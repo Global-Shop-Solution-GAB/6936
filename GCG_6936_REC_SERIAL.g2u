@@ -1,0 +1,466 @@
+﻿Program.Sub.ScreenSU.Start
+Gui.FormSerialRec..Create(BaseForm)
+Gui.FormSerialRec..Caption("Custom Serial PO Receipt")
+Gui.FormSerialRec..Size(6525,1515)
+Gui.FormSerialRec..MinX(0)
+Gui.FormSerialRec..MinY(0)
+Gui.FormSerialRec..Position(0,0)
+Gui.FormSerialRec..BackColor(-2147483633)
+Gui.FormSerialRec..MousePointer(0)
+Gui.FormSerialRec..Event(UnLoad,FormSerialRec_UnLoad)
+Gui.FormSerialRec..AlwaysOnTop(False)
+Gui.FormSerialRec..FontName("Tahoma")
+Gui.FormSerialRec..FontSize(8.25)
+Gui.FormSerialRec..ControlBox(True)
+Gui.FormSerialRec..MaxButton(True)
+Gui.FormSerialRec..MinButton(True)
+Gui.FormSerialRec..Moveable(True)
+Gui.FormSerialRec..Sizeable(True)
+Gui.FormSerialRec..ShowInTaskBar(True)
+Gui.FormSerialRec..TitleBar(True)
+Gui.FormSerialRec.lblHeatImport.Create(Label,"Select Excel File From Vendor",True,5325,255,0,105,225,True,0,"Arial",8,-2147483633,0,0)
+Gui.FormSerialRec.lblHeatImport.BorderStyle(0)
+Gui.FormSerialRec.cmdFileBrowser.Create(Button)
+Gui.FormSerialRec.cmdFileBrowser.Size(480,420)
+Gui.FormSerialRec.cmdFileBrowser.Position(5745,450)
+Gui.FormSerialRec.cmdFileBrowser.Caption("^")
+Gui.FormSerialRec.cmdFileBrowser.Event(Click,cmdFileBrowser_Click)
+Gui.FormSerialRec.cmdFileBrowser.Enabled(True)
+Gui.FormSerialRec.cmdFileBrowser.Visible(True)
+Gui.FormSerialRec.cmdFileBrowser.Zorder(0)
+Gui.FormSerialRec.cmdFileBrowser.FontName("Tahoma")
+Gui.FormSerialRec.cmdFileBrowser.FontSize(8.25)
+Gui.FormSerialRec.lvw1.Create(ListView)
+Gui.FormSerialRec.lvw1.Size(5550,390)
+Gui.FormSerialRec.lvw1.Position(105,465)
+Gui.FormSerialRec.lvw1.View(0)
+Gui.FormSerialRec.lvw1.Event(OLEDragDrop,lvw1_OLEDragDrop)
+Gui.FormSerialRec.lvw1.Enabled(True)
+Gui.FormSerialRec.lvw1.Visible(True)
+Gui.FormSerialRec.lvw1.Zorder(0)
+Gui.FormSerialRec.lvw1.FontName("Tahoma")
+Gui.FormSerialRec.lvw1.FontSize(8)
+Gui.FormSerialRec.lvw1.Multiselect(False)
+Gui.FormSerialRec.lvw1.CheckBoxes(False)
+Program.Sub.ScreenSU.End
+
+Program.Sub.Preflight.Start
+V.Global.bOpen.Declare(Boolean,False)
+Program.External.Include.Library("6016.lib")
+Program.Sub.Preflight.End
+
+Program.Sub.Main.Start
+F.Intrinsic.Control.Try
+	V.Local.sError.Declare(String,"")
+	V.Local.bExcel.Declare(String,"")
+	V.Local.sReceiver.Declare(String,"")
+	V.Local.sSql.Declare(String,"")
+	
+	F.Automation.MSExcel.CheckPresence(V.Local.bExcel)
+	
+	F.Intrinsic.Control.SelectCase(V.Caller.Hook)
+		'populate hook on po receipt lot/bin 
+		F.Intrinsic.Control.Case(16400)
+			V.Passed.000085.Set("Serial Import")
+			F.Intrinsic.Control.End
+	
+		'script 1 on Po receipt lot/bin
+		F.Intrinsic.Control.Case(16440)
+			
+			F.Intrinsic.Control.If(V.Local.bExcel)
+				'show the form
+				Gui.FormSerialRec..Show
+				Gui.FormSerialRec..AlwaysOnTop(True)
+				Gui.FormSerialRec..AlwaysOnTop(False)
+			F.Intrinsic.Control.Else
+				F.Intrinsic.UI.Msgbox("Excel Needs to be Installed to run this menu item","Attention")
+				F.Intrinsic.Control.End
+			F.Intrinsic.Control.EndIf
+		
+		'post ok hook po receipt lot/bin
+		F.Intrinsic.Control.Case(15040)
+
+			F.Intrinsic.String.Build("{0}{1}",V.Passed.000010,V.Passed.000153,V.Local.sReceiver)
+			'updating Item Master Records
+			F.Intrinsic.Control.CallSub(Update_Item_Master,"Receiver",V.Local.sReceiver)
+			'Removing records from customt table that didn't get processed by po receipts post ok hook
+			F.Intrinsic.String.Build("Delete From GCG_6936_PO_SERIALS Where Lst_Chg_Prg = '{0}'",V.Caller.PID,V.Local.sSql)
+			F.ODBC.Connection!con.OpenCompanyConnection
+			F.ODBC.Connection!Con.Execute(V.Local.sSql)
+			F.ODBC.Connection!Con.Close
+			
+		F.Intrinsic.Control.Case(15068)
+			'Removing records from customt table that didn't get processed by po receipts post ok hook
+			F.Intrinsic.String.Build("Delete From GCG_6936_PO_SERIALS Where Lst_Chg_Prg = '{0}'",V.Caller.PID,V.Local.sSql)
+			F.ODBC.Connection!con.OpenCompanyConnection
+			F.ODBC.Connection!Con.Execute(V.Local.sSql)
+			F.ODBC.Connection!Con.Close
+			
+		F.Intrinsic.Control.CaseElse
+			F.Intrinsic.Control.End
+			
+	F.Intrinsic.Control.EndSelect
+	
+	F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+		F.Intrinsic.String.Build("Project: {0}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}","GCG_6936_REC_SERIAL.g2u",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+		F.Intrinsic.UI.Msgbox(V.Local.sError)
+		F.Intrinsic.Control.CallSub(FormSerialRec_Unload)
+	F.Intrinsic.Control.EndIf
+Function.Intrinsic.Control.EndTry
+Program.Sub.Main.End
+
+Program.Sub.FormSerialRec_UnLoad.Start
+F.Intrinsic.Control.Try
+	V.Local.sError.Declare(String,"")
+	
+	'check to see if connection is still open
+	F.Intrinsic.Control.If(V.Global.bOpen)
+		V.Global.bOpen.Set(False)
+		F.ODBC.Connection!Con.Close
+	F.Intrinsic.Control.EndIf
+	'end the program
+	F.Intrinsic.Control.End
+	
+	F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+		F.Intrinsic.String.Build("Project: {0}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}","GCG_6936_REC_SERIAL.g2u",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+		F.Intrinsic.UI.Msgbox(V.Local.sError)
+		F.Intrinsic.Control.End
+	F.Intrinsic.Control.EndIf
+Function.Intrinsic.Control.EndTry
+Program.Sub.FormSerialRec_UnLoad.End
+
+Program.Sub.lvw1_OLEDragDrop.Start
+F.Intrinsic.Control.Try
+	V.Local.sError.Declare(String,"")
+
+	F.Intrinsic.Control.CallSub(Attach_Serials,"Files",V.Args.Files)
+
+	F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+		F.Intrinsic.String.Build("Project: {0}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}","GCG_6936_REC_SERIAL.g2u",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+		F.Intrinsic.UI.Msgbox(V.Local.sError)
+		F.Intrinsic.Control.CallSub(FormSerialRec_Unload)
+	F.Intrinsic.Control.EndIf
+Function.Intrinsic.Control.EndTry
+Program.Sub.lvw1_OLEDragDrop.End
+
+Program.Sub.cmdFileBrowser_Click.Start
+F.Intrinsic.Control.Try
+	V.Local.sError.Declare(String,"")
+	V.Local.sRet.Declare(String,"")
+	
+	'when selecting from the browser only show csv files
+	F.Intrinsic.UI.ShowOpenFileDialog("","XLSX [.xlsx]|*.xlsx","",V.Local.sRet)
+	'checking to see if a file was chosen
+
+	F.Intrinsic.Control.If(V.Local.sRet.Length,>,0)
+		F.Intrinsic.Control.If(V.Local.sRet.UCase,<>,"***CANCEL***")
+			F.Intrinsic.Control.CallSub(Attach_Serials,"Files",V.Local.sRet)
+		F.Intrinsic.Control.EndIf
+	F.Intrinsic.Control.EndIf
+	
+	F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+		F.Intrinsic.String.Build("Project: {0}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}","GCG_6936_REC_SERIAL.g2u",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+		F.Intrinsic.UI.Msgbox(V.Local.sError)
+		F.Intrinsic.Control.CallSub(FormSerialRec_Unload)
+	F.Intrinsic.Control.EndIf
+Function.Intrinsic.Control.EndTry
+Program.Sub.cmdFileBrowser_Click.End
+
+Program.Sub.Attach_Serials.Start
+F.Intrinsic.Control.Try
+	V.Local.sError.Declare(String,"")
+	V.Local.sFiles.Declare(String,"")
+	V.Local.i.Declare(Long,0)
+	V.Local.iC.Declare(Long,0)
+	V.Local.sFileContent.Declare(String,"")
+	V.Local.sSheets.Declare(String,"")
+	V.Local.sSheetInfo.Declare(String,"")
+	V.Local.sData.Declare(String,"")
+	V.Local.sRet.Declare(String,"")
+	V.Local.sPO.Declare(String,"")
+	V.Local.sLine.Declare(String,"")
+	V.Local.sFilePO.Declare(String,"")
+	V.Local.sFileLine.Declare(String,"")
+	V.Local.sPOPart.Declare(String,"")
+	V.Local.sFilePart.Declare(String,"")
+	V.Local.sSql.Declare(String,"")
+	V.local.sWriteRow.Declare(String,"")
+	V.Local.sBin.Declare(String,"")
+	V.Local.sDate.Declare(String,"")
+	V.Local.sTime.Declare(String,"")
+	V.Local.sTemp.Declare(String,"")
+	
+	F.Intrinsic.UI.InvokeWaitDialog("Getting Serial Data............")
+	Gui.FormSerialRec..Visible(False)
+	
+	F.Intrinsic.String.LPad(V.Passed.009000.Trim,"0",7,V.Local.sPO)
+	F.Intrinsic.String.LPad(V.Passed.009001.Trim,"0",3,V.Local.sLine)
+	F.Intrinsic.String.RPad(V.Local.sLine,"0",4,V.Local.sLine)
+	
+	F.Intrinsic.BDF.Load("AUX002","AUX002")
+	F.Intrinsic.BDF.Clone("AUX002","CLONE")
+	
+	F.ODBC.Connection!Con.OpenCompanyConnection(999)
+	V.Global.bOpen.Set(True)
+
+	F.Intrinsic.String.Build("Select rtrim(Part) From V_PO_Lines Where Purchase_Order = '{0}' and Record_No = '{1}'",V.Local.sPO,v.Local.sLine,V.Local.sSql)
+	F.ODBC.Connection!con.ExecuteAndReturn(V.Local.sSql,V.Local.sPOPart)
+	
+	F.Intrinsic.String.Split(V.Args.Files,"*!*",V.Local.sFiles)
+	
+	F.Global.General.ReadOption("401893",1,"","0001",Variable.Local.sBin)
+	
+	F.Intrinsic.Control.For(V.Local.i,0,V.Local.sFiles.UBound,1)
+		F.Automation.MSExcel.ReadSpreadsheet(V.Local.sFiles(V.Local.i),V.Local.sFileContent)
+		
+		F.Intrinsic.String.Split(V.Local.sFileContent,"&^&",V.Local.sSheets)
+	
+		F.Intrinsic.String.Split(V.Local.sSheets(0),"$!$",V.Local.sSheetInfo)
+		
+		F.Data.DataTable.CreateFromSQL("Serial",con,"Select Purchase_Order, Record_No, Serial_Number, Heat, Bonnet_Heat, Received From GCG_6936_PO_SERIALS Where Serial_Number = '-1'",True)
+		F.Intrinsic.String.Format(V.Ambient.Now,"HH:NN:SS",V.Local.sTime)
+		F.Intrinsic.String.Build("{0} {1}",V.Ambient.Date.PervasiveDate,V.Local.sTime,V.Local.sDate)
+		F.Intrinsic.Control.For(V.Local.iC,0,V.Local.sSheetInfo.UBound,1)
+			F.Intrinsic.String.Split(V.Local.sSheetInfo(V.Local.iC),"*!*",V.Local.sData)
+			V.Local.sData.RedimPreserve(0,5)
+			F.Intrinsic.Control.If(V.Local.sData.IsNumeric)
+				F.Intrinsic.String.LPad(V.Local.sData(0).Trim,"0",7,V.Local.sFilePO)
+				F.Intrinsic.String.LPad(V.Local.sData(1).Trim,"0",3,V.Local.sFileLine)
+				F.Intrinsic.String.RPad(V.Local.sFileLine,"0",4,V.Local.sFileLine)
+				F.Intrinsic.Control.If(V.Local.sPO,=,V.Local.sFilePO)
+					F.Intrinsic.String.Build("Select rtrim(Part) From V_PO_Lines Where Purchase_Order = '{0}' and Record_No = '{1}'",V.Local.sFilePO,v.Local.sFileLine,V.Local.sSql)
+					F.ODBC.Connection!con.ExecuteAndReturn(V.Local.sSql,V.Local.sFilePart)
+					
+					F.Intrinsic.Control.If(V.Local.sPOPart.UCase,=,V.Local.sFilePart.UCase)
+						F.Intrinsic.String.Build("Select RECEIVED,LST_CHG_PRG From GCG_6936_PO_SERIALS Where Serial_Number = '{0}'",V.Local.sData(2).Trim,V.Local.sSql)
+						F.ODBC.Connection!Con.ExecuteAndReturn(V.Local.sSql,V.Local.sTemp)
+						F.Intrinsic.String.Split(V.Local.sTemp,"*!*",V.Local.sTemp)
+						V.Local.sTemp.RedimPreserve(0,1)
+						V.Local.sRet.Set(V.Local.sTemp.Trim)
+						F.Intrinsic.Control.If(V.Local.sRet.UCase,=,"FALSE","OR",V.Local.sRet,=,"")
+							F.Intrinsic.Control.If(V.Local.sTemp(1).Long,<>,V.Caller.PID)
+								F.Data.DataTable.AddRow("Serial","Purchase_Order",V.Local.sPO,"RECORD_NO",V.Local.sLine,"Serial_Number",V.Local.sData(2).Trim,"Heat",V.Local.sData(5).Trim,"Bonnet_Heat",V.Local.sData(4).Trim,"RECEIVED",False)
+							F.Intrinsic.Control.EndIf
+						F.Intrinsic.Control.EndIf
+					F.Intrinsic.Control.EndIf
+				F.Intrinsic.Control.EndIf
+			F.Intrinsic.Control.EndIf
+			F.Intrinsic.Control.If(V.Passed.000137.Long,=,V.DataTable.Serial.RowCount)
+				F.Intrinsic.Control.ExitFor(V.Local.iC)
+			F.Intrinsic.Control.EndIf
+		F.Intrinsic.Control.Next(V.Local.iC)
+	F.Intrinsic.Control.Next(V.Local.i)
+	
+	F.Intrinsic.Control.If(V.DataTable.Serial.RowCount--,<>,-1)
+		F.Data.DataTable.AddColumn("Serial","LST_CHG_DATE",Date,V.Local.sDate)
+		F.Data.DataTable.AddColumn("Serial","LST_CHG_USER",String,V.Caller.User)
+		F.Data.DataTable.AddColumn("Serial","LST_CHG_PRG",String,V.Caller.PID)
+		F.Intrinsic.Control.For(V.Local.i,0,V.DataTable.Serial.RowCount--,1)
+			F.Intrinsic.String.Build("N|~|N|~|{0}|~|{1}|~|{2}|~|{1}|~|1.0000|~|1.0000|~|0.0000|~||~|0.0000|~|",V.Local.sBin,V.DataTable.Serial(V.Local.i).Serial_Number!FieldValTrim,V.DataTable.Serial(V.Local.i).Heat!FieldValTrim,V.local.sWriteRow)
+			F.Intrinsic.BDF.WriteRow("Clone",V.Local.sWriteRow)
+		F.Intrinsic.Control.Next(V.Local.i)
+		F.Intrinsic.BDF.Save("Clone","AUX002")
+		F.Data.DataTable.SaveToDB("Serial",con,"GCG_6936_PO_SERIALS","Serial_Number",256,"Purchase_Order@!@Purchase_Order*!*Record_No@!@Record_No*!*Serial_Number@!@Serial_Number*!*Heat@!@Heat*!*Bonnet_Heat@!@Bonnet_Heat*!*Received@!@Received*!*LST_CHG_DATE@!@LST_CHG_DATE*!*LST_CHG_USER@!@LST_CHG_USER*!*LST_CHG_PRG@!@LST_CHG_PRG")
+		F.Intrinsic.String.Build("Update GCG_6936_PO_SERIALS Set Date_Added = '{0}' Where Date_Added is null",V.Ambient.Date.PervasiveDate,V.Local.sSql)
+		F.ODBC.Connection!Con.Execute(V.Local.sSql)
+	F.Intrinsic.Control.EndIf
+	
+	F.Data.DataTable.Close("SERIAL")
+	
+	F.ODBC.Connection!Con.Close
+	V.Global.bOpen.Set(False)
+	
+	F.Intrinsic.UI.CloseWaitDialog
+	
+	F.Intrinsic.Control.CallSub(FormSerialRec_Unload)
+	
+	F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+		F.Intrinsic.String.Build("Project: {0}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}","GCG_6936_REC_SERIAL.g2u",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+		F.Intrinsic.UI.Msgbox(V.Local.sError)
+		F.Intrinsic.Control.CallSub(FormSerialRec_Unload)
+	F.Intrinsic.Control.EndIf
+Function.Intrinsic.Control.EndTry
+Program.Sub.Attach_Serials.End
+
+Program.Sub.Update_Item_Master.Start
+F.Intrinsic.Control.Try
+	V.Local.sError.Declare(String,"")
+	V.Local.sSql.Declare(String,"")
+	V.Local.i.Declare(Long,0)
+	V.Local.iC.Declare(Long,0)
+	V.Local.sLine.Declare(String,"")
+	V.Local.sRet.Declare(String,"")
+	V.Local.sDate.Declare(String,"")
+	V.Local.sTime.Declare(String,"")
+	V.Local.sFilter.Declare(String,"")
+	
+	F.ODBC.Connection!Con.OpenCompanyConnection(999)
+	V.Global.bOpen.Set(True)
+	
+'	F.Intrinsic.String.Build("Select Purchase_Order, Po_Line, Part, Location From PO_Receiver Where Receiver_No = '{0}'",V.Args.Receiver,V.Local.sSql)
+'	F.Data.DataTable.CreateFromSQL("REC",con,V.Local.sSql,True)
+	
+	F.Intrinsic.String.Format(V.Ambient.Now,"HH:NN:SS",V.Local.sTime)
+	F.Intrinsic.String.Build("{0} {1}",V.Ambient.Date.PervasiveDate,V.Local.sTime,V.Local.sDate)
+		
+'	F.Intrinsic.Control.For(V.Local.i,0,V.DataTable.REC.RowCount--,1)
+'		F.Intrinsic.String.RPad(V.DataTable.REC(V.Local.i).PO_Line!FieldValTrim,"0",4,V.Local.sLine)
+'		F.Intrinsic.String.Build("Select Serial_Number, Heat, Bonnet_Heat, Received, Lst_Chg_Date, Lst_Chg_User, Lst_Chg_Prg From GCG_6936_PO_Serials Where Purchase_Order = '{0}' and Record_No = '{1}' and Received = 0",V.DataTable.REC(V.Local.i).Purchase_Order!FieldValTrim,V.Local.sLine,V.Local.sSql)
+'		F.Data.DataTable.CreateFromSQL("SERIAL",con,V.Local.sSql)
+'		F.Intrinsic.Control.For(V.Local.iC,0,V.DataTable.Serial.RowCount--,1)
+'			F.Data.DataTable.SetValue("Serial",V.Local.iC,"LST_CHG_PRG","GCG_6936_REC_SERIAL")
+'			F.Intrinsic.String.Build("Select Part, Location, Serial_Number, Heat, Quantity, User_Field_4, User_Field_5, User_Field_6, User_Field_7 From Item_Master Where Part = '{0}' and Location = '{1}' and Heat = '{2}' and Serial_Number = '{3}'",V.DataTable.REC(V.Local.i).Part!FieldValTrim,V.DataTable.REC(V.Local.i).Location!FieldValTrim,V.DataTable.Serial(V.Local.iC).Heat!FieldValTrim,V.DataTable.Serial(V.Local.iC).Serial_Number!FieldValTrim,V.Local.sSql)
+'			F.Data.DataTable.CreateFromSQL("Item",con,V.Local.sSql,True)
+'			F.Intrinsic.Control.If(V.DataTable.Item.RowCount--,<>,-1)
+'				F.Intrinsic.Control.If(V.DataTable.Item(V.DataTable.Item.RowCount--).Quantity,>,0)
+'					F.Data.DataTable.SetValue("Serial",V.Local.iC,"Received",True,"LST_CHG_DATE",V.Local.sDate,"LST_CHG_USER",V.Caller.User,"LST_CHG_PRG","GCG_6936_REC_SERIAL")
+'	
+'					F.Data.DataTable.SetValue("Item",-1,"User_Field_4",V.DataTable.Serial(V.Local.iC).Bonnet_Heat!FieldValTrim)
+'	
+'					F.Data.DataTable.SaveToDB("Item",con,"Item_Master","Part*!*Location*!*Heat*!*Serial_Number",3)
+'					F.Intrinsic.String.Build("Select Top 1 Date_History, Time_Item_History From Item_History Where (code_transaction = 'P10' or code_transaction = 'R10') and Receiver = '{0}' and Serial_Number = '{1}' order by date_history desc, Time_Item_History Desc",V.Args.Receiver,V.DataTable.Serial(V.Local.iC).Serial_Number!FieldValTrim,V.Local.sSql)
+'					F.ODBC.Connection!Con.ExecuteAndReturn(V.Local.sSql,V.Local.sRet)
+'					F.Intrinsic.String.Split(V.Local.sRet,"*!*",V.Local.sRet)
+'					F.Intrinsic.Control.If(V.Local.sRet.Trim,<>,"")
+'						F.Intrinsic.String.Build("Update ITEM_HIST_USR Set Usr_Field_4 = '{0}' Where Part = '{1}' and key_date = '{2}' and Key_Time = '{3}'",V.DataTable.Serial(V.Local.iC).Bonnet_Heat!FieldValTrim,V.DataTable.REC(V.Local.i).Part!FieldValTrim,V.Local.sRet(0).Trim,V.Local.sRet(1).Trim,V.Local.sSql)
+'						F.ODBC.Connection!Con.Execute(V.Local.sSql)
+'					F.Intrinsic.Control.EndIf
+'					V.Local.sRet.RedimPreserve(0,1)
+'				F.Intrinsic.Control.Else
+'					F.Data.DataTable.SetValue("Serial",V.Local.iC,"Received",False,"LST_CHG_DATE",V.Local.sDate,"LST_CHG_USER",V.Caller.User,"LST_CHG_PRG","GCG_6936_REC_SERIAL")
+'				F.Intrinsic.Control.EndIf
+'			F.Intrinsic.Control.EndIf
+'			F.Data.DataTable.Close("Item")
+'		F.Intrinsic.Control.Next(V.Local.iC)
+'		F.Data.DataTable.SaveToDB("SERIAL",con,"GCG_6936_PO_SERIALS","Serial_Number",3)
+'		F.Intrinsic.String.Build("Update GCG_6936_PO_SERIALS Set Date_Added = '{0}' Where Date_Added is null",V.Ambient.Date.PervasiveDate,V.Local.sSql)
+'		F.ODBC.Connection!Con.Execute(V.Local.sSql)
+'		F.Data.DataTable.Close("SERIAL")
+'	F.Intrinsic.Control.Next(V.Local.i)
+'	
+'	F.Data.DataTable.Close("REC")
+	
+	F.Intrinsic.String.Build("Select rtrim(Serial_Number) as Serial_Number, Heat, Part, Location, Purchase_Order, PO_Line, Quantity, Code_Transaction From V_Item_History Where (Code_Transaction = 'P10' or Code_Transaction = 'R10') and Receiver = '{0}' and Serial_Number <> '' Order by Time_Item_History",V.Args.Receiver,V.Local.sSql)
+	F.Data.DataTable.CreateFromSQL("Temp",Con,V.Local.sSql,True)
+	F.Data.DataView.Create("Temp","VTemp",22,"Code_Transaction = 'P10'","")
+	F.Data.DataView.ToDataTable("Temp","VTemp","P10",True)
+	F.Data.DataView.Close("Temp","VTemp")
+	
+	F.Intrinsic.Control.For(V.Local.i,0,V.DataTable.P10.RowCount--,1)
+		F.Intrinsic.Control.If(V.DataTable.P10(V.Local.i).Quantity!FieldValFloat,>,0)
+			'Receiving the Serial
+			F.Intrinsic.String.Build("Select Purchase_Order, Record_No, Serial_Number, Heat, Bonnet_Heat, Received, Lst_Chg_Date, Lst_Chg_User, Lst_Chg_Prg From GCG_6936_PO_Serials Where Serial_Number = '{0}'",V.DataTable.P10(V.Local.i).Serial_Number!FieldValTrim,V.Local.sSql)
+			F.Data.DataTable.CreateFromSQL("SERIAL",con,V.Local.sSql)
+			
+			F.Intrinsic.Control.If(V.DataTable.Serial.RowCount--,<>,-1)
+				F.Data.DataTable.SetValue("Serial",-1,"Received",True,"LST_CHG_DATE",V.Local.sDate,"LST_CHG_USER",V.Caller.User,"LST_CHG_PRG","GCG_6936_REC_SERIAL","Purchase_Order",V.DataTable.P10(V.Local.i).Purchase_Order!FieldValTrim,"RECORD_NO",V.DataTable.P10(V.Local.i).PO_Line!FieldValTrim)
+				
+				F.Intrinsic.String.Build("Select Top 1 Part, Date_History, Time_Item_History From Item_History Where (code_transaction = 'P10' or code_transaction = 'R10') and Receiver = '{0}' and Serial_Number = '{1}' order by date_history desc, Time_Item_History Desc",V.Args.Receiver,V.DataTable.P10(V.Local.i).Serial_Number!FieldValTrim,V.Local.sSql)
+				F.ODBC.Connection!Con.ExecuteAndReturn(V.Local.sSql,V.Local.sRet)
+				F.Intrinsic.String.Split(V.Local.sRet,"*!*",V.Local.sRet)
+				F.Intrinsic.Control.If(V.Local.sRet.Trim,<>,"")
+					F.Intrinsic.String.Build("Update ITEM_HIST_USR Set Usr_Field_4 = '{0}' Where Part = '{1}' and key_date = '{2}' and Key_Time = '{3}'",V.DataTable.Serial(V.Local.iC).Bonnet_Heat!FieldValTrim,V.Local.sRet(0).Trim,V.Local.sRet(1).Trim,V.Local.sRet(2).Trim,V.Local.sSql)
+					F.ODBC.Connection!Con.Execute(V.Local.sSql)
+				F.Intrinsic.Control.EndIf
+			F.Intrinsic.Control.Else
+				F.Data.DataTable.AddRow("SERIAL","Serial_Number",V.DataTable.P10(V.Local.i).Serial_Number!FieldValTrim,"Heat",V.DataTable.P10(V.Local.i).Heat!FieldValTrim,"Received",True,"LST_CHG_DATE",V.Local.sDate,"LST_CHG_USER",V.Caller.User,"LST_CHG_PRG","GCG_6936_REC_SERIAL","Purchase_Order",V.DataTable.P10(V.Local.i).Purchase_Order!FieldValTrim,"RECORD_NO",V.DataTable.P10(V.Local.i).PO_Line!FieldValTrim)
+			F.Intrinsic.Control.EndIf
+			F.Data.DataTable.SaveToDB("SERIAL",con,"GCG_6936_PO_SERIALS","Serial_Number",3)
+			F.Data.DataTable.Close("SERIAL")
+		F.Intrinsic.Control.Else
+			'Reversing the Received Serial
+			F.Intrinsic.String.Build("Select Serial_Number, Heat, Bonnet_Heat, Received, Lst_Chg_Date, Lst_Chg_User, Lst_Chg_Prg From GCG_6936_PO_Serials Where Serial_Number = '{0}'",V.DataTable.P10(V.Local.i).Serial_Number!FieldValTrim,V.Local.sSql)
+			F.Data.DataTable.CreateFromSQL("SERIAL",con,V.Local.sSql)
+			
+			F.Intrinsic.Control.If(V.DataTable.Serial.RowCount--,<>,-1)
+				F.Data.DataTable.DeleteRow("SERIAL")
+				F.Data.DataTable.SaveToDB("SERIAL",con,"GCG_6936_PO_SERIALS","Serial_Number",4)
+			F.Intrinsic.Control.EndIf
+			F.Data.DataTable.Close("SERIAL")
+		F.Intrinsic.Control.EndIf
+	F.Intrinsic.Control.Next(V.Local.i)
+	
+	F.Data.DataTable.Close("P10")
+	
+	F.Data.DataView.Create("Temp","VTemp",22,"Code_Transaction = 'R10'","")
+	F.Data.DataView.ToDataTable("Temp","VTemp","R10",True)
+	F.Data.DataView.Close("Temp","VTemp")
+	F.Data.DataTable.Close("Temp")
+	
+	F.Data.DataView.Create("R10","VR10",22,"","")
+	F.Data.DataView.ToDataTableDistinct("R10","VR10","R10Serial","Serial_Number",True)
+	F.Data.DataView.Close("R10","VR10")
+	F.Intrinsic.Control.For(V.Local.i,0,V.DataTable.R10Serial.RowCount--,1)
+		F.Intrinsic.String.Build("Serial_Number = '{0}'",V.DataTable.R10Serial(V.Local.i).Serial_Number!FieldValTrim,V.Local.sFilter)
+		F.Data.DataView.Create("R10","VR10",22,V.Local.sFilter,"")
+		F.Intrinsic.Control.If(v.DataView.R10!VR10(0).Quantity!FieldValFloat,>,0)
+			'Receiving the Serial
+			F.Intrinsic.String.Build("Select Purchase_Order, Record_No, Serial_Number, Heat, Bonnet_Heat, Received, Lst_Chg_Date, Lst_Chg_User, Lst_Chg_Prg From GCG_6936_PO_Serials Where Serial_Number = '{0}'",v.DataView.R10!VR10(0).Serial_Number!FieldValTrim,V.Local.sSql)
+			F.Data.DataTable.CreateFromSQL("SERIAL",con,V.Local.sSql)
+			
+			F.Intrinsic.Control.If(V.DataTable.Serial.RowCount--,<>,-1)
+				F.Data.DataTable.SetValue("Serial",-1,"Received",True,"LST_CHG_DATE",V.Local.sDate,"LST_CHG_USER",V.Caller.User,"LST_CHG_PRG","GCG_6936_REC_SERIAL","Purchase_Order",v.DataView.R10!VR10(0).Purchase_Order!FieldValTrim,"RECORD_NO",v.DataView.R10!VR10(0).PO_Line!FieldValTrim)
+			
+				F.Intrinsic.String.Build("Select Top 1 Part, Date_History, Time_Item_History From Item_History Where (code_transaction = 'P10' or code_transaction = 'R10') and Receiver = '{0}' and Serial_Number = '{1}' order by date_history desc, Time_Item_History Desc",V.Args.Receiver,v.DataView.R10!VR10(0).Serial_Number!FieldValTrim,V.Local.sSql)
+				F.ODBC.Connection!Con.ExecuteAndReturn(V.Local.sSql,V.Local.sRet)
+				F.Intrinsic.String.Split(V.Local.sRet,"*!*",V.Local.sRet)
+				F.Intrinsic.Control.If(V.Local.sRet.Trim,<>,"")
+					F.Intrinsic.String.Build("Update ITEM_HIST_USR Set Usr_Field_4 = '{0}' Where Part = '{1}' and key_date = '{2}' and Key_Time = '{3}'",V.DataTable.Serial(V.Local.iC).Bonnet_Heat!FieldValTrim,V.Local.sRet(0).Trim,V.Local.sRet(1).Trim,V.Local.sRet(2).Trim,V.Local.sSql)
+					F.ODBC.Connection!Con.Execute(V.Local.sSql)
+				F.Intrinsic.Control.EndIf
+			F.Intrinsic.Control.Else
+				F.Data.DataTable.AddRow("SERIAL","Serial_Number",v.DataView.R10!VR10(0).Serial_Number!FieldValTrim,"Heat",v.DataView.R10!VR10(0).Heat!FieldValTrim,"Received",True,"LST_CHG_DATE",V.Local.sDate,"LST_CHG_USER",V.Caller.User,"LST_CHG_PRG","GCG_6936_REC_SERIAL","Purchase_Order",v.DataView.R10!VR10(0).Purchase_Order!FieldValTrim,"RECORD_NO",v.DataView.R10!VR10(0).PO_Line!FieldValTrim)
+			F.Intrinsic.Control.EndIf
+			F.Data.DataTable.SaveToDB("SERIAL",con,"GCG_6936_PO_SERIALS","Serial_Number",3)
+			F.Data.DataTable.Close("SERIAL")
+		F.Intrinsic.Control.Else
+			'Reversing the Received Serial
+			F.Intrinsic.String.Build("Select Serial_Number, Heat, Bonnet_Heat, Received, Lst_Chg_Date, Lst_Chg_User, Lst_Chg_Prg From GCG_6936_PO_Serials Where Serial_Number = '{0}'",v.DataView.R10!VR10(0).Serial_Number!FieldValTrim,V.Local.sSql)
+			F.Data.DataTable.CreateFromSQL("SERIAL",con,V.Local.sSql)
+			
+			F.Intrinsic.Control.If(V.DataTable.Serial.RowCount--,<>,-1)
+				F.Data.DataTable.DeleteRow("SERIAL")
+				F.Data.DataTable.SaveToDB("SERIAL",con,"GCG_6936_PO_SERIALS","Serial_Number",4)
+			F.Intrinsic.Control.EndIf
+			F.Data.DataTable.Close("SERIAL")
+		F.Intrinsic.Control.EndIf
+	F.Intrinsic.Control.Next(V.Local.i)
+	
+	F.Data.DataTable.Close("R10Serial")
+	F.Data.DataTable.Close("R10")
+	
+	F.Intrinsic.String.Build("Update GCG_6936_PO_SERIALS Set Date_Added = '{0}' Where Date_Added is null",V.Ambient.Date.PervasiveDate,V.Local.sSql)
+	F.ODBC.Connection!Con.Execute(V.Local.sSql)
+	
+	F.ODBC.Connection!Con.Close
+	V.Global.bOpen.Set(False)
+	F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+		F.Intrinsic.String.Build("Project: {0}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}","GCG_6936_REC_SERIAL.g2u",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+		F.Intrinsic.UI.Msgbox(V.Local.sError)
+		F.Intrinsic.Control.CallSub(FormSerialRec_Unload)
+	F.Intrinsic.Control.EndIf
+Function.Intrinsic.Control.EndTry
+Program.Sub.Update_Item_Master.End
+
+Program.Sub.Comments.Start
+${$5$}$2.0.0.0$}$2
+${$6$}$rking$}$20230822095400684$}$QNdZLVy4bWuiWa9jh1ZTiKHvMPldSPXekajuQEovdLqlb4AKgkZCrfE8YKucPjj//WGCg31jeP8=
+Program.Sub.Comments.End
