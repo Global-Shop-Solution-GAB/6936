@@ -1,0 +1,513 @@
+﻿Program.Sub.ScreenSU.Start
+Gui.FormHOLDTIME..Create(BaseForm)
+Gui.FormHOLDTIME..Caption("Holding Time Import/Update")
+Gui.FormHOLDTIME..Size(1024,720)
+Gui.FormHOLDTIME..MinX(0)
+Gui.FormHOLDTIME..MinY(0)
+Gui.FormHOLDTIME..Position(0,0)
+Gui.FormHOLDTIME..AlwaysOnTop(False)
+Gui.FormHOLDTIME..FontName("Tahoma")
+Gui.FormHOLDTIME..FontSize(8.25)
+Gui.FormHOLDTIME..ControlBox(True)
+Gui.FormHOLDTIME..MaxButton(True)
+Gui.FormHOLDTIME..MinButton(True)
+Gui.FormHOLDTIME..MousePointer(0)
+Gui.FormHOLDTIME..Moveable(True)
+Gui.FormHOLDTIME..Sizeable(True)
+Gui.FormHOLDTIME..ShowInTaskBar(True)
+Gui.FormHOLDTIME..TitleBar(True)
+Gui.FormHOLDTIME..Event(UnLoad,FormHOLDTIME_UnLoad)
+Gui.FormHOLDTIME.lblCode.Create(Label,"Code",True,25,13,0,27,11,True,0,"Tahoma",8.25,,0,0)
+Gui.FormHOLDTIME.lblCode.BorderStyle(0)
+Gui.FormHOLDTIME.txtCODE.Create(TextBox,"",True,65,20,0,26,28,True,0,"Tahoma",8.25,,1)
+Gui.FormHOLDTIME.txtCODE.Mask(">")
+Gui.FormHOLDTIME.txtCODE.MaxLength(20)
+Gui.FormHOLDTIME.txtCODE.Event(GotFocus,txtCODE_GotFocus)
+Gui.FormHOLDTIME.lblDesc.Create(Label,"Description",True,53,13,0,114,11,True,0,"Tahoma",8.25,,0,0)
+Gui.FormHOLDTIME.lblDesc.BorderStyle(0)
+Gui.FormHOLDTIME.txtDesc.Create(TextBox,"",True,156,20,0,113,28,True,0,"Tahoma",8.25,,1)
+Gui.FormHOLDTIME.txtDesc.MaxLength(30)
+Gui.FormHOLDTIME.txtDesc.Event(GotFocus,txtDesc_GotFocus)
+Gui.FormHOLDTIME.lblTIME1.Create(Label,"MTR - Holding Time 1",True,100,13,0,293,11,True,0,"Tahoma",8.25,,0,0)
+Gui.FormHOLDTIME.lblTIME1.BorderStyle(0)
+Gui.FormHOLDTIME.txtTime1.Create(TextBox,"",True,79,20,0,292,28,True,0,"Tahoma",8.25,,1)
+Gui.FormHOLDTIME.txtTime1.NumericOnly(2)
+Gui.FormHOLDTIME.txtTime1.Event(GotFocus,txtTime1_GotFocus)
+Gui.FormHOLDTIME.lblTime2.Create(Label,"MTR - Holding Time 2",True,100,13,0,416,11,True,0,"Tahoma",8.25,,0,0)
+Gui.FormHOLDTIME.lblTime2.BorderStyle(0)
+Gui.FormHOLDTIME.txtTime2.Create(TextBox,"",True,79,20,0,415,28,True,0,"Tahoma",8.25,,1)
+Gui.FormHOLDTIME.txtTime2.NumericOnly(2)
+Gui.FormHOLDTIME.txtTime2.Event(GotFocus,txtTime2_GotFocus)
+Gui.FormHOLDTIME.lblTime3.Create(Label,"MTR - Holding Time 3",True,100,13,0,540,11,True,0,"Tahoma",8.25,,0,0)
+Gui.FormHOLDTIME.lblTime3.BorderStyle(0)
+Gui.FormHOLDTIME.txtTime3.Create(TextBox,"",True,79,20,0,539,28,True,0,"Tahoma",8.25,,1)
+Gui.FormHOLDTIME.txtTime3.NumericOnly(2)
+Gui.FormHOLDTIME.txtTime3.Event(GotFocus,txtTime3_GotFocus)
+Gui.FormHOLDTIME.cmdUpdate.Create(Button)
+Gui.FormHOLDTIME.cmdUpdate.Enabled(True)
+Gui.FormHOLDTIME.cmdUpdate.Visible(True)
+Gui.FormHOLDTIME.cmdUpdate.Zorder(0)
+Gui.FormHOLDTIME.cmdUpdate.Size(162,23)
+Gui.FormHOLDTIME.cmdUpdate.Position(732,26)
+Gui.FormHOLDTIME.cmdUpdate.Caption("Mass Update from Excel File")
+Gui.FormHOLDTIME.cmdUpdate.FontName("Tahoma")
+Gui.FormHOLDTIME.cmdUpdate.FontSize(8.25)
+Gui.FormHOLDTIME.cmdUpdate.Event(Click,cmdUpdate_Click)
+Gui.FormHOLDTIME.GsGridHOLDTIME.Create(GsGridControl)
+Gui.FormHOLDTIME.GsGridHOLDTIME.Enabled(True)
+Gui.FormHOLDTIME.GsGridHOLDTIME.Visible(True)
+Gui.FormHOLDTIME.GsGridHOLDTIME.Zorder(0)
+Gui.FormHOLDTIME.GsGridHOLDTIME.Size(1008,601)
+Gui.FormHOLDTIME.GsGridHOLDTIME.Position(11,53)
+Gui.FormHOLDTIME.GsGridHOLDTIME.Anchor(15)
+Gui.FormHOLDTIME.GsGridHOLDTIME.Event(RowCellClick,GsGridHOLDTIME_RowCellClick)
+Gui.FormHOLDTIME.cmdSave.Create(Button)
+Gui.FormHOLDTIME.cmdSave.Enabled(True)
+Gui.FormHOLDTIME.cmdSave.Visible(True)
+Gui.FormHOLDTIME.cmdSave.Zorder(0)
+Gui.FormHOLDTIME.cmdSave.Size(75,23)
+Gui.FormHOLDTIME.cmdSave.Position(19,662)
+Gui.FormHOLDTIME.cmdSave.Caption("Save")
+Gui.FormHOLDTIME.cmdSave.FontName("Tahoma")
+Gui.FormHOLDTIME.cmdSave.FontSize(8.25)
+Gui.FormHOLDTIME.cmdSave.Anchor(6)
+Gui.FormHOLDTIME.cmdSave.Event(Click,cmdSave_Click)
+Gui.FormHOLDTIME.cmdAdd.Create(Button)
+Gui.FormHOLDTIME.cmdAdd.Enabled(True)
+Gui.FormHOLDTIME.cmdAdd.Visible(True)
+Gui.FormHOLDTIME.cmdAdd.Zorder(0)
+Gui.FormHOLDTIME.cmdAdd.Size(62,23)
+Gui.FormHOLDTIME.cmdAdd.Position(655,26)
+Gui.FormHOLDTIME.cmdAdd.Caption("Add")
+Gui.FormHOLDTIME.cmdAdd.FontName("Tahoma")
+Gui.FormHOLDTIME.cmdAdd.FontSize(8.25)
+Gui.FormHOLDTIME.cmdAdd.Event(Click,cmdAdd_Click)
+Program.Sub.ScreenSU.End
+
+Program.Sub.Preflight.Start
+Program.Sub.Preflight.End
+
+Program.Sub.Main.Start
+F.Intrinsic.Control.SetErrorHandler("Main_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+V.Local.bExcel.Declare(Boolean,False)
+
+Function.Intrinsic.UI.UsePixels ' Allows you to use Pixels instead of Twips throughout
+
+F.Automation.MSExcel.CheckPresence(V.Local.bExcel)
+
+F.Intrinsic.Control.If(V.Local.bExcel)
+	Gui.FormHOLDTIME.cmdUpdate.Visible(True)
+F.Intrinsic.Control.Else
+	Gui.FormHOLDTIME.cmdUpdate.Visible(False)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.CallSub(Get_Data)
+F.Intrinsic.Control.CallSub(Set_Prop)
+
+Gui.FormHOLDTIME..Show
+Gui.FormHOLDTIME..AlwaysOnTop(True)
+Gui.FormHOLDTIME..AlwaysOnTop(False)
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("Main_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_HOLD_TIME.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormHOLDTIME_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.Main.End
+
+Program.Sub.FormHOLDTIME_UnLoad.Start
+F.Intrinsic.Control.SetErrorHandler("FormHOLDTIME_UnLoad_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+F.Intrinsic.Control.End
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("FormHOLDTIME_UnLoad_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.Control.End
+Function.Intrinsic.Control.EndIf
+Program.Sub.FormHOLDTIME_UnLoad.End
+
+Program.Sub.GsGridHOLDTIME_RowCellClick.Start
+F.Intrinsic.Control.SetErrorHandler("GsGridHOLDTIME_RowCellClick_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+F.Intrinsic.Control.SelectCase(V.Args.Column.UCase)
+	F.Intrinsic.Control.Case("DELETE_ROW")
+		F.Data.DataTable.DeleteRow("HOLD",v.Args.RowIndex)
+	
+F.Intrinsic.Control.EndSelect
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("GsGridHOLDTIME_RowCellClick_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_HOLD_TIME.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormHOLDTIME_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.GsGridHOLDTIME_RowCellClick.End
+
+Program.Sub.cmdUpdate_Click.Start
+F.Intrinsic.Control.SetErrorHandler("cmdUpdate_Click_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+V.Local.sFileName.Declare(String,"")
+V.Local.sFileContent.Declare(String,"")
+V.Local.sSheets.Declare(String,"")
+V.Local.sSheetInfo.Declare(String,"")
+V.Local.i.Declare(Long,0)
+V.Local.iC.Declare(Long,0)
+V.Local.iRet.Declare(Long,0)
+V.Local.sData.Declare(String,"")
+V.Local.sFilter.Declare(String,"")
+V.Local.sFields.Declare(String,"Code*!*Description*!*MTR_Time_1*!*MTR_Time_2*!*MTR_Time_3")
+
+F.Intrinsic.String.Split(V.Local.sFields,"*!*",V.Local.sFields)
+
+'when selecting from the browser only show csv files
+F.Intrinsic.UI.ShowOpenFileDialog("","XLSX [.xlsx]|*.xlsx","",V.Local.sFileName)
+'checking to see if a file was chosen
+F.Intrinsic.Control.If(V.Local.sFileName.Length,>,0,"AND",V.Local.sFileName.UCase,<>,"***CANCEL***")
+	Gui.FormHOLDTIME.GsGridHOLDTIME.SuspendLayout
+	F.Automation.MSExcel.ReadSpreadsheet(V.Local.sFileName,V.Local.sFileContent)
+	
+	F.Intrinsic.String.Split(V.Local.sFileContent,"&^&",V.Local.sSheets)
+	
+	F.Intrinsic.String.Split(V.Local.sSheets(0),"$!$",V.Local.sSheetInfo)
+
+	F.Intrinsic.Control.For(V.Local.i,1,V.Local.sSheetInfo.UBound,1)
+		F.Intrinsic.String.Split(V.Local.sSheetInfo(V.Local.i),"*!*",V.Local.sData)
+		F.Intrinsic.String.Build("Code = '{0}'",V.Local.sData(0).Trim,V.Local.sFilter)
+		F.Data.DataView.Create("HOLD","Temp",22,V.Local.sFilter,"")
+		F.Intrinsic.Control.If(V.DataView.HOLD!Temp.RowCount--,<>,-1)
+			F.Intrinsic.Control.For(V.Local.iC,1,V.Local.sFields.UBound,1)
+				F.Intrinsic.Control.If(V.Local.sData(V.Local.iC).Trim,=,"")
+					F.Data.DataTable.SetValue("HOLD",V.DataView.HOLD!Temp(V.DataView.HOLD!Temp.RowCount--).DataTableIndex,V.Local.sFields(V.Local.iC),V.Ambient.DBNULL)
+				F.Intrinsic.Control.Else
+					F.Data.DataTable.SetValue("HOLD",V.DataView.HOLD!Temp(V.DataView.HOLD!Temp.RowCount--).DataTableIndex,V.Local.sFields(V.Local.iC),V.Local.sData(V.Local.iC))
+				F.Intrinsic.Control.EndIf
+			F.Intrinsic.Control.Next(V.Local.iC)
+		F.Intrinsic.Control.Else
+			F.Data.DataTable.AddRow("HOLD","Code",V.Local.sData(0).Trim)
+			F.Intrinsic.Control.For(V.Local.iC,1,V.Local.sFields.UBound,1)
+				F.Intrinsic.Control.If(V.Local.sData(V.Local.iC).Trim,=,"")
+					F.Data.DataTable.SetValue("HOLD",V.DataTable.HOLD.RowCount--,V.Local.sFields(V.Local.iC),V.Ambient.DBNULL)
+				F.Intrinsic.Control.Else
+					F.Data.DataTable.SetValue("HOLD",V.DataTable.HOLD.RowCount--,V.Local.sFields(V.Local.iC),V.Local.sData(V.Local.iC))
+				F.Intrinsic.Control.EndIf
+			F.Intrinsic.Control.Next(V.Local.iC)
+		F.Intrinsic.Control.EndIf
+		F.Data.DataView.Close("HOLD","Temp")
+	F.Intrinsic.Control.Next(V.Local.i)
+	Gui.FormHOLDTIME.GsGridHOLDTIME.ResumeLayout
+	F.Intrinsic.UI.Msgbox("Records have been updated in the Grid.  Would you like to save updated Records?","Attention",4,V.Local.iRet)
+	F.Intrinsic.Control.If(V.Local.iRet,=,6)
+		F.Intrinsic.Control.CallSub(cmdSave_Click)
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.EndIf
+	
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("cmdUpdate_Click_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_HOLD_TIME.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormHOLDTIME_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.cmdUpdate_Click.End
+
+Program.Sub.cmdSave_Click.Start
+F.Intrinsic.Control.SetErrorHandler("cmdSave_Click_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+F.ODBC.Connection!con.OpenCompanyConnection
+F.Data.DataTable.SaveToDB("HOLD",con,"GCG_6936_HOLD_TIME","Code",7,"Code@!@Code*!*Description@!@Description*!*MTR_Time_1@!@MTR_Time_1*!*MTR_Time_2@!@MTR_Time_2*!*MTR_Time_3@!@MTR_Time_3")
+F.ODBC.Connection!Con.Close
+
+F.Data.DataTable.AcceptChanges("HOLD")
+
+F.Intrinsic.UI.Msgbox("Records have been saved.........")
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("cmdSave_Click_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_HOLD_TIME.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormHOLDTIME_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.cmdSave_Click.End
+
+Program.Sub.txtCODE_GotFocus.Start
+F.Intrinsic.Control.SetErrorHandler("txtCODE_GotFocus_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+Gui.FormHOLDTIME.txtCODE.SelectAll
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("txtCODE_GotFocus_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_HOLD_TIME.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormHOLDTIME_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.txtCODE_GotFocus.End
+
+Program.Sub.txtTime1_GotFocus.Start
+F.Intrinsic.Control.SetErrorHandler("txtTime1_GotFocus_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+Gui.FormHOLDTIME.txtTime1.SelectAll
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("txtTime1_GotFocus_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_HOLD_TIME.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormHOLDTIME_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.txtTime1_GotFocus.End
+
+Program.Sub.txtTime2_GotFocus.Start
+F.Intrinsic.Control.SetErrorHandler("txtTime2_GotFocus_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+Gui.FormHOLDTIME.txtTime2.SelectAll
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("txtTime2_GotFocus_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_HOLD_TIME.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormHOLDTIME_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.txtTime2_GotFocus.End
+
+Program.Sub.txtTime3_GotFocus.Start
+F.Intrinsic.Control.SetErrorHandler("txtTime3_GotFocus_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+Gui.FormHOLDTIME.txtTime3.SelectAll
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("txtTime3_GotFocus_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_HOLD_TIME.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormHOLDTIME_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.txtTime3_GotFocus.End
+
+Program.Sub.txtN_Seat_GotFocus.Start
+F.Intrinsic.Control.SetErrorHandler("txtN_Seat_GotFocus_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+Gui.FormHOLDTIME.txtN_Seat.SelectAll
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("txtN_Seat_GotFocus_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_HOLD_TIME.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormHOLDTIME_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.txtN_Seat_GotFocus.End
+
+Program.Sub.txtA_Seat_GotFocus.Start
+F.Intrinsic.Control.SetErrorHandler("txtA_Seat_GotFocus_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+Gui.FormHOLDTIME.txtA_Seat.SelectAll
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("txtA_Seat_GotFocus_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_HOLD_TIME.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormHOLDTIME_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.txtA_Seat_GotFocus.End
+
+Program.Sub.cmdAdd_Click.Start
+F.Intrinsic.Control.SetErrorHandler("cmdAdd_Click_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+V.Local.sFilter.Declare(String,"")
+V.Local.sValue.Declare(String,"")
+V.Local.sFields.Declare(String,"Description*!*MTR_Time_1*!*MTR_Time_2*!*MTR_Time_3")
+V.Local.sControl.Declare(String,"txtDesc*!*txtTime1*!*txtTime2*!*txtTime3")
+V.Local.iC.Declare(Long,0)
+
+F.Intrinsic.String.Split(V.Local.sFields,"*!*",V.Local.sFields)
+F.Intrinsic.String.Split(V.Local.sControl,"*!*",V.Local.sControl)
+
+V.Local.sValue.Set(V.Screen.FormHOLDTIME!txtCODE.Text)
+
+F.Intrinsic.Control.If(V.Local.sValue.Trim,<>,"")
+	F.Intrinsic.String.Build("Code = '{0}'",V.Local.sValue.Trim,V.Local.sFilter)
+	F.Data.DataView.Create("HOLD","Temp",22,V.Local.sFilter,"")
+	F.Intrinsic.Control.If(V.DataView.HOLD!Temp.RowCount--,<>,-1)
+		F.Intrinsic.Control.For(V.Local.iC,0,V.Local.sFields.UBound,1)
+			V.Local.sValue.Set(V.Screen.FormHOLDTIME![V.Local.sControl(V.Local.iC)].Text)
+			F.Intrinsic.Control.If(V.Local.sValue.Trim,=,"")
+				F.Data.DataTable.SetValue("HOLD",V.DataView.HOLD!Temp(V.DataView.HOLD!Temp.RowCount--).DataTableIndex,V.Local.sFields(V.Local.iC),V.Ambient.DBNULL)
+			F.Intrinsic.Control.Else
+				F.Data.DataTable.SetValue("HOLD",V.DataView.HOLD!Temp(V.DataView.HOLD!Temp.RowCount--).DataTableIndex,V.Local.sFields(V.Local.iC),V.Local.sValue.Trim)
+			F.Intrinsic.Control.EndIf
+		F.Intrinsic.Control.Next(V.Local.iC)
+	F.Intrinsic.Control.Else
+		F.Data.DataTable.AddRow("HOLD","Code",V.Local.sValue.Trim)
+		F.Intrinsic.Control.For(V.Local.iC,0,V.Local.sFields.UBound,1)
+			V.Local.sValue.Set(V.Screen.FormHOLDTIME![V.Local.sControl(V.Local.iC)].Text)
+			F.Intrinsic.Control.If(V.Local.sValue.Trim,=,"")
+				F.Data.DataTable.SetValue("HOLD",V.DataTable.HOLD.RowCount--,V.Local.sFields(V.Local.iC),V.Ambient.DBNULL)
+			F.Intrinsic.Control.Else
+				F.Data.DataTable.SetValue("HOLD",V.DataTable.HOLD.RowCount--,V.Local.sFields(V.Local.iC),V.Local.sValue.Trim)
+			F.Intrinsic.Control.EndIf
+		F.Intrinsic.Control.Next(V.Local.iC)
+	F.Intrinsic.Control.EndIf
+	F.Data.DataView.Close("HOLD","Temp")
+F.Intrinsic.Control.EndIf
+
+Gui.FormHOLDTIME.txtCODE.Text(V.Ambient.DBNULL)
+Gui.FormHOLDTIME.txtDesc.Text(V.Ambient.DBNULL)
+Gui.FormHOLDTIME.txtTime1.Text(V.Ambient.DBNULL)
+Gui.FormHOLDTIME.txtTime2.Text(V.Ambient.DBNULL)
+Gui.FormHOLDTIME.txtTime3.Text(V.Ambient.DBNULL)
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("cmdAdd_Click_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_HOLD_TIME.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormHOLDTIME_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.cmdAdd_Click.End
+
+Program.Sub.txtDesc_GotFocus.Start
+F.Intrinsic.Control.SetErrorHandler("txtDesc_GotFocus_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+Gui.FormHOLDTIME.txtDesc.SelectAll
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("txtDesc_GotFocus_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_HOLD_TIME.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormHOLDTIME_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.txtDesc_GotFocus.End
+
+Program.Sub.Get_Data.Start
+F.Intrinsic.Control.SetErrorHandler("Get_Data_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+F.ODBC.Connection!Con.OpenCompanyConnection
+
+F.Data.DataTable.CreateFromSQL("HOLD",con,"Select Code, Description, MTR_Time_1, MTR_Time_2, MTR_Time_3 From GCG_6936_HOLD_TIME Order by Code",True)
+
+F.ODBC.Connection!Con.Close
+
+F.Data.DataTable.AddColumn("HOLD","DELETE_ROW",STRING)
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("Get_Data_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_HOLD_TIME.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormHOLDTIME_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.Get_Data.End
+
+Program.Sub.Set_Prop.Start
+F.Intrinsic.Control.SetErrorHandler("Set_Prop_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+Gui.FormHOLDTIME.GsGridHOLDTIME.AddGridviewFromDatatable("GHOLD","HOLD")
+
+Gui.FormHOLDTIME.GsGridHOLDTIME.SetColumnProperty("GHOLD","Code","Caption","Code")
+Gui.FormHOLDTIME.GsGridHOLDTIME.SetColumnProperty("GHOLD","Code","AllowEdit",False)
+Gui.FormHOLDTIME.GsGridHOLDTIME.SetColumnProperty("GHOLD","Code","ReadOnly",True)
+
+Gui.FormHOLDTIME.GsGridHOLDTIME.SetColumnProperty("GHOLD","Description","Caption","Description")
+Gui.FormHOLDTIME.GsGridHOLDTIME.SetColumnProperty("GHOLD","Description","AllowEdit",True)
+Gui.FormHOLDTIME.GsGridHOLDTIME.SetColumnProperty("GHOLD","Description","ReadOnly",False)
+Gui.FormHOLDTIME.GsGridHOLDTIME.SetColumnProperty("GHOLD","Description","MaxLength",30)
+
+Gui.FormHOLDTIME.GsGridHOLDTIME.SetColumnProperty("GHOLD","MTR_Time_1","Caption","MTR - Holding Time 1")
+Gui.FormHOLDTIME.GsGridHOLDTIME.SetColumnProperty("GHOLD","MTR_Time_1","AllowEdit",True)
+Gui.FormHOLDTIME.GsGridHOLDTIME.SetColumnProperty("GHOLD","MTR_Time_1","ReadOnly",False)
+
+Gui.FormHOLDTIME.GsGridHOLDTIME.SetColumnProperty("GHOLD","MTR_Time_2","Caption","MTR - Holding Time 2")
+Gui.FormHOLDTIME.GsGridHOLDTIME.SetColumnProperty("GHOLD","MTR_Time_2","AllowEdit",True)
+Gui.FormHOLDTIME.GsGridHOLDTIME.SetColumnProperty("GHOLD","MTR_Time_2","ReadOnly",False)
+
+Gui.FormHOLDTIME.GsGridHOLDTIME.SetColumnProperty("GHOLD","MTR_Time_3","Caption","MTR - Holding Time 3")
+Gui.FormHOLDTIME.GsGridHOLDTIME.SetColumnProperty("GHOLD","MTR_Time_3","AllowEdit",True)
+Gui.FormHOLDTIME.GsGridHOLDTIME.SetColumnProperty("GHOLD","MTR_Time_3","ReadOnly",False)
+
+Gui.FormHOLDTIME.GsGridHOLDTIME.SetColumnProperty("GHOLD","Delete_Row","Caption"," ")
+Gui.FormHOLDTIME.GsGridHOLDTIME.ColumnEdit("GHOLD","Delete_Row","EditorButton","Delete")
+Gui.FormHOLDTIME.GsGridHOLDTIME.SetColumnProperty("GHOLD","Delete_Row","AllowEdit",False)
+Gui.FormHOLDTIME.GsGridHOLDTIME.SetColumnProperty("GHOLD","Delete_Row","ReadOnly",True)
+
+Gui.FormHOLDTIME.GsGridHOLDTIME.MainView("GHOLD")
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("Set_Prop_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_HOLD_TIME.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormHOLDTIME_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.Set_Prop.End
+
+Program.Sub.Comments.Start
+${$5$}$20.1.8615.24403$}$1
+${$6$}$rking$}$20230927113853978$}$QNdZLVy4bWuiWa9jh1ZTiKHvMPldSPXeg5tnYWgTB0e3Z2+qEcLQg9C1rezdJ8z1WVj3hXc1mbA=
+Program.Sub.Comments.End
