@@ -1,0 +1,533 @@
+﻿Program.Sub.ScreenSU.Start
+Gui.FormMATLGROUP..Create(BaseForm)
+Gui.FormMATLGROUP..Caption("Material Group Import/Update")
+Gui.FormMATLGROUP..Size(1024,720)
+Gui.FormMATLGROUP..MinX(0)
+Gui.FormMATLGROUP..MinY(0)
+Gui.FormMATLGROUP..Position(0,0)
+Gui.FormMATLGROUP..AlwaysOnTop(False)
+Gui.FormMATLGROUP..FontName("Tahoma")
+Gui.FormMATLGROUP..FontSize(8.25)
+Gui.FormMATLGROUP..ControlBox(True)
+Gui.FormMATLGROUP..MaxButton(True)
+Gui.FormMATLGROUP..MinButton(True)
+Gui.FormMATLGROUP..MousePointer(0)
+Gui.FormMATLGROUP..Moveable(True)
+Gui.FormMATLGROUP..Sizeable(True)
+Gui.FormMATLGROUP..ShowInTaskBar(True)
+Gui.FormMATLGROUP..TitleBar(True)
+Gui.FormMATLGROUP..Event(UnLoad,FormMATLGROUP_UnLoad)
+Gui.FormMATLGROUP.lblGroup.Create(Label,"Group",True,29,13,0,27,11,True,0,"Tahoma",8.25,,0,0)
+Gui.FormMATLGROUP.lblGroup.BorderStyle(0)
+Gui.FormMATLGROUP.txtMATL.Create(TextBox,"",True,156,20,0,26,28,True,0,"Tahoma",8.25,,1)
+Gui.FormMATLGROUP.txtMATL.Mask(">")
+Gui.FormMATLGROUP.txtMATL.MaxLength(20)
+Gui.FormMATLGROUP.txtMATL.Event(GotFocus,txtMATL_GotFocus)
+Gui.FormMATLGROUP.lblDesc.Create(Label,"Description",True,53,13,0,191,11,True,0,"Tahoma",8.25,,0,0)
+Gui.FormMATLGROUP.lblDesc.BorderStyle(0)
+Gui.FormMATLGROUP.txtDesc.Create(TextBox,"",True,156,20,0,190,28,True,0,"Tahoma",8.25,,1)
+Gui.FormMATLGROUP.txtDesc.MaxLength(30)
+Gui.FormMATLGROUP.txtDesc.Event(GotFocus,txtDesc_GotFocus)
+Gui.FormMATLGROUP.lblH_Shell.Create(Label,"Hydro Shell",True,54,13,0,353,11,True,0,"Tahoma",8.25,,0,0)
+Gui.FormMATLGROUP.lblH_Shell.BorderStyle(0)
+Gui.FormMATLGROUP.txtH_Shell.Create(TextBox,"",True,79,20,0,352,28,True,0,"Tahoma",8.25,,1)
+Gui.FormMATLGROUP.txtH_Shell.NumericOnly(2)
+Gui.FormMATLGROUP.txtH_Shell.Event(GotFocus,txtH_Shell_GotFocus)
+Gui.FormMATLGROUP.lblN_Shell.Create(Label,"Nitrogen Shell",True,66,13,0,438,11,True,0,"Tahoma",8.25,,0,0)
+Gui.FormMATLGROUP.lblN_Shell.BorderStyle(0)
+Gui.FormMATLGROUP.txtN_Shell.Create(TextBox,"",True,79,20,0,437,28,True,0,"Tahoma",8.25,,1)
+Gui.FormMATLGROUP.txtN_Shell.NumericOnly(2)
+Gui.FormMATLGROUP.txtN_Shell.Event(GotFocus,txtN_Shell_GotFocus)
+Gui.FormMATLGROUP.lblH_Sest.Create(Label,"Hydro Seat",True,54,13,0,524,11,True,0,"Tahoma",8.25,,0,0)
+Gui.FormMATLGROUP.lblH_Sest.BorderStyle(0)
+Gui.FormMATLGROUP.txtH_Seat.Create(TextBox,"",True,79,20,0,523,28,True,0,"Tahoma",8.25,,1)
+Gui.FormMATLGROUP.txtH_Seat.NumericOnly(2)
+Gui.FormMATLGROUP.txtH_Seat.Event(GotFocus,txtH_Seat_GotFocus)
+Gui.FormMATLGROUP.lblN_Seat.Create(Label,"Nitrogen Seat",True,66,13,0,609,11,True,0,"Tahoma",8.25,,0,0)
+Gui.FormMATLGROUP.lblN_Seat.BorderStyle(0)
+Gui.FormMATLGROUP.txtN_Seat.Create(TextBox,"",True,79,20,0,608,28,True,0,"Tahoma",8.25,,1)
+Gui.FormMATLGROUP.txtN_Seat.NumericOnly(2)
+Gui.FormMATLGROUP.txtN_Seat.Event(GotFocus,txtN_Seat_GotFocus)
+Gui.FormMATLGROUP.lblA_Seat.Create(Label,"Air Seat",True,38,13,0,695,11,True,0,"Tahoma",8.25,,0,0)
+Gui.FormMATLGROUP.lblA_Seat.BorderStyle(0)
+Gui.FormMATLGROUP.txtA_Seat.Create(TextBox,"",True,79,20,0,694,28,True,0,"Tahoma",8.25,,1)
+Gui.FormMATLGROUP.txtA_Seat.NumericOnly(2)
+Gui.FormMATLGROUP.txtA_Seat.Event(GotFocus,txtA_Seat_GotFocus)
+Gui.FormMATLGROUP.cmdUpdate.Create(Button)
+Gui.FormMATLGROUP.cmdUpdate.Enabled(True)
+Gui.FormMATLGROUP.cmdUpdate.Visible(True)
+Gui.FormMATLGROUP.cmdUpdate.Zorder(0)
+Gui.FormMATLGROUP.cmdUpdate.Size(162,23)
+Gui.FormMATLGROUP.cmdUpdate.Position(853,26)
+Gui.FormMATLGROUP.cmdUpdate.Caption("Mass Update from Excel File")
+Gui.FormMATLGROUP.cmdUpdate.FontName("Tahoma")
+Gui.FormMATLGROUP.cmdUpdate.FontSize(8.25)
+Gui.FormMATLGROUP.cmdUpdate.Event(Click,cmdUpdate_Click)
+Gui.FormMATLGROUP.GsGridMATL.Create(GsGridControl)
+Gui.FormMATLGROUP.GsGridMATL.Enabled(True)
+Gui.FormMATLGROUP.GsGridMATL.Visible(True)
+Gui.FormMATLGROUP.GsGridMATL.Zorder(0)
+Gui.FormMATLGROUP.GsGridMATL.Size(1008,601)
+Gui.FormMATLGROUP.GsGridMATL.Position(11,53)
+Gui.FormMATLGROUP.GsGridMATL.Anchor(15)
+Gui.FormMATLGROUP.GsGridMATL.Event(RowCellClick,GsGridMATL_RowCellClick)
+Gui.FormMATLGROUP.cmdSave.Create(Button)
+Gui.FormMATLGROUP.cmdSave.Enabled(True)
+Gui.FormMATLGROUP.cmdSave.Visible(True)
+Gui.FormMATLGROUP.cmdSave.Zorder(0)
+Gui.FormMATLGROUP.cmdSave.Size(75,23)
+Gui.FormMATLGROUP.cmdSave.Position(19,662)
+Gui.FormMATLGROUP.cmdSave.Caption("Save")
+Gui.FormMATLGROUP.cmdSave.FontName("Tahoma")
+Gui.FormMATLGROUP.cmdSave.FontSize(8.25)
+Gui.FormMATLGROUP.cmdSave.Anchor(6)
+Gui.FormMATLGROUP.cmdSave.Event(Click,cmdSave_Click)
+Gui.FormMATLGROUP.cmdAdd.Create(Button)
+Gui.FormMATLGROUP.cmdAdd.Enabled(True)
+Gui.FormMATLGROUP.cmdAdd.Visible(True)
+Gui.FormMATLGROUP.cmdAdd.Zorder(0)
+Gui.FormMATLGROUP.cmdAdd.Size(62,23)
+Gui.FormMATLGROUP.cmdAdd.Position(776,26)
+Gui.FormMATLGROUP.cmdAdd.Caption("Add")
+Gui.FormMATLGROUP.cmdAdd.FontName("Tahoma")
+Gui.FormMATLGROUP.cmdAdd.FontSize(8.25)
+Gui.FormMATLGROUP.cmdAdd.Event(Click,cmdAdd_Click)
+Program.Sub.ScreenSU.End
+
+Program.Sub.Preflight.Start
+Program.Sub.Preflight.End
+
+Program.Sub.Main.Start
+F.Intrinsic.Control.SetErrorHandler("Main_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+V.Local.bExcel.Declare(Boolean,False)
+
+Function.Intrinsic.UI.UsePixels ' Allows you to use Pixels instead of Twips throughout
+
+F.Automation.MSExcel.CheckPresence(V.Local.bExcel)
+
+F.Intrinsic.Control.If(V.Local.bExcel)
+	Gui.FormMATLGROUP.cmdUpdate.Visible(True)
+F.Intrinsic.Control.Else
+	Gui.FormMATLGROUP.cmdUpdate.Visible(False)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.CallSub(Get_Data)
+F.Intrinsic.Control.CallSub(Set_Prop)
+
+Gui.FormMATLGROUP..Show
+Gui.FormMATLGROUP..AlwaysOnTop(True)
+Gui.FormMATLGROUP..AlwaysOnTop(False)
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("Main_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_MATL_GROUP.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormMATLGROUP_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.Main.End
+
+Program.Sub.FormMATLGROUP_UnLoad.Start
+F.Intrinsic.Control.SetErrorHandler("FormMATLGROUP_UnLoad_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+F.Intrinsic.Control.End
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("FormMATLGROUP_UnLoad_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.Control.End
+Function.Intrinsic.Control.EndIf
+Program.Sub.FormMATLGROUP_UnLoad.End
+
+Program.Sub.GsGridMATL_RowCellClick.Start
+F.Intrinsic.Control.SetErrorHandler("GsGridMATL_RowCellClick_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+F.Intrinsic.Control.SelectCase(V.Args.Column.UCase)
+	F.Intrinsic.Control.Case("DELETE_ROW")
+		F.Data.DataTable.DeleteRow("MATL",v.Args.RowIndex)
+	
+F.Intrinsic.Control.EndSelect
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("GsGridMATL_RowCellClick_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_MATL_GROUP.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormMATLGROUP_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.GsGridMATL_RowCellClick.End
+
+Program.Sub.cmdUpdate_Click.Start
+F.Intrinsic.Control.SetErrorHandler("cmdUpdate_Click_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+V.Local.sFileName.Declare(String,"")
+V.Local.sFileContent.Declare(String,"")
+V.Local.sSheets.Declare(String,"")
+V.Local.sSheetInfo.Declare(String,"")
+V.Local.i.Declare(Long,0)
+V.Local.iC.Declare(Long,0)
+V.Local.iRet.Declare(Long,0)
+V.Local.sData.Declare(String,"")
+V.Local.sFilter.Declare(String,"")
+V.Local.sFields.Declare(String,"Mat_Group*!*Description*!*Hydro_Shell*!*Nitrogen_Shell*!*Hydro_Seat*!*Nitrogen_Seat*!*Air_Seat")
+
+F.Intrinsic.String.Split(V.Local.sFields,"*!*",V.Local.sFields)
+
+'when selecting from the browser only show csv files
+F.Intrinsic.UI.ShowOpenFileDialog("","XLSX [.xlsx]|*.xlsx","",V.Local.sFileName)
+'checking to see if a file was chosen
+F.Intrinsic.Control.If(V.Local.sFileName.Length,>,0,"AND",V.Local.sFileName.UCase,<>,"***CANCEL***")
+	Gui.FormMATLGROUP.GsGridMATL.SuspendLayout
+	F.Automation.MSExcel.ReadSpreadsheet(V.Local.sFileName,V.Local.sFileContent)
+	
+	F.Intrinsic.String.Split(V.Local.sFileContent,"&^&",V.Local.sSheets)
+	
+	F.Intrinsic.String.Split(V.Local.sSheets(0),"$!$",V.Local.sSheetInfo)
+
+	F.Intrinsic.Control.For(V.Local.i,1,V.Local.sSheetInfo.UBound,1)
+		F.Intrinsic.String.Split(V.Local.sSheetInfo(V.Local.i),"*!*",V.Local.sData)
+		F.Intrinsic.String.Build("Mat_Group = '{0}'",V.Local.sData(0).Trim,V.Local.sFilter)
+		F.Data.DataView.Create("MATL","Temp",22,V.Local.sFilter,"")
+		F.Intrinsic.Control.If(V.DataView.MATL!Temp.RowCount--,<>,-1)
+			F.Intrinsic.Control.For(V.Local.iC,1,V.Local.sFields.UBound,1)
+				F.Intrinsic.Control.If(V.Local.sData(V.Local.iC).Trim,=,"")
+					F.Data.DataTable.SetValue("MATL",V.DataView.MATL!Temp(V.DataView.MATL!Temp.RowCount--).DataTableIndex,V.Local.sFields(V.Local.iC),V.Ambient.DBNULL)
+				F.Intrinsic.Control.Else
+					F.Data.DataTable.SetValue("MATL",V.DataView.MATL!Temp(V.DataView.MATL!Temp.RowCount--).DataTableIndex,V.Local.sFields(V.Local.iC),V.Local.sData(V.Local.iC))
+				F.Intrinsic.Control.EndIf
+			F.Intrinsic.Control.Next(V.Local.iC)
+		F.Intrinsic.Control.Else
+			F.Data.DataTable.AddRow("MATL","Mat_Group",V.Local.sData(0).Trim)
+			F.Intrinsic.Control.For(V.Local.iC,1,V.Local.sFields.UBound,1)
+				F.Intrinsic.Control.If(V.Local.sData(V.Local.iC).Trim,=,"")
+					F.Data.DataTable.SetValue("MATL",V.DataTable.MATL.RowCount--,V.Local.sFields(V.Local.iC),V.Ambient.DBNULL)
+				F.Intrinsic.Control.Else
+					F.Data.DataTable.SetValue("MATL",V.DataTable.MATL.RowCount--,V.Local.sFields(V.Local.iC),V.Local.sData(V.Local.iC))
+				F.Intrinsic.Control.EndIf
+			F.Intrinsic.Control.Next(V.Local.iC)
+		F.Intrinsic.Control.EndIf
+		F.Data.DataView.Close("MATL","Temp")
+	F.Intrinsic.Control.Next(V.Local.i)
+	Gui.FormMATLGROUP.GsGridMATL.ResumeLayout
+	F.Intrinsic.UI.Msgbox("Records have been updated in the Grid.  Would you like to save updated Records?","Attention",4,V.Local.iRet)
+	F.Intrinsic.Control.If(V.Local.iRet,=,6)
+		F.Intrinsic.Control.CallSub(cmdSave_Click)
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.EndIf
+	
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("cmdUpdate_Click_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_MATL_GROUP.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormMATLGROUP_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.cmdUpdate_Click.End
+
+Program.Sub.cmdSave_Click.Start
+F.Intrinsic.Control.SetErrorHandler("cmdSave_Click_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+F.ODBC.Connection!con.OpenCompanyConnection
+F.Data.DataTable.SaveToDB("MATL",con,"GCG_6936_MAT_GROUP","Mat_Group",7,"Mat_Group@!@Mat_Group*!*Description@!@Description*!*Hydro_Shell@!@Hydro_Shell*!*Nitrogen_Shell@!@Nitrogen_Shell*!*Hydro_Seat@!@Hydro_Seat*!*Nitrogen_Seat@!@Nitrogen_Seat*!*Air_Seat@!@Air_Seat")
+F.ODBC.Connection!Con.Close
+
+F.Data.DataTable.AcceptChanges("MATL")
+
+F.Intrinsic.UI.Msgbox("Records have been saved.........")
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("cmdSave_Click_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_MATL_GROUP.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormMATLGROUP_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.cmdSave_Click.End
+
+Program.Sub.txtMATL_GotFocus.Start
+F.Intrinsic.Control.SetErrorHandler("txtMATL_GotFocus_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+Gui.FormMATLGROUP.txtMATL.SelectAll
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("txtMATL_GotFocus_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_MATL_GROUP.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormMATLGROUP_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.txtMATL_GotFocus.End
+
+Program.Sub.txtH_Shell_GotFocus.Start
+F.Intrinsic.Control.SetErrorHandler("txtH_Shell_GotFocus_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+Gui.FormMATLGROUP.txtH_Shell.SelectAll
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("txtH_Shell_GotFocus_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_MATL_GROUP.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormMATLGROUP_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.txtH_Shell_GotFocus.End
+
+Program.Sub.txtN_Shell_GotFocus.Start
+F.Intrinsic.Control.SetErrorHandler("txtN_Shell_GotFocus_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+Gui.FormMATLGROUP.txtN_Shell.SelectAll
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("txtN_Shell_GotFocus_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_MATL_GROUP.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormMATLGROUP_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.txtN_Shell_GotFocus.End
+
+Program.Sub.txtH_Seat_GotFocus.Start
+F.Intrinsic.Control.SetErrorHandler("txtH_Seat_GotFocus_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+Gui.FormMATLGROUP.txtH_Seat.SelectAll
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("txtH_Seat_GotFocus_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_MATL_GROUP.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormMATLGROUP_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.txtH_Seat_GotFocus.End
+
+Program.Sub.txtN_Seat_GotFocus.Start
+F.Intrinsic.Control.SetErrorHandler("txtN_Seat_GotFocus_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+Gui.FormMATLGROUP.txtN_Seat.SelectAll
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("txtN_Seat_GotFocus_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_MATL_GROUP.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormMATLGROUP_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.txtN_Seat_GotFocus.End
+
+Program.Sub.txtA_Seat_GotFocus.Start
+F.Intrinsic.Control.SetErrorHandler("txtA_Seat_GotFocus_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+Gui.FormMATLGROUP.txtA_Seat.SelectAll
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("txtA_Seat_GotFocus_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_MATL_GROUP.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormMATLGROUP_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.txtA_Seat_GotFocus.End
+
+Program.Sub.cmdAdd_Click.Start
+F.Intrinsic.Control.SetErrorHandler("cmdAdd_Click_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+V.Local.sFilter.Declare(String,"")
+V.Local.sValue.Declare(String,"")
+V.Local.sFields.Declare(String,"Description*!*Hydro_Shell*!*Nitrogen_Shell*!*Hydro_Seat*!*Nitrogen_Seat*!*Air_Seat")
+V.Local.sControl.Declare(String,"txtDesc*!*txtH_Shell*!*txtN_Shell*!*txtH_Seat*!*txtN_Seat*!*txtA_Seat")
+V.Local.iC.Declare(Long,0)
+
+F.Intrinsic.String.Split(V.Local.sFields,"*!*",V.Local.sFields)
+F.Intrinsic.String.Split(V.Local.sControl,"*!*",V.Local.sControl)
+
+V.Local.sValue.Set(V.Screen.FormMATLGROUP!txtMATL.Text)
+
+F.Intrinsic.Control.If(V.Local.sValue.Trim,<>,"")
+	F.Intrinsic.String.Build("Mat_Group = '{0}'",V.Local.sValue.Trim,V.Local.sFilter)
+	F.Data.DataView.Create("MATL","Temp",22,V.Local.sFilter,"")
+	F.Intrinsic.Control.If(V.DataView.MATL!Temp.RowCount--,<>,-1)
+		F.Intrinsic.Control.For(V.Local.iC,0,V.Local.sFields.UBound,1)
+			V.Local.sValue.Set(V.Screen.FormMATLGROUP![V.Local.sControl(V.Local.iC)].Text)
+			F.Intrinsic.Control.If(V.Local.sValue.Trim,=,"")
+				F.Data.DataTable.SetValue("MATL",V.DataView.MATL!Temp(V.DataView.MATL!Temp.RowCount--).DataTableIndex,V.Local.sFields(V.Local.iC),V.Ambient.DBNULL)
+			F.Intrinsic.Control.Else
+				F.Data.DataTable.SetValue("MATL",V.DataView.MATL!Temp(V.DataView.MATL!Temp.RowCount--).DataTableIndex,V.Local.sFields(V.Local.iC),V.Local.sValue.Trim)
+			F.Intrinsic.Control.EndIf
+		F.Intrinsic.Control.Next(V.Local.iC)
+	F.Intrinsic.Control.Else
+		F.Data.DataTable.AddRow("MATL","Mat_Group",V.Local.sValue.Trim)
+		F.Intrinsic.Control.For(V.Local.iC,0,V.Local.sFields.UBound,1)
+			V.Local.sValue.Set(V.Screen.FormMATLGROUP![V.Local.sControl(V.Local.iC)].Text)
+			F.Intrinsic.Control.If(V.Local.sValue.Trim,=,"")
+				F.Data.DataTable.SetValue("MATL",V.DataTable.MATL.RowCount--,V.Local.sFields(V.Local.iC),V.Ambient.DBNULL)
+			F.Intrinsic.Control.Else
+				F.Data.DataTable.SetValue("MATL",V.DataTable.MATL.RowCount--,V.Local.sFields(V.Local.iC),V.Local.sValue.Trim)
+			F.Intrinsic.Control.EndIf
+		F.Intrinsic.Control.Next(V.Local.iC)
+	F.Intrinsic.Control.EndIf
+	F.Data.DataView.Close("MATL","Temp")
+F.Intrinsic.Control.EndIf
+
+Gui.FormMATLGROUP.txtMATL.Text(V.Ambient.DBNULL)
+Gui.FormMATLGROUP.txtDesc.Text(V.Ambient.DBNULL)
+Gui.FormMATLGROUP.txtH_Seat.Text(V.Ambient.DBNULL)
+Gui.FormMATLGROUP.txtA_Seat.Text(V.Ambient.DBNULL)
+Gui.FormMATLGROUP.txtH_Shell.Text(V.Ambient.DBNULL)
+Gui.FormMATLGROUP.txtN_Seat.Text(V.Ambient.DBNULL)
+Gui.FormMATLGROUP.txtN_Shell.Text(V.Ambient.DBNULL)
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("cmdAdd_Click_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_MATL_GROUP.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormMATLGROUP_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.cmdAdd_Click.End
+
+Program.Sub.txtDesc_GotFocus.Start
+F.Intrinsic.Control.SetErrorHandler("txtDesc_GotFocus_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+Gui.FormMATLGROUP.txtDesc.SelectAll
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("txtDesc_GotFocus_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_MATL_GROUP.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormMATLGROUP_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.txtDesc_GotFocus.End
+
+Program.Sub.Get_Data.Start
+F.Intrinsic.Control.SetErrorHandler("Get_Data_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+F.ODBC.Connection!Con.OpenCompanyConnection
+
+F.Data.DataTable.CreateFromSQL("MATL",con,"Select Mat_Group, Description, Hydro_Shell, Nitrogen_Shell, Hydro_Seat, Nitrogen_Seat, Air_Seat From GCG_6936_MAT_GROUP Order by Mat_Group",True)
+
+F.ODBC.Connection!Con.Close
+
+F.Data.DataTable.AddColumn("MATL","DELETE_ROW",STRING)
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("Get_Data_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_MATL_GROUP.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormMATLGROUP_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.Get_Data.End
+
+Program.Sub.Set_Prop.Start
+F.Intrinsic.Control.SetErrorHandler("Set_Prop_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+Gui.FormMATLGROUP.GsGridMATL.AddGridviewFromDatatable("GMATL","MATL")
+
+Gui.FormMATLGROUP.GsGridMATL.SetColumnProperty("GMATL","Mat_Group","Caption","Group")
+Gui.FormMATLGROUP.GsGridMATL.SetColumnProperty("GMATL","Mat_Group","AllowEdit",False)
+Gui.FormMATLGROUP.GsGridMATL.SetColumnProperty("GMATL","Mat_Group","ReadOnly",True)
+
+Gui.FormMATLGROUP.GsGridMATL.SetColumnProperty("GMATL","Description","Caption","Description")
+Gui.FormMATLGROUP.GsGridMATL.SetColumnProperty("GMATL","Description","AllowEdit",True)
+Gui.FormMATLGROUP.GsGridMATL.SetColumnProperty("GMATL","Description","ReadOnly",False)
+Gui.FormMATLGROUP.GsGridMATL.SetColumnProperty("GMATL","Description","MaxLength",50)
+
+Gui.FormMATLGROUP.GsGridMATL.SetColumnProperty("GMATL","Hydro_Shell","Caption","Hydro Shell")
+Gui.FormMATLGROUP.GsGridMATL.SetColumnProperty("GMATL","Hydro_Shell","AllowEdit",True)
+Gui.FormMATLGROUP.GsGridMATL.SetColumnProperty("GMATL","Hydro_Shell","ReadOnly",False)
+
+Gui.FormMATLGROUP.GsGridMATL.SetColumnProperty("GMATL","Nitrogen_Shell","Caption","Nitrogen Shell")
+Gui.FormMATLGROUP.GsGridMATL.SetColumnProperty("GMATL","Nitrogen_Shell","AllowEdit",True)
+Gui.FormMATLGROUP.GsGridMATL.SetColumnProperty("GMATL","Nitrogen_Shell","ReadOnly",False)
+
+Gui.FormMATLGROUP.GsGridMATL.SetColumnProperty("GMATL","Hydro_Seat","Caption","Hydro Seat")
+Gui.FormMATLGROUP.GsGridMATL.SetColumnProperty("GMATL","Hydro_Seat","AllowEdit",True)
+Gui.FormMATLGROUP.GsGridMATL.SetColumnProperty("GMATL","Hydro_Seat","ReadOnly",False)
+
+Gui.FormMATLGROUP.GsGridMATL.SetColumnProperty("GMATL","Nitrogen_Seat","Caption","Nitrogen Seat")
+Gui.FormMATLGROUP.GsGridMATL.SetColumnProperty("GMATL","Nitrogen_Seat","AllowEdit",True)
+Gui.FormMATLGROUP.GsGridMATL.SetColumnProperty("GMATL","Nitrogen_Seat","ReadOnly",False)
+
+Gui.FormMATLGROUP.GsGridMATL.SetColumnProperty("GMATL","Air_Seat","Caption","Air Seat")
+Gui.FormMATLGROUP.GsGridMATL.SetColumnProperty("GMATL","Air_Seat","AllowEdit",True)
+Gui.FormMATLGROUP.GsGridMATL.SetColumnProperty("GMATL","Air_Seat","ReadOnly",False)
+
+Gui.FormMATLGROUP.GsGridMATL.SetColumnProperty("GMATL","Delete_Row","Caption"," ")
+Gui.FormMATLGROUP.GsGridMATL.ColumnEdit("GMATL","Delete_Row","EditorButton","Delete")
+Gui.FormMATLGROUP.GsGridMATL.SetColumnProperty("GMATL","Delete_Row","AllowEdit",False)
+Gui.FormMATLGROUP.GsGridMATL.SetColumnProperty("GMATL","Delete_Row","ReadOnly",True)
+
+Gui.FormMATLGROUP.GsGridMATL.MainView("GMATL")
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("Set_Prop_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_MATL_GROUP.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormMATLGROUP_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.Set_Prop.End
+
+Program.Sub.Comments.Start
+${$5$}$20.1.8615.24403$}$1
+${$6$}$rking$}$20230927113910232$}$QNdZLVy4bWuiWa9jh1ZTiKHvMPldSPXeg5tnYWgTB0dqjivNh+ETG+r9PMDq+AGDaELMESmtjG4=
+Program.Sub.Comments.End
