@@ -1,0 +1,1069 @@
+﻿Program.Sub.ScreenSU.Start
+Gui.FormSerialWIP..Create(BaseForm)
+Gui.FormSerialWIP..Caption("WIP TO FG Serialized Jobs")
+Gui.FormSerialWIP..Size(1024,720)
+Gui.FormSerialWIP..MinX(0)
+Gui.FormSerialWIP..MinY(0)
+Gui.FormSerialWIP..Position(0,0)
+Gui.FormSerialWIP..AlwaysOnTop(False)
+Gui.FormSerialWIP..FontName("Tahoma")
+Gui.FormSerialWIP..FontSize(8.25)
+Gui.FormSerialWIP..ControlBox(True)
+Gui.FormSerialWIP..MaxButton(True)
+Gui.FormSerialWIP..MinButton(True)
+Gui.FormSerialWIP..MousePointer(0)
+Gui.FormSerialWIP..Moveable(True)
+Gui.FormSerialWIP..Sizeable(True)
+Gui.FormSerialWIP..ShowInTaskBar(True)
+Gui.FormSerialWIP..TitleBar(True)
+Gui.FormSerialWIP..Event(UnLoad,FormSerialWIP_UnLoad)
+Gui.FormSerialWIP.lblJob.Create(Label,"Job",True,25,21,0,17,10,True,0,"Tahoma",8.25,,0,0)
+Gui.FormSerialWIP.lblJob.BorderStyle(0)
+Gui.FormSerialWIP.txtJob.Create(TextBox,"",True,100,28,0,15,32,True,0,"Tahoma",8.25,,1)
+Gui.FormSerialWIP.txtJob.MaxLength(6)
+Gui.FormSerialWIP.txtJob.Event(GotFocus,txtJob_GotFocus)
+Gui.FormSerialWIP.txtJob.Locked(True)
+Gui.FormSerialWIP.lblSuffix.Create(Label,"Suffix",True,41,21,0,122,10,True,0,"Tahoma",8.25,,0,0)
+Gui.FormSerialWIP.lblSuffix.BorderStyle(0)
+Gui.FormSerialWIP.txtSuffix.Create(TextBox,"",True,51,28,0,120,32,True,0,"Tahoma",8.25,,1)
+Gui.FormSerialWIP.txtSuffix.MaxLength(3)
+Gui.FormSerialWIP.txtSuffix.Event(GotFocus,txtSuffix_GotFocus)
+Gui.FormSerialWIP.txtSuffix.Event(LostFocus,txtSuffix_LostFocus)
+Gui.FormSerialWIP.txtSuffix.Locked(True)
+Gui.FormSerialWIP.cmdJS.Create(Button)
+Gui.FormSerialWIP.cmdJS.Enabled(True)
+Gui.FormSerialWIP.cmdJS.Visible(True)
+Gui.FormSerialWIP.cmdJS.Zorder(0)
+Gui.FormSerialWIP.cmdJS.Size(27,23)
+Gui.FormSerialWIP.cmdJS.Position(177,30)
+Gui.FormSerialWIP.cmdJS.Caption("^")
+Gui.FormSerialWIP.cmdJS.FontName("Tahoma")
+Gui.FormSerialWIP.cmdJS.FontSize(8.25)
+Gui.FormSerialWIP.cmdJS.Event(Click,cmdJS_Click)
+Gui.FormSerialWIP.GsGridSerial.Create(GsGridControl)
+Gui.FormSerialWIP.GsGridSerial.Enabled(True)
+Gui.FormSerialWIP.GsGridSerial.Visible(True)
+Gui.FormSerialWIP.GsGridSerial.Zorder(0)
+Gui.FormSerialWIP.GsGridSerial.Size(997,581)
+Gui.FormSerialWIP.GsGridSerial.Position(17,63)
+Gui.FormSerialWIP.GsGridSerial.Anchor(15)
+Gui.FormSerialWIP.GsGridSerial.Event(RowCellClick,GsGridSerial_RowCellClick)
+Gui.FormSerialWIP.GsGridSerial.Event(CellValueChanged,GsGridSerial_CellValueChanged)
+Gui.FormSerialWIP.cmdWIPFG.Create(Button)
+Gui.FormSerialWIP.cmdWIPFG.Enabled(True)
+Gui.FormSerialWIP.cmdWIPFG.Visible(True)
+Gui.FormSerialWIP.cmdWIPFG.Zorder(0)
+Gui.FormSerialWIP.cmdWIPFG.Size(162,23)
+Gui.FormSerialWIP.cmdWIPFG.Position(24,654)
+Gui.FormSerialWIP.cmdWIPFG.Caption("WIP TO FG Selected")
+Gui.FormSerialWIP.cmdWIPFG.FontName("Tahoma")
+Gui.FormSerialWIP.cmdWIPFG.FontSize(8.25)
+Gui.FormSerialWIP.cmdWIPFG.Anchor(6)
+Gui.FormSerialWIP.cmdWIPFG.Event(Click,cmdWIPFG_Click)
+Gui.FormSerialWIP.lblQty.Create(Label,"Open Qty",True,70,21,0,272,10,True,0,"Tahoma",8.25,,0,0)
+Gui.FormSerialWIP.lblQty.BorderStyle(0)
+Gui.FormSerialWIP.txtQty.Create(TextBox,"",True,77,28,0,271,32,True,0,"Tahoma",8.25,,1)
+Gui.FormSerialWIP.txtQty.Locked(True)
+Gui.FormSerialWIP.chkClose.Create(CheckBox)
+Gui.FormSerialWIP.chkClose.Enabled(True)
+Gui.FormSerialWIP.chkClose.Visible(True)
+Gui.FormSerialWIP.chkClose.Zorder(0)
+Gui.FormSerialWIP.chkClose.Size(113,20)
+Gui.FormSerialWIP.chkClose.Position(373,32)
+Gui.FormSerialWIP.chkClose.Caption("Close Work Order")
+Gui.FormSerialWIP.chkClose.FontName("Tahoma")
+Gui.FormSerialWIP.chkClose.FontSize(8.25)
+Gui.FormSerialWIP.chkLbl.Create(CheckBox)
+Gui.FormSerialWIP.chkLbl.Enabled(True)
+Gui.FormSerialWIP.chkLbl.Visible(True)
+Gui.FormSerialWIP.chkLbl.Zorder(0)
+Gui.FormSerialWIP.chkLbl.Size(125,20)
+Gui.FormSerialWIP.chkLbl.Position(490,32)
+Gui.FormSerialWIP.chkLbl.Caption("Print Labels")
+Gui.FormSerialWIP.chkLbl.FontName("Tahoma")
+Gui.FormSerialWIP.chkLbl.FontSize(8.25)
+Gui.FormSerialWIP.lblBin.Create(Label,"WIP Bin",True,37,13,0,583,9,True,0,"Tahoma",8.25,,0,0)
+Gui.FormSerialWIP.lblBin.BorderStyle(0)
+Gui.FormSerialWIP.ddlBin.Create(DropDownList)
+Gui.FormSerialWIP.ddlBin.Enabled(True)
+Gui.FormSerialWIP.ddlBin.Visible(True)
+Gui.FormSerialWIP.ddlBin.Zorder(0)
+Gui.FormSerialWIP.ddlBin.Size(71,20)
+Gui.FormSerialWIP.ddlBin.Position(583,31)
+Gui.FormSerialWIP.ddlBin.FontName("Tahoma")
+Gui.FormSerialWIP.ddlBin.FontSize(8.25)
+Gui.FormSerialWIP.lblNote.Create(Label,"Job Part <> SO Part",False,116,16,0,673,7,True,0,"Tahoma",10,,0,0)
+Gui.FormSerialWIP.lblNote.BorderStyle(0)
+Gui.FormSerialWIP.lblNote.ForeColor(255)
+Gui.FormSerialWIP.lblNote2.Create(Label,"Heat Chem Info Missing",False,135,16,0,674,30,True,0,"Tahoma",10,,0,0)
+Gui.FormSerialWIP.lblNote2.BorderStyle(0)
+Gui.FormSerialWIP.lblNote2.ForeColor(255)
+Program.Sub.ScreenSU.End
+
+Program.Sub.Preflight.Start
+Program.External.Include.Library("2003.lib")
+V.Global.sDir.Declare(String,"")
+V.Global.sPart.Declare(String,"")
+V.Global.bSerialUpdate.Declare(Boolean,Flase)
+Program.Sub.Preflight.End
+
+Program.Sub.Main.Start
+F.Intrinsic.Control.SetErrorHandler("Main_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+V.Local.sSql.Declare(String,"")
+V.Local.sDate.Declare(String,"")
+V.Local.sTime2.Declare(String,"")
+V.Local.sSalesOrder.Declare(String,"")
+V.Local.sRet.Declare(String,"")
+V.Local.iD.Declare(Long,0)
+V.Local.sFile.Declare(String,"")
+V.Local.sFileName.Declare(String,"")
+V.Local.sOrder.Declare(String,"")
+V.Local.iRPTID.Declare(Long,0)
+V.Local.sValues.Declare(String,"")
+V.Local.sDesc.Declare(String,"")
+V.Local.iLogID.Declare(Long,0)
+V.Local.iRunID.Declare(Long,0)
+V.Local.sParams.Declare(String,"")
+V.Local.sPart.Declare(String,"")
+V.Local.sLine.Declare(String,"")
+v.Local.iRet.Declare(Long,0)
+
+Function.Intrinsic.UI.UsePixels ' Allows you to use Pixels instead of Twips throughout
+
+F.Intrinsic.Control.SelectCase(V.Caller.Hook)
+	F.Intrinsic.Control.Case(16504)
+
+		'Job passed.000003
+		'Suffix passed 000004
+		F.Intrinsic.String.Format(V.Ambient.Now,"HH:NN:SS",V.Local.sTime2)
+		F.Intrinsic.String.Build("{0} {1}",V.Ambient.Date.PervasiveDate,V.Local.sTime2,V.Local.sDate)
+		
+		F.ODBC.Connection!Con.OpenCompanyConnection
+		F.Intrinsic.String.Build("select Top 1 rtrim(Part), Sales_Order,Sales_Order_Line from V_JOB_HEADER Where Job = '{0}' and Suffix = '{1}' and Sales_Order <> '0000000' and Sales_Order <> ''",V.Passed.000003,V.Passed.000004.Trim,V.Local.sSql)
+		F.ODBC.Connection!con.ExecuteAndReturn(V.Local.sSql,V.Local.sSalesOrder)
+		F.Intrinsic.String.Split(V.Local.sSalesOrder,"*!*",V.Local.sSalesOrder)
+		v.Local.sSalesOrder.RedimPreserve(0,2)
+		V.Local.sOrder.Set(V.Local.sSalesOrder(1))
+		F.Intrinsic.Control.If(V.Local.sSalesOrder(2).Trim,<>,"")
+			F.Intrinsic.String.Build("{0}0",V.Local.sSalesOrder(2).Trim,V.Local.sLine)
+		F.Intrinsic.Control.EndIf
+		V.Local.sPart.Set(V.Local.sSalesOrder.Trim)
+		F.Intrinsic.Control.If(V.Local.sPart.Trim,=,"")
+			F.Intrinsic.String.Build("select Top 1 rtrim(Part) from V_JOB_HEADER Where Job = '{0}' and Suffix = '{1}'",V.Passed.000003,V.Passed.000004.Trim,V.Local.sSql)
+			F.ODBC.Connection!con.ExecuteAndReturn(V.Local.sSql,V.Local.sPart)
+			V.Local.sPart.Set(V.Local.sPart.Trim)
+			
+		F.Intrinsic.Control.EndIf
+		F.Intrinsic.String.Build("{0}-{1}",V.Local.sSalesOrder(1).Trim,V.Local.sSalesOrder(2).Trim,V.Local.sSalesOrder)
+	
+		F.Intrinsic.String.Build("Select a.Job, a.Suffix, rtrim(a.Serial_Number) as Serial_Number, Heat, (Select Usr_Field_4 From Item_Hist_Usr c Where a.Part = c.Part and a.Date_History = c.Key_Date and a.Time_Item_History = c.Key_Time) as Bonnet_Heat From Item_History a Where a.DTL_Key_Seq = (Select Top 1 b.DTL_KEY_SEQ from V_Item_History b Where b.Job = a.Job and b.Suffix = a.Suffix and b.Code_Transaction = 'J52' Order by b.Date_History Desc, b.Time_Item_History Desc) and a.Job = '{0}' and a.Suffix = '{1}' and a.Serial_Number <> '' and a.Quantity > 0 and a.Code_Transaction = 'J52'",V.Passed.000003,V.Passed.000004.Trim,V.Local.sSql)
+		F.Data.DataTable.CreateFromSQL("Serial",con,V.Local.sSql,True)
+		F.Data.DataTable.AddColumn("Serial","WIPFG",BOOLEAN,True)
+		F.Data.DataTable.AddColumn("Serial","LST_CHG_DATE",Date,V.Local.sDate)
+		F.Data.DataTable.AddColumn("Serial","LST_CHG_USER",String,V.Caller.User)
+		F.Data.DataTable.AddColumn("Serial","LST_CHG_PRG",String,"GCG_6936_SERIAL_WIP_HOOK")
+		F.Data.DataTable.AddColumn("Serial","Date_Created",Date,V.Ambient.Date)
+		F.Data.DataTable.AddColumn("Serial","Sales_Order",String,V.Local.sOrder)
+		F.Data.DataTable.AddColumn("Serial","Sales_Order_Line",String,V.Local.sLine)
+		F.Intrinsic.Control.If(V.DataTable.Serial.RowCount--,<>,-1)
+			F.Data.DataTable.SaveToDB("Serial",con,"GCG_6936_PO_SERIALS","Serial_Number",256,"Job@!@Job*!*Suffix@!@Suffix*!*Serial_Number@!@Serial_Number*!*WIPFG@!@WIPFG*!*Date_Created@!@Date_Created*!*Sales_Order@!@Sales_Order*!*Sales_Order_Line@!@Sales_Order_Line*!*Heat@!@Heat*!*Bonnet_Heat@!@Bonnet_Heat*!*LST_CHG_DATE@!@LST_CHG_DATE*!*LST_CHG_USER@!@LST_CHG_USER*!*LST_CHG_PRG@!@LST_CHG_PRG")
+			
+			F.Intrinsic.Control.CallSub(Build_Empty_DT,"Exit","Y")
+			
+			F.Intrinsic.Control.If(V.Local.sPart.Trim,<>,"","AND",V.Local.sSalesOrder.Trim,<>,"")
+				F.Intrinsic.String.Build("{0}-{1}","MTR",V.Local.sSalesOrder,V.Local.sRet)
+		
+				F.Global.DocumentControl.CreateReference(V.Local.sOrder,45,V.Local.iD)
+				F.Intrinsic.String.Build("{0}{1}.PDF",V.Global.sDir,V.Local.sRet,V.Local.sFile)
+				F.Intrinsic.String.Build("{0}.PDF",V.Local.sRet.UCase,V.Local.sFileName)
+				V.Local.sParams.Set("Sales Order*!*Line") 
+				
+				F.Intrinsic.String.Build("MTR-{0}",V.Local.sSalesOrder,V.Local.sDesc)
+				
+				F.Intrinsic.String.Build("{0}*!*{1}",V.Local.sOrder,V.Local.sLine,V.Local.sValues)
+				
+				F.Global.BI.GetIDFromName("GCG_6936_MTR.rpt",V.Local.iRPTID)
+				
+				F.Global.BI.GetRunID(V.Local.iRunID)
+				F.Global.BI.StartLogging(V.Local.iRunID,V.Local.iRPTID,-1,"",V.Local.iLogID)
+				F.Global.BI.StopLogging(V.Local.iLogID)
+		
+				F.Intrinsic.Control.If(V.Local.iRPTID,<>,-1)
+					F.Global.BI.RunReportPreProcessor(V.Local.iRunID,V.Local.iLogID,V.Local.sParams,V.Local.sValues,"",4,True,"",-1,"",0,V.Local.sFile,"",V.Local.iRet)
+					
+					F.Intrinsic.String.Build("Select File From ATG_Doc_Assoc Where Link_ID = {0} and ucase(File) = '{1}'",V.Local.iD,V.Local.sFileName,V.Local.sSql)
+					F.ODBC.Connection!Con.ExecuteAndReturn(V.Local.sSql,V.Local.sRet)
+					F.Intrinsic.Control.If(V.Local.sRet.Trim,=,"")
+						F.Global.DocumentControl.AddDocument(V.Local.iD,V.Local.sFile,V.Local.sDesc,-1,"PDF")
+					F.Intrinsic.Control.EndIf
+				F.Intrinsic.Control.EndIf
+			F.Intrinsic.Control.EndIf
+		F.Intrinsic.Control.EndIf
+		F.ODBC.Connection!Con.Close
+		F.Intrinsic.Control.End
+		
+	F.Intrinsic.Control.CaseElse
+		F.Intrinsic.Control.CallSub(Build_Empty_DT,"Exit","N")
+		F.Intrinsic.Control.CallSub(Set_Properties)
+		
+		Gui.FormSerialWIP..Show
+		Gui.FormSerialWIP..AlwaysOnTop(True)
+		Gui.FormSerialWIP..AlwaysOnTop(False)
+
+F.Intrinsic.Control.EndSelect
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("Main_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_SERIAL_WIP.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormSerialWIP_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.Main.End
+
+Program.Sub.GsGridSerial_RowCellClick.Start
+F.Intrinsic.Control.SetErrorHandler("GsGridSerial_RowCellClick_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+F.Intrinsic.Control.If(V.Args.Column.UCase,=,"WIPFG")
+	F.Data.DataTable.SetValue("Serial",V.Args.RowIndex,"WIPFG",V.DataTable.Serial(V.Args.RowIndex).WIPFG!FieldValNot)
+	F.Intrinsic.Control.If(V.DataView.Serial!VSerial.RowCount,=,V.Screen.FormSerialWIP!txtQty.Text)
+		Gui.FormSerialWIP.chkClose.Value(1)
+	F.Intrinsic.Control.Else
+		Gui.FormSerialWIP.chkClose.Value(0)
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("GsGridSerial_RowCellClick_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_SERIAL_WIP.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormSerialWIP_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.GsGridSerial_RowCellClick.End
+
+Program.Sub.cmdWIPFG_Click.Start
+F.Intrinsic.Control.SetErrorHandler("cmdWIPFG_Click_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+V.Local.sSql.Declare(String,"")
+V.Local.i.Declare(Long,0)
+V.Local.iDay.Declare(Long,0)
+V.Local.iMonth.Declare(Long,0)
+V.Local.iYear.Declare(Long,0)
+V.Local.sFlag.Declare(String,"N")
+V.Local.sClose.Declare(String,"N")
+V.Local.sPrint.Declare(String,"N")
+V.Local.sMethod.Declare(String,"")
+V.Local.sKey.Declare(String,"")
+V.Local.iLock.Declare(Long,0)
+V.Local.iMethod.Declare(Long,0)
+V.Local.bStd.Declare(Boolean,False)
+V.Local.sMTR.Declare(String,"")
+V.Local.sPart.Declare(String,"")
+V.Local.sRet.Declare(String,"")
+V.Local.sSalesOrder.Declare(String,"")
+V.Local.iD.Declare(Long,0)
+V.Local.iRPTID.Declare(Long,0)
+V.Local.iRunID.Declare(Long,0)
+V.Local.iLogID.Declare(Long,0)
+V.Local.sParams.Declare(String,"")
+V.Local.sValues.Declare(String,"")
+V.Local.sFile.Declare(String,"")
+V.Local.iRet.Declare(Long,0)
+V.Local.sDesc.Declare(String,"")
+V.Local.bRev.Declare(Boolean,False)
+V.Local.sOrder.Declare(String,"")
+V.Local.sLine.Declare(String,"")
+V.Local.sFileName.Declare(String,"")
+V.Local.sBMat.Declare(String,"")
+V.Local.sHMat.Declare(String,"")
+v.Local.sCallwrapperError.Declare(String,"")
+V.Local.sDate.Declare(String,"")
+V.Local.sTime.Declare(String,"")
+V.Local.sTemp.Declare(String,"")
+V.Local.sBin.Declare(String,"")
+
+v.Local.sBin.Set(v.Screen.FormSerialWIP!ddlBin.Text)
+
+Gui.FormSerialWIP.cmdWIPFG.Enabled(False)
+Gui.FormSerialWIP..Enabled(False)
+
+F.Intrinsic.Control.If(V.Screen.FormSerialWIP!chkClose.Value,=,1)
+	F.Global.General.ReadOption(401150,0,False,"00000",V.Local.bStd)
+	F.Intrinsic.Control.If(V.Local.bStd)
+		V.Local.sMethod.Set("I")
+	F.Intrinsic.Control.Else
+		V.Local.sMethod.Set("A")
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.Else
+	F.Global.General.ReadOption(401163,3,False,"00000",V.Local.iMethod)
+	F.Intrinsic.Control.If(V.Local.iMethod,=,1)
+		'Price
+		V.Local.sMethod.Set("P")
+	F.Intrinsic.Control.ElseIf(V.Local.iMethod,=,2)
+		'Estimate
+		V.Local.sMethod.Set("E")
+	F.Intrinsic.Control.ElseIf(V.Local.iMethod,=,3)
+		'Inventory
+		V.Local.sMethod.Set("I")
+	F.Intrinsic.Control.ElseIf(V.Local.iMethod,=,4)
+		'Actual
+		V.Local.sMethod.Set("A")
+	F.Intrinsic.Control.ElseIf(V.Local.iMethod,=,5)
+		'Remaining
+		V.Local.sMethod.Set("R")
+	F.Intrinsic.Control.ElseIf(V.Local.iMethod,=,6)
+		'Alt Cost
+		V.Local.sMethod.Set("L")
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Date.Day(V.Ambient.Date,V.Local.iDay)
+F.Intrinsic.Date.Month(V.Ambient.Date,V.Local.iMonth)
+F.Intrinsic.Date.Year(V.Ambient.Date,V.Local.iYear)
+
+F.Intrinsic.Control.If(V.Screen.FormSerialWIP!chkClose.Value,=,1)
+	V.Local.sClose.Set("Y")
+F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.If(V.Screen.FormSerialWIP!chkLbl.Value,=,1)
+	V.Local.sPrint.Set("Y")
+F.Intrinsic.Control.EndIf
+
+F.ODBC.Connection!Con.OpenCompanyConnection
+
+F.Intrinsic.Control.If(V.DataView.Serial!VSerial.RowCount--,<>,-1)
+	F.Data.DataTable.AddRow("2003","Mode","NS","WONum",V.DataView.Serial!VSerial(V.DataView.Serial!VSerial.RowCount--).Job!FieldValTrim,"WOSuffix",V.DataView.Serial!VSerial(V.DataView.Serial!VSerial.RowCount--).Suffix!FieldValTrim,"XferYear",V.Local.iYear,"XferMonth",V.Local.iMonth,"XferDay",V.Local.iDay,"CloseWO",V.Local.sClose,"Quantity",V.DataView.Serial!VSerial.RowCount,"CostMethod",V.Local.sMethod,"UpdateInv","Y","PrintLabels",V.Local.sPrint)
+	F.Intrinsic.String.Build("select Top 1 rtrim(Part), Sales_Order,Sales_Order_Line from V_JOB_HEADER Where Job = '{0}' and Suffix = '{1}' and Sales_Order <> '0000000' and Sales_Order <> ''",V.DataView.Serial!VSerial(V.DataView.Serial!VSerial.RowCount--).Job!FieldValTrim,V.DataView.Serial!VSerial(V.DataView.Serial!VSerial.RowCount--).Suffix!FieldValTrim,V.Local.sSql)
+	F.ODBC.Connection!con.ExecuteAndReturn(V.Local.sSql,V.Local.sSalesOrder)
+	F.Intrinsic.String.Split(V.Local.sSalesOrder,"*!*",V.Local.sSalesOrder)
+	v.Local.sSalesOrder.RedimPreserve(0,2)
+	V.Local.sOrder.Set(V.Local.sSalesOrder(1))
+	F.Intrinsic.Control.If(V.Local.sSalesOrder(2).Trim,<>,"")
+		F.Intrinsic.String.Build("{0}0",V.Local.sSalesOrder(2).Trim,V.Local.sLine)
+	F.Intrinsic.Control.EndIf
+	V.Local.sPart.Set(V.Local.sSalesOrder.Trim)
+	F.Intrinsic.Control.If(V.Local.sPart.Trim,=,"")
+		F.Intrinsic.String.Build("select Top 1 rtrim(Part) from V_JOB_HEADER Where Job = '{0}' and Suffix = '{1}'",V.DataView.Serial!VSerial(V.DataView.Serial!VSerial.RowCount--).Job!FieldValTrim,V.DataView.Serial!VSerial(V.DataView.Serial!VSerial.RowCount--).Suffix!FieldValTrim,V.Local.sSql)
+		F.ODBC.Connection!con.ExecuteAndReturn(V.Local.sSql,V.Local.sPart)
+		V.Local.sPart.Set(V.Local.sPart.Trim)
+		
+	F.Intrinsic.Control.EndIf
+	F.Intrinsic.String.Build("{0}-{1}",V.Local.sSalesOrder(1).Trim,V.Local.sSalesOrder(2).Trim,V.Local.sSalesOrder)
+	F.Intrinsic.Control.For(V.Local.i,0,V.DataView.Serial!VSerial.RowCount--,1)
+'		F.Intrinsic.String.Build("Select Top 1 User_Field_5,User_Field_6,User_Field_7 From V_Item_Master Where Lot = '{0}'",V.DataView.Serial!VSerial(V.Local.i).Serial_Number!FieldValTrim,V.Local.sSql)
+'		F.ODBC.Connection!Con.ExecuteAndReturn(V.Local.sSql,V.Local.sMTR)
+'		F.Intrinsic.String.Split(V.Local.sMTR,"*!*",V.Local.sMTR)
+		F.Data.DataTable.AddRow("2003File","WONum",V.DataView.Serial!VSerial(V.Local.i).Job!FieldValTrim,"WOSuffix",V.DataView.Serial!VSerial(V.Local.i).Suffix!FieldValTrim,"Heat",V.DataView.Serial!VSerial(V.Local.i).Heat!FieldValTrim,"Serial",V.DataView.Serial!VSerial(V.Local.i).Serial_Number!FieldValTrim,"SpecificQuantity",1,"UserField4",V.DataView.Serial!VSerial(V.Local.i).Bonnet_Heat!FieldValTrim,"UserField5",V.Local.sMTR(0).Trim,"UserField6",V.Local.sMTR(1).Trim,"UserField7",V.Local.sMTR(2).Trim)
+	F.Intrinsic.Control.Next(V.Local.i)
+	F.Intrinsic.String.Build("Select Flag_Serialize From Job_Header Where Job = '{0}' and Suffix = '{1}'",V.DataView.Serial!VSerial(V.DataView.Serial!VSerial.RowCount--).Job!FieldValTrim,V.DataView.Serial!VSerial(V.DataView.Serial!VSerial.RowCount--).Suffix!FieldValTrim,V.Local.sSql)
+	F.ODBC.Connection!con.ExecuteAndReturn(V.Local.sSql,V.Local.sFlag)
+	F.Intrinsic.Control.If(V.Local.sFlag,=,"Y")
+		F.Intrinsic.UI.Sleep(1)
+		F.Intrinsic.String.Build("Update Job_Header Set Flag_Serialize = 'N' Where Job = '{0}' and Suffix = '{1}'",V.DataView.Serial!VSerial(V.DataView.Serial!VSerial.RowCount--).Job!FieldValTrim,V.DataView.Serial!VSerial(V.DataView.Serial!VSerial.RowCount--).Suffix!FieldValTrim,V.Local.sSql)
+		F.ODBC.Connection!con.Execute(V.Local.sSql)
+		F.Intrinsic.UI.Sleep(3)
+	F.Intrinsic.Control.EndIf
+	F.Intrinsic.Control.If(V.Screen.FormSerialWIP!txtJob.Text,<>,"")
+		F.Intrinsic.String.Build("{0}-{1}",V.Screen.FormSerialWIP!txtJob.Text,V.Screen.FormSerialWIP!txtSuffix.Text,V.Local.sKey)
+		F.Global.General.DestroySoftLock("WO",V.Local.sKey,V.Local.iLock)
+	F.Intrinsic.Control.EndIf
+	F.Intrinsic.Control.CallSub(2003Sync)
+	F.Data.DataView.ToDataTable("Serial","VSerial","SerialSave",True)
+'	F.Intrinsic.String.Build("Select Top 1 User1 From GAB_4912_User_Fields Where Part = '{0}'",V.Local.sPart.Trim,V.Local.sSql)
+'	F.ODBC.Connection!Con.ExecuteAndReturn(V.Local.sSql,V.Local.sHMat)
+'	F.Intrinsic.String.Build("Select Top 1 User2 From GAB_4912_User_Fields Where Part = '{0}'",V.Local.sPart.Trim,V.Local.sSql)
+'	F.ODBC.Connection!Con.ExecuteAndReturn(V.Local.sSql,V.Local.sBMat)
+	F.Intrinsic.String.Format(V.Ambient.Now,"HH:NN:SS",V.Local.sTime)
+	F.Intrinsic.String.Build("{0} {1}",V.Ambient.Date.PervasiveDate,V.Local.sTime,V.Local.sDate)
+	F.Data.DataTable.AddColumn("SerialSave","H_MAT",String,V.Local.sHMat)
+	F.Data.DataTable.AddColumn("SerialSave","B_MAT",String,V.Local.sBMat)
+	F.Data.DataTable.AddColumn("SerialSave","LST_CHG_DATE",Date,V.Local.sDate)
+	F.Data.DataTable.AddColumn("SerialSave","LST_CHG_USER",String,V.Caller.User)
+	F.Data.DataTable.AddColumn("SerialSave","LST_CHG_PRG",String,"GCG_6936_SERIAL_WIP")
+	F.Data.DataTable.SetValue("SerialSave",-1,"Date_Created",V.Ambient.Date,"Sales_Order",V.Local.sOrder,"Sales_Order_Line",V.Local.sLine)
+
+	F.Intrinsic.String.Split(V.Ambient.CallWrapperReturn,"*!*",V.Local.sRet)
+	V.Local.sRet.RedimPreserve(0,48)
+	V.Local.sCallwrapperError.Set(V.Local.sRet(46).Trim)
+	F.Intrinsic.String.Split(V.Local.sCallwrapperError,"::",V.Local.sTemp)
+	V.Local.sTemp.RedimPreserve(0,1)
+	F.Intrinsic.Control.If(V.Local.sTemp(1).Trim,<>,"0")
+		V.Local.sCallwrapperError.Set(V.Local.sRet(47).Trim)
+		F.Intrinsic.String.Build("Issue with WIP To FG.  {0}",V.Local.sCallwrapperError,V.Local.sRet)
+		F.Intrinsic.UI.Msgbox(V.Local.sRet)
+		F.Data.DataTable.SetValue("SerialSave",-1,"WIPFG",False)
+		
+	F.Intrinsic.Control.Else
+		V.Local.sRet.Redim(0,0)
+		
+		'This is being done on the 16504 hook
+'		F.Data.DataTable.SaveToDB("SerialSave",con,"GCG_6936_PO_SERIALS","Serial_Number",256,"Job@!@Job*!*Suffix@!@Suffix*!*Serial_Number@!@Serial_Number*!*WIPFG@!@WIPFG*!*Date_Created@!@Date_Created*!*Sales_Order@!@Sales_Order*!*Sales_Order_Line@!@Sales_Order_Line*!*H_MAT@!@H_MAT@!@B_MAT@!@B_MAT*!*Heat@!@Heat*!*Bonnet_Heat@!@Bonnet_Heat*!*LST_CHG_DATE@!@LST_CHG_DATE*!*LST_CHG_USER@!@LST_CHG_USER*!*LST_CHG_PRG@!@LST_CHG_PRG")
+		F.Intrinsic.Control.If(V.Local.sClose,=,"Y")
+		
+			'removing unused serial numbers from custom table after job is closed
+			F.Intrinsic.String.Build("DELETE FROM GCG_6936_PO_SERIALS Where Job = '{0}' and Suffix = '{1}' and WIPFG = 0",V.DataView.Serial!VSerial(V.DataView.Serial!VSerial.RowCount--).Job!FieldValTrim,V.DataView.Serial!VSerial(V.DataView.Serial!VSerial.RowCount--).Suffix!FieldValTrim,V.Local.sSql)
+			F.ODBC.Connection!con.Execute(V.Local.sSql)
+		F.Intrinsic.Control.EndIf
+	F.Intrinsic.Control.EndIf
+	F.Data.DataTable.Close("SerialSave")
+	
+	F.Intrinsic.String.Build("Update GCG_6936_PO_SERIALS Set Date_Added = '{0}' Where Date_Added is null",V.Ambient.Date.PervasiveDate,V.Local.sSql)
+	F.ODBC.Connection!Con.Execute(V.Local.sSql)
+	F.Intrinsic.Control.If(V.Local.sFlag,=,"Y")
+		F.Intrinsic.String.Build("Update Job_Header Set Flag_Serialize = 'Y' Where Job = '{0}' and Suffix = '{1}'",V.DataView.Serial!VSerial(V.DataView.Serial!VSerial.RowCount--).Job!FieldValTrim,V.DataView.Serial!VSerial(V.DataView.Serial!VSerial.RowCount--).Suffix!FieldValTrim,V.Local.sSql)
+		F.ODBC.Connection!con.Execute(V.Local.sSql)
+	F.Intrinsic.Control.EndIf
+	
+	'This is being done on the 16504 hook
+'	F.Intrinsic.Control.If(V.Local.sPart.Trim,<>,"","AND",V.Local.sSalesOrder.Trim,<>,"")
+'		F.Intrinsic.String.Build("{0}-{1}","MTR",V.Local.sSalesOrder,V.Local.sRet)
+''		F.Global.DocumentControl.CreateReference(V.Local.sRet,2010,V.Local.iD)
+'		F.Global.DocumentControl.CreateReference(V.Local.sOrder,45,V.Local.iD)
+'		F.Intrinsic.String.Build("{0}{1}.PDF",V.Global.sDir,V.Local.sRet,V.Local.sFile)
+'		F.Intrinsic.String.Build("{0}.PDF",V.Local.sRet.UCase,V.Local.sFileName)
+'		V.Local.sParams.Set("Sales Order*!*Line") 
+'		
+'		F.Intrinsic.String.Build("MTR-{0}",V.Local.sSalesOrder,V.Local.sDesc)
+'		
+'		F.Intrinsic.String.Build("{0}*!*{1}",V.Local.sOrder,V.Local.sLine,V.Local.sValues)
+'		
+'		F.Global.BI.GetIDFromName("GCG_6936_MTR.rpt",V.Local.iRPTID)
+'		
+'		F.Global.BI.GetRunID(V.Local.iRunID)
+'		F.Global.BI.StartLogging(V.Local.iRunID,V.Local.iRPTID,-1,"",V.Local.iLogID)
+'		F.Global.BI.StopLogging(V.Local.iLogID)
+
+'		F.Intrinsic.Control.If(V.Local.iRPTID,<>,-1)
+'			F.Global.BI.RunReportPreProcessor(V.Local.iRunID,V.Local.iLogID,V.Local.sParams,V.Local.sValues,"",4,True,"",-1,"",0,V.Local.sFile,"",V.Local.iRet)
+'			
+'			F.Intrinsic.String.Build("Select File From ATG_Doc_Assoc Where Link_ID = {0} and ucase(File) = '{1}'",V.Local.iD,V.Local.sFileName,V.Local.sSql)
+'			F.ODBC.Connection!Con.ExecuteAndReturn(V.Local.sSql,V.Local.sRet)
+'			F.Intrinsic.Control.If(V.Local.sRet.Trim,=,"")
+'				F.Global.DocumentControl.AddDocument(V.Local.iD,V.Local.sFile,V.Local.sDesc,-1,"PDF")
+'			F.Intrinsic.Control.EndIf
+'		F.Intrinsic.Control.EndIf
+'	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.EndIf
+
+F.ODBC.Connection!Con.Close
+
+F.Intrinsic.Control.If(V.Screen.FormSerialWIP!txtJob.Text,<>,"")
+	F.Intrinsic.String.Build("{0}-{1}",V.Screen.FormSerialWIP!txtJob.Text,V.Screen.FormSerialWIP!txtSuffix.Text,V.Local.sKey)
+	F.Global.General.DestroySoftLock("WO",V.Local.sKey,V.Local.iLock)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.BlockEvents
+F.Data.DataTable.DeleteRow("Serial")
+F.Data.DataTable.AcceptChanges("Serial")
+Gui.FormSerialWIP.txtJob.Text("")
+Gui.FormSerialWIP.txtSuffix.Text("")
+Gui.FormSerialWIP.txtQty.Text(V.Ambient.DBNULL)
+F.Intrinsic.Control.UnBlockEvents
+Gui.FormSerialWIP.cmdWIPFG.Enabled(True)
+Gui.FormSerialWIP..Enabled(True)
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("cmdWIPFG_Click_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_SERIAL_WIP.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormSerialWIP_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.cmdWIPFG_Click.End
+
+Program.Sub.FormSerialWIP_UnLoad.Start
+F.Intrinsic.Control.SetErrorHandler("FormSerialWIP_UnLoad_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+V.Local.sKey.Declare(String,"")
+
+F.Intrinsic.Control.If(V.Screen.FormSerialWIP!txtJob.Text,<>,"")
+	F.Intrinsic.String.Build("{0}-{1}",V.Screen.FormSerialWIP!txtJob.Text,V.Screen.FormSerialWIP!txtSuffix.Text,V.Local.sKey)
+	F.Global.General.DestroySoftLock("WO",V.Local.sKey,V.Local.iLock)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.End
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("FormSerialWIP_UnLoad_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.Control.End
+Function.Intrinsic.Control.EndIf
+Program.Sub.FormSerialWIP_UnLoad.End
+
+Program.Sub.txtJob_GotFocus.Start
+F.Intrinsic.Control.SetErrorHandler("txtJob_GotFocus_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+Gui.FormSerialWIP.txtJob.SelectAll
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("txtJob_GotFocus_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_SERIAL_WIP.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormSerialWIP_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.txtJob_GotFocus.End
+
+Program.Sub.txtSuffix_GotFocus.Start
+F.Intrinsic.Control.SetErrorHandler("txtSuffix_GotFocus_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+Gui.FormSerialWIP.txtSuffix.SelectAll
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("txtSuffix_GotFocus_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_SERIAL_WIP.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormSerialWIP_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.txtSuffix_GotFocus.End
+
+Program.Sub.txtSuffix_LostFocus.Start
+F.Intrinsic.Control.SetErrorHandler("txtSuffix_LostFocus_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+'currently locking the job and suffix and going to force user to browse.  since this will only be used for work orders that appear in custom table GCG_6936_PO_Serials.
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("txtSuffix_LostFocus_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_SERIAL_WIP.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormSerialWIP_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.txtSuffix_LostFocus.End
+
+Program.Sub.cmdJS_Click.Start
+F.Intrinsic.Control.SetErrorHandler("cmdJS_Click_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+V.Local.sRet.Declare(String,"")
+V.Local.sSql.Declare(String,"")
+V.Local.sTitles.Declare(String,"")
+V.Local.sWidths.Declare(String,"")
+V.Local.iLock.Declare(Long,0)
+V.Local.sKey.Declare(String,"")
+V.Local.sTemp.Declare(String,"")
+V.Local.sPart.Declare(String,"")
+
+F.Intrinsic.UI.SetBrowserHotTypeAhead(True)
+
+F.Intrinsic.Control.If(V.Screen.FormSerialWIP!txtJob.Text,<>,"")
+	F.Intrinsic.String.Build("{0}-{1}",V.Screen.FormSerialWIP!txtJob.Text,V.Screen.FormSerialWIP!txtSuffix.Text,V.Local.sKey)
+	F.Global.General.DestroySoftLock("WO",V.Local.sKey,V.Local.iLock)
+F.Intrinsic.Control.EndIf
+
+'V.Local.sSql.Set("Select a.Job, a.Suffix, Part, Description, Qty_Order-Qty_Completed as Qty_Remaining, Case When (Select Top 1 'Y' From Job_Operations c Where a.Job = c.job and a.suffix = c.suffix and c.Flag_Closed <> 'Y' and c.Seq < '995000' and c.LMO <> 'C') = 'Y' Then 'Not Ready' Else 'Ready' End as Ready From Job_Header a Where rtrim(a.Job)+rtrim(a.Suffix) in(Select rtrim(b.Job)+rtrim(b.Suffix) From V_Job_Serial b) and Date_Closed = '000000' Order by a.Job,a.Suffix")
+V.Local.sSql.Set("Select a.Job, a.Suffix, a.Part, a.Description, a.Qty_Order-a.Qty_Completed as Qty_Remaining, Case When (Select Top 1 'Y' From Job_Operations c Where a.Job = c.job and a.suffix = c.suffix and c.Flag_Closed <> 'Y' and c.Seq < '995000' and c.LMO <> 'C') = 'Y' Then 'Not Ready' Else 'Ready' End as Ready From Job_Header a Left Join Inventory_Mstr b on a.Part = b.Part and a.Location = b.Location Where b.Flag_Lot = 'Y' and a.Date_Closed = '000000' Order by a.Job,a.Suffix")
+V.Local.sTitles.Set("Job*!*Suffix*!*Part*!*Description*!*Qty Remaining*!*Ready")
+V.Local.sWidths.Set("1200*!*800*!*1800*!*2400*!*800*!*800")
+
+F.Intrinsic.String.Split(V.Local.sTitles,"*!*",V.Local.sTitles)
+F.Intrinsic.String.Split(V.Local.sWidths,"*!*",V.Local.sWidths)
+
+F.ODBC.Connection!Con.OpenCompanyConnection
+F.Intrinsic.UI.Browser("Select Job","con",V.Local.sSql,V.Local.sTitles,V.Local.sWidths,10200,8700,V.Local.sRet)
+
+F.Intrinsic.Control.If(V.Local.sRet,<>,"***CANCEL***")
+	F.Intrinsic.String.Split(V.Local.sRet,"*!*",V.Local.sRet)
+	F.Intrinsic.String.Build("{0}-{1}",V.Local.sRet.Trim,V.Local.sRet(1).Trim,V.Local.sKey)
+	F.Intrinsic.String.Build("Select Seq From Job_Operations  Where Flag_Closed <> 'Y' and Seq < '995000' and (LMO = 'L' or LMO = 'M') and Job = '{0}' and Suffix = '{1}'",V.Local.sRet.Trim,V.Local.sRet(1).Trim,V.Local.sSql)
+	F.ODBC.Connection!Con.ExecuteAndReturn(V.Local.sSql,V.Local.sTemp)
+	F.Intrinsic.Control.If(V.Local.sTemp.Trim,<>,"")
+		F.Intrinsic.String.Replace(V.Local.sTemp,"#$#",", ",V.Local.sTemp)
+		F.Intrinsic.String.Build("The Following Seq(s) are still Open :{0}.  Job cannot be WIP To Finished Goods",V.Local.sTemp,V.Local.sTemp)
+		F.Intrinsic.UI.Msgbox(V.Local.sTemp,"Attention")
+		F.ODBC.Connection!Con.Close
+		F.Intrinsic.Control.BlockEvents
+		Gui.FormSerialWIP.txtJob.Text("")
+		Gui.FormSerialWIP.txtSuffix.Text("")
+		V.Global.sPart.Set("")
+		Gui.FormSerialWIP.txtQty.Text(V.Ambient.DBNULL)
+		Gui.FormSerialWIP.txtJob.SetFocus
+		F.Intrinsic.Control.UnBlockEvents
+		F.Intrinsic.Control.ExitSub
+	F.Intrinsic.Control.EndIf
+	F.Global.General.ReadSoftLock("WO",V.Local.sKey,V.Local.iLock)
+	F.Intrinsic.Control.If(V.Local.iLock,<>,1)
+		F.ODBC.Connection!Con.Close
+		Gui.FormSerialWIP.txtJob.Text(V.Local.sRet.Trim)
+		Gui.FormSerialWIP.txtSuffix.Text(V.Local.sRet(1).Trim)
+		Gui.FormSerialWIP.txtQty.Text(V.Local.sRet(4))
+		V.Global.sPart.Set(V.Local.sRet(2).Trim)
+		F.Intrinsic.String.Build("Select Top 1 b.Part From V_Job_Header a Join V_Order_Lines b on a.Sales_Order = b.Order_No and a.Sales_Order_Line = Left(b.Record_No,3) where a.Job = '{0}' and a.Suffix = '{1}'",V.Local.sRet.Trim,V.Local.sRet(1).Trim,V.Local.sSql)
+		F.ODBC.Connection!Con.OpenCompanyConnection
+		F.ODBC.Connection!Con.ExecuteAndReturn(V.Local.sSql,V.Local.sPart)
+		F.ODBC.Connection!Con.Close
+		F.Intrinsic.Control.If(V.Local.sPart,<>,"")
+			F.Intrinsic.Control.If(V.Local.sPart.Trim,<>,V.Global.sPart.Trim)
+				Gui.FormSerialWIP.lblNote.Visible(True)
+			F.Intrinsic.Control.Else
+				Gui.FormSerialWIP.lblNote.Visible(False)
+			F.Intrinsic.Control.EndIf
+		F.Intrinsic.Control.Else
+			Gui.FormSerialWIP.lblNote.Visible(False)
+		F.Intrinsic.Control.EndIf
+		F.Intrinsic.Control.Try
+			F.Global.General.CreateSoftLock("WO",V.Local.sKey,V.Local.iLock)
+		F.Intrinsic.Control.Catch
+		F.Intrinsic.Control.EndTry
+		F.Intrinsic.Control.CallSub(Get_Data)
+	F.Intrinsic.Control.Else
+		F.Intrinsic.String.Build("Select User_Id From X_Lock_File Where Lock_Type = 'WO' and Rec_Key = '{0}'",V.Local.sKey,V.Local.sSql)
+		F.ODBC.Connection!Con.ExecuteAndReturn(V.Local.sSql,V.Local.sSql)
+		F.ODBC.Connection!Con.Close
+		F.Intrinsic.String.Build("Job {0} Suffix {1} is Locked by user {2}",V.Local.sRet,V.Local.sRet(1).Trim,V.Local.sSql,V.Local.sSql)
+		F.Intrinsic.UI.Msgbox(V.Local.sSql)
+		F.Intrinsic.Control.BlockEvents
+		Gui.FormSerialWIP.txtJob.Text("")
+		Gui.FormSerialWIP.txtSuffix.Text("")
+		Gui.FormSerialWIP.txtQty.Text(V.Ambient.DBNULL)
+		V.Global.sPart.Set("")
+		Gui.FormSerialWIP.txtJob.SetFocus
+		F.Intrinsic.Control.UnBlockEvents
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.Else
+	F.ODBC.Connection!Con.Close
+	F.Intrinsic.Control.BlockEvents
+	Gui.FormSerialWIP.txtJob.Text("")
+	Gui.FormSerialWIP.txtSuffix.Text("")
+	V.Global.sPart.Set("")
+	Gui.FormSerialWIP.txtQty.Text(V.Ambient.DBNULL)
+	Gui.FormSerialWIP.txtJob.SetFocus
+	F.Intrinsic.Control.UnBlockEvents
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("cmdJS_Click_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_SERIAL_WIP.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormSerialWIP_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.cmdJS_Click.End
+
+Program.Sub.Build_Empty_DT.Start
+F.Intrinsic.Control.SetErrorHandler("Build_Empty_DT_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+V.Local.sPath.Declare(String,"")
+V.Local.bRet.Declare(Boolean,False)
+
+F.Intrinsic.Control.If(V.Caller.GlobalDir.Right1,=,"\")
+	F.Intrinsic.String.Build("{0}Custom",V.Caller.GlobalDir,V.Global.sDir)
+F.Intrinsic.Control.Else
+	V.Global.sDir.Set(V.Caller.GlobalDir)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.String.Build("{0}\Custom",V.Global.sDir,V.Global.sDir)
+F.Intrinsic.File.DirExists(V.Global.sDir,V.Local.bRet)
+
+F.Intrinsic.Control.If(V.Local.bRet,=,False)
+	F.Intrinsic.File.CreateDir(V.Global.sDir)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.String.Build("{0}\6936",V.Global.sDir,V.Global.sDir)
+F.Intrinsic.File.DirExists(V.Global.sDir,V.Local.bRet)
+
+F.Intrinsic.Control.If(V.Local.bRet,=,False)
+	F.Intrinsic.File.CreateDir(V.Global.sDir)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.String.Build("{0}\6936\{1}",V.Global.sDir,V.Caller.CompanyCode,V.Global.sDir)
+F.Intrinsic.File.DirExists(V.Global.sDir,V.Local.bRet)
+
+F.Intrinsic.Control.If(V.Local.bRet,=,False)
+	F.Intrinsic.File.CreateDir(V.Global.sDir)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.String.Build("{0}\",V.Global.sDir,V.Global.sDir)
+
+F.Intrinsic.Variable.ArgExists("Exit",V.Local.bRet)
+
+F.Intrinsic.Control.If(V.Local.bRet)
+	F.Intrinsic.Control.If(V.Args.Exit,=,"Y")
+		F.Intrinsic.Control.ExitSub
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.EndIf
+
+F.ODBC.Connection!Con.OpenCompanyConnection
+F.Data.DataTable.CreateFromSQL("Serial",con,"Select WIPFG, Job, Suffix, '' as Bin, '' as Lot, Heat, Bonnet_Heat, Serial_Number, Date_Created, Sales_Order, Sales_Order_Line From GCG_6936_PO_Serials Where Serial_Number = '-1239i239j'",True)
+
+F.Data.Dictionary.CreateFromSQL("Bin",con,"Select Bin, Bin From Bin_Master Where Bin <> '' Order by Bin")
+Gui.FormSerialWIP.ddlBin.AddItem("",0)
+Gui.FormSerialWIP.ddlBin.AddItems("Dictionary","Bin")
+
+F.ODBC.Connection!Con.ExecuteAndReturn("Select rtrim(Path) as Path From ATG_DOC_PATH WHERE DOCTYPE = 'PDF'",V.Local.sPath)
+F.Intrinsic.Control.If(V.Local.sPath,<>,"")
+	F.Intrinsic.Control.If(V.Local.sPath.Right1,=,"\")
+		V.Global.sDir.Set(V.Local.sPath)
+	F.Intrinsic.Control.Else
+		F.Intrinsic.String.Build("{0}\",V.Local.sPath,V.Global.sDir)
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.EndIf
+F.ODBC.Connection!Con.Close
+
+F.Data.DataView.Create("Serial","VSerial",22,"WIPFG = True","")
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("Build_Empty_DT_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_SERIAL_WIP.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormSerialWIP_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.Build_Empty_DT.End
+
+Program.Sub.Set_Properties.Start
+F.Intrinsic.Control.SetErrorHandler("Set_Properties_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+F.Global.Security.IsInGroup(V.Caller.User,"SNUPDATE",V.Caller.CompanyCode,V.Global.bSerialUpdate)
+
+Gui.FormSerialWIP.GsGridSerial.AddGridviewFromDatatable("GSerial","Serial")
+
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","WIPFG",v.Enum.ColumnPropertyNames!Caption," ")
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","WIPFG",V.Enum.ColumnPropertyNames!HeaderForeColor,v.Color.PRI-GSS-00)
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","WIPFG",V.Enum.ColumnPropertyNames!HeaderFontBold,True)
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","WIPFG",V.Enum.ColumnPropertyNames!Visible,True)
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","WIPFG",V.Enum.ColumnPropertyNames!Fixed,"Left")
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","WIPFG",V.Enum.ColumnPropertyNames!MaxWidth,"50")
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","WIPFG",V.Enum.ColumnPropertyNames!AllowEdit,False)
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","WIPFG",V.Enum.ColumnPropertyNames!ReadOnly,True)
+
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Job",v.Enum.ColumnPropertyNames!Caption,"Job")
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Job",V.Enum.ColumnPropertyNames!HeaderForeColor,v.Color.PRI-GSS-00)
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Job",V.Enum.ColumnPropertyNames!HeaderFontBold,True)
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Job",V.Enum.ColumnPropertyNames!Visible,False)
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Job",V.Enum.ColumnPropertyNames!AllowEdit,False)
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Job",V.Enum.ColumnPropertyNames!ReadOnly,True)
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Job",V.Enum.ColumnPropertyNames!AllowShowHide,False)
+
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Suffix",v.Enum.ColumnPropertyNames!Caption,"Suffix")
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Suffix",V.Enum.ColumnPropertyNames!HeaderForeColor,v.Color.PRI-GSS-00)
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Suffix",V.Enum.ColumnPropertyNames!HeaderFontBold,True)
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Suffix",V.Enum.ColumnPropertyNames!Visible,False)
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Suffix",V.Enum.ColumnPropertyNames!AllowEdit,False)
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Suffix",V.Enum.ColumnPropertyNames!ReadOnly,True)
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Suffix",V.Enum.ColumnPropertyNames!AllowShowHide,False)
+
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Sales_Order",v.Enum.ColumnPropertyNames!Caption,"Sales Order")
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Sales_Order",V.Enum.ColumnPropertyNames!HeaderForeColor,v.Color.PRI-GSS-00)
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Sales_Order",V.Enum.ColumnPropertyNames!HeaderFontBold,True)
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Sales_Order",V.Enum.ColumnPropertyNames!Visible,False)
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Sales_Order",V.Enum.ColumnPropertyNames!AllowEdit,False)
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Sales_Order",V.Enum.ColumnPropertyNames!ReadOnly,True)
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Sales_Order",V.Enum.ColumnPropertyNames!AllowShowHide,False)
+
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Sales_Order_Line",v.Enum.ColumnPropertyNames!Caption,"Line")
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Sales_Order_Line",V.Enum.ColumnPropertyNames!HeaderForeColor,v.Color.PRI-GSS-00)
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Sales_Order_Line",V.Enum.ColumnPropertyNames!HeaderFontBold,True)
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Sales_Order_Line",V.Enum.ColumnPropertyNames!Visible,False)
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Sales_Order_Line",V.Enum.ColumnPropertyNames!AllowEdit,False)
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Sales_Order_Line",V.Enum.ColumnPropertyNames!ReadOnly,True)
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Sales_Order_Line",V.Enum.ColumnPropertyNames!AllowShowHide,False)
+
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Date_Created",v.Enum.ColumnPropertyNames!Caption,"Date Created")
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Date_Created",V.Enum.ColumnPropertyNames!HeaderForeColor,v.Color.PRI-GSS-00)
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Date_Created",V.Enum.ColumnPropertyNames!HeaderFontBold,True)
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Date_Created",V.Enum.ColumnPropertyNames!Visible,False)
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Date_Created",V.Enum.ColumnPropertyNames!AllowEdit,False)
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Date_Created",V.Enum.ColumnPropertyNames!ReadOnly,True)
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Date_Created",V.Enum.ColumnPropertyNames!AllowShowHide,False)
+
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Bin",v.Enum.ColumnPropertyNames!Caption,"Bin")
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Bin",V.Enum.ColumnPropertyNames!HeaderForeColor,v.Color.PRI-GSS-00)
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Bin",V.Enum.ColumnPropertyNames!HeaderFontBold,True)
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Bin",V.Enum.ColumnPropertyNames!Visible,False)
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Bin",V.Enum.ColumnPropertyNames!AllowEdit,False)
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Bin",V.Enum.ColumnPropertyNames!ReadOnly,True)
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Bin",V.Enum.ColumnPropertyNames!AllowShowHide,False)
+
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Lot",v.Enum.ColumnPropertyNames!Caption,"Lot")
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Lot",V.Enum.ColumnPropertyNames!HeaderForeColor,v.Color.PRI-GSS-00)
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Lot",V.Enum.ColumnPropertyNames!HeaderFontBold,True)
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Lot",V.Enum.ColumnPropertyNames!Visible,False)
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Lot",V.Enum.ColumnPropertyNames!AllowEdit,False)
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Lot",V.Enum.ColumnPropertyNames!ReadOnly,True)
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Lot",V.Enum.ColumnPropertyNames!AllowShowHide,False)
+
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Heat",v.Enum.ColumnPropertyNames!Caption,"Body Heat")
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Heat",V.Enum.ColumnPropertyNames!HeaderForeColor,v.Color.PRI-GSS-00)
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Heat",V.Enum.ColumnPropertyNames!HeaderFontBold,True)
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Heat",V.Enum.ColumnPropertyNames!Visible,True)
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Heat",V.Enum.ColumnPropertyNames!AllowEdit,True)
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Heat",V.Enum.ColumnPropertyNames!ReadOnly,False)
+
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Bonnet_Heat",v.Enum.ColumnPropertyNames!Caption,"User 4(Bonnet Heat)")
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Bonnet_Heat",V.Enum.ColumnPropertyNames!HeaderForeColor,v.Color.PRI-GSS-00)
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Bonnet_Heat",V.Enum.ColumnPropertyNames!HeaderFontBold,True)
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Bonnet_Heat",V.Enum.ColumnPropertyNames!Visible,True)
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Bonnet_Heat",V.Enum.ColumnPropertyNames!AllowEdit,True)
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Bonnet_Heat",V.Enum.ColumnPropertyNames!ReadOnly,False)
+
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Serial_Number",v.Enum.ColumnPropertyNames!Caption,"Serial Number")
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Serial_Number",V.Enum.ColumnPropertyNames!HeaderForeColor,v.Color.PRI-GSS-00)
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Serial_Number",V.Enum.ColumnPropertyNames!HeaderFontBold,True)
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Serial_Number",V.Enum.ColumnPropertyNames!Visible,True)
+F.Intrinsic.Control.If(V.Global.bSerialUpdate,=,False)
+	Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Serial_Number",V.Enum.ColumnPropertyNames!AllowEdit,False)
+	Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Serial_Number",V.Enum.ColumnPropertyNames!ReadOnly,True)
+F.Intrinsic.Control.Else
+	Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Serial_Number",V.Enum.ColumnPropertyNames!AllowEdit,True)
+	Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Serial_Number",V.Enum.ColumnPropertyNames!ReadOnly,False)
+F.Intrinsic.Control.EndIf
+Gui.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Serial_Number",V.Enum.ColumnPropertyNames!CellFontBold,True)
+
+GUI.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Serial_Number","VisibleIndex", 0)
+GUI.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Heat","VisibleIndex", 1)
+GUI.FormSerialWIP.GsGridSerial.SetColumnProperty("GSerial","Bonnet_Heat","VisibleIndex", 2)
+
+Gui.FormSerialWIP.GsGridSerial.MainView("GSerial")
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("Set_Properties_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_SERIAL_WIP.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormSerialWIP_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.Set_Properties.End
+
+Program.Sub.Get_Data.Start
+F.Intrinsic.Control.SetErrorHandler("Get_Data_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+V.Local.sSql.Declare(String,"")
+V.Local.sHeat.Declare(String,"")
+V.Local.sSuffix.Declare(String,"")
+V.Local.sFilter.Declare(String,"")
+V.Local.i.Declare(Long,0)
+V.Local.sOrder.Declare(String,"")
+
+Gui.FormSerialWIP.lblNote2.Visible(False)
+Gui.FormSerialWIP.cmdWIPFG.Enabled(True)
+		
+F.ODBC.Connection!Con.OpenCompanyConnection
+
+V.Local.sSuffix.Set(V.Screen.FormSerialWIP!txtSuffix.Text)
+
+F.Intrinsic.String.Build("Select Sales_Order, Sales_Order_Line+'0' From Job_Header Where Job = '{0}' and Suffix = '{1}' and Sales_Order <> '' and Sales_Order <> '0000000'",V.Screen.FormSerialWIP!txtJob.Text,V.Local.sSuffix,V.Local.sSql)
+F.ODBC.Connection!Con.ExecuteAndReturn(V.Local.sSql,V.Local.sOrder)
+F.Intrinsic.Control.If(V.Local.sOrder.Trim,<>,"")
+	F.Intrinsic.String.Split(V.Local.sOrder,"*!*",V.Local.sOrder)
+	F.Intrinsic.String.Build("Select Order_No, Record_No, Shell_Hydro, Seat_A_Hydro, Seat_A_Air, Seat_B_Hydro, Seat_B_Air, Ht_Description, Hold_Time_1, Hold_Time_2, Hold_Time_3 From GCG_6936_Pressure Where Order_NO = '{0}' and Record_No = '{1}'",V.Local.sOrder,V.Local.sOrder(1),V.Local.sSql)
+	F.Intrinsic.Control.If(V.DataTable.Pres.Exists,=,True)
+		F.Data.DataTable.Close("Pres")
+	F.Intrinsic.Control.EndIf
+	F.Data.DataTable.CreateFromSQL("Pres",Con,V.Local.sSql,True)
+	'closing table since info as already been saved to custom table.  Updating of table will be done from Order Line script button
+	F.Intrinsic.Control.If(V.DataTable.Pres.RowCount--,<>,-1)
+		F.Data.DataTable.Close("Pres")
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.EndIf
+
+F.Data.Dictionary.CreateFromSQL("Bonnet",con,"Select rtrim(Serial_Number), rtrim(Bonnet_Heat) From GCG_6936_PO_Serials")
+F.Data.Dictionary.SetDefaultReturn("Bonnet","")
+
+F.Data.DataTable.Create("SerialTemp",True)
+F.Data.DataTable.AddColumn("SerialTemp","WIPFG",Boolean,False)
+F.Data.DataTable.AddColumn("SerialTemp","Job",String,V.Screen.FormSerialWIP!txtJob.Text)
+F.Data.DataTable.AddColumn("SerialTemp","Suffix",String,V.Local.sSuffix)
+F.Data.DataTable.AddColumn("SerialTemp","Heat",String)
+F.Data.DataTable.AddColumn("SerialTemp","Bonnet_Heat",String)
+F.Data.DataTable.AddColumn("SerialTemp","Serial_Number",String)
+
+F.Intrinsic.String.Build("Select Distinct Cast(0 as Bit) as WIPFG, Job, Suffix, rtrim(Serial_Number) as Serial_Number, Heat, Code_Transaction, Date_History, Time_Item_History, Quantity, Part, Location From V_Item_History Where Job = '{0}' and Suffix = '{1}' and Code_Transaction in('R10','J52','J55') Order by Serial_Number,Date_History, Time_Item_History",V.Screen.FormSerialWIP!txtJob.Text,V.Local.sSuffix,V.Local.sSql)
+F.Data.DataTable.CreateFromSQL("Temp",con,V.Local.sSql,True)
+F.Data.DataView.Create("Temp","VTemp",22,"","")
+F.Data.DataView.ToDataTableDistinct("Temp","VTemp","Dis_Serial","Serial_Number")
+F.Data.DataView.Close("Temp","VTemp")
+
+F.Intrinsic.Control.For(V.Local.i,0,V.DataTable.Dis_Serial.RowCount--,1)
+	F.Intrinsic.String.Build("Serial_Number = '{0}'",V.DataTable.Dis_Serial(V.Local.i).Serial_Number!FieldValTrim,V.Local.sFilter)
+	F.Data.DataView.Create("Temp","VTemp",22,V.Local.sFilter,"")
+	
+	F.Intrinsic.Control.SelectCase(V.DataView.Temp!VTemp(V.DataView.Temp!VTemp.RowCount--).Code_Transaction!FieldValTrim)
+		F.Intrinsic.Control.Case("J55")
+			F.Intrinsic.Control.If(V.DataView.Temp!VTemp(V.DataView.Temp!VTemp.RowCount--).Quantity!FieldValFloat,<,0)
+				F.Data.DataTable.AddRow("SerialTemp","Heat",V.DataView.Temp!VTemp(V.DataView.Temp!VTemp.RowCount--).Heat!FieldValTrim,"Bonnet_Heat","","Serial_Number",V.DataView.Temp!VTemp(V.DataView.Temp!VTemp.RowCount--).Serial_Number!FieldValTrim)
+				F.Intrinsic.Control.If(V.DataTable.Pres.Exists,=,True)
+					F.Intrinsic.String.Build("Select Hydro_Shell, Hydro_Seat, Nitrogen_Seat, MTR_Time_1, MTR_Time_2, MTR_Time_3, HT_Description From GCG_6936_Part_Info a Left Join GCG_6936_Mat_Group b on a.Mat_Group = b.Mat_Group Left Join GCG_6936_Hold_Time c on a.Code = c.Code Left Join GCG_6936_Heat_Treat d on a.HT_Group = d.HT_Group Where Part = '{0}' and Location = '{1}'",V.DataView.Temp!VTemp(V.DataView.Temp!VTemp.RowCount--).Part!FieldValTrim,V.DataView.Temp!VTemp(V.DataView.Temp!VTemp.RowCount--).Location!FieldValTrim,V.Local.sSql)
+					F.Data.DataTable.CreateFromSQL("PartInfo",con,V.Local.sSql,True)
+					F.Intrinsic.Control.If(V.DataTable.PartInfo.RowCount--,<>,-1)
+						F.Data.DataTable.AddRow("Pres","Order_NO",V.Local.sOrder,"Record_NO",V.Local.sOrder(1),"Shell_Hydro",V.DataTable.PartInfo(V.DataTable.PartInfo.RowCount--).Hydro_Shell!FieldValFloat,"Seat_A_Hydro",V.DataTable.PartInfo(V.DataTable.PartInfo.RowCount--).Hydro_Seat!FieldValFloat,"Seat_B_Hydro",V.DataTable.PartInfo(V.DataTable.PartInfo.RowCount--).Hydro_Seat!FieldValFloat,"Seat_A_Air",0.00,"Seat_B_Air",0.00)
+						F.Data.DataTable.SetValue("Pres",-1,"Hold_Time_1",V.DataTable.PartInfo(V.DataTable.PartInfo.RowCount--).MTR_Time_1!FieldValFloat,"Hold_Time_2",V.DataTable.PartInfo(V.DataTable.PartInfo.RowCount--).MTR_Time_2!FieldValFloat,"Hold_Time_3",V.DataTable.PartInfo(V.DataTable.PartInfo.RowCount--).MTR_Time_3!FieldValFloat,"HT_Description",V.DataTable.PartInfo(V.DataTable.PartInfo.RowCount--).HT_Description!FieldValTrim)
+						F.Data.DataTable.SaveToDB("Pres",con,"GCG_6936_Pressure","Order_NO*!*Record_No",3)
+						F.Data.DataTable.Close("Pres")
+					F.Intrinsic.Control.EndIf
+					F.Data.DataTable.Close("PartInfo")
+				F.Intrinsic.Control.EndIf
+			F.Intrinsic.Control.EndIf
+			
+		F.Intrinsic.Control.Case("J52")
+			F.Intrinsic.Control.If(V.DataView.Temp!VTemp(V.DataView.Temp!VTemp.RowCount--).Quantity!FieldValFloat,<,0)
+				F.Data.DataTable.AddRow("SerialTemp","Heat",V.DataView.Temp!VTemp(V.DataView.Temp!VTemp.RowCount--).Heat!FieldValTrim,"Bonnet_Heat","","Serial_Number",V.DataView.Temp!VTemp(V.DataView.Temp!VTemp.RowCount--).Serial_Number!FieldValTrim)
+			F.Intrinsic.Control.EndIf
+			
+		F.Intrinsic.Control.Case("R10")
+			F.Intrinsic.Control.If(V.DataView.Temp!VTemp(V.DataView.Temp!VTemp.RowCount--).Quantity!FieldValFloat,<,0)
+				F.Data.DataTable.AddRow("SerialTemp","Heat",V.DataView.Temp!VTemp(V.DataView.Temp!VTemp.RowCount--).Heat!FieldValTrim,"Bonnet_Heat","","Serial_Number",V.DataView.Temp!VTemp(V.DataView.Temp!VTemp.RowCount--).Serial_Number!FieldValTrim)
+				F.Intrinsic.Control.If(V.DataTable.Pres.Exists,=,True)
+					F.Intrinsic.String.Build("Select Hydro_Shell, Hydro_Seat, Nitrogen_Seat, MTR_Time_1, MTR_Time_2, MTR_Time_3, HT_Description From GCG_6936_Part_Info a Left Join GCG_6936_Mat_Group b on a.Mat_Group = b.Mat_Group Left Join GCG_6936_Hold_Time c on a.Code = c.Code Left Join GCG_6936_Heat_Treat d on a.HT_Group = d.HT_Group Where Part = '{0}' and Location = '{1}'",V.DataView.Temp!VTemp(V.DataView.Temp!VTemp.RowCount--).Part!FieldValTrim,V.DataView.Temp!VTemp(V.DataView.Temp!VTemp.RowCount--).Location!FieldValTrim,V.Local.sSql)
+					F.Data.DataTable.CreateFromSQL("PartInfo",con,V.Local.sSql,True)
+					F.Intrinsic.Control.If(V.DataTable.PartInfo.RowCount--,<>,-1)
+						F.Data.DataTable.AddRow("Pres","Order_NO",V.Local.sOrder,"Record_NO",V.Local.sOrder(1),"Shell_Hydro",V.DataTable.PartInfo(V.DataTable.PartInfo.RowCount--).Hydro_Shell!FieldValFloat,"Seat_A_Hydro",V.DataTable.PartInfo(V.DataTable.PartInfo.RowCount--).Hydro_Seat!FieldValFloat,"Seat_B_Hydro",V.DataTable.PartInfo(V.DataTable.PartInfo.RowCount--).Hydro_Seat!FieldValFloat,"Seat_A_Air",0.00,"Seat_B_Air",0.00)
+						F.Data.DataTable.SetValue("Pres",-1,"Hold_Time_1",V.DataTable.PartInfo(V.DataTable.PartInfo.RowCount--).MTR_Time_1!FieldValFloat,"Hold_Time_2",V.DataTable.PartInfo(V.DataTable.PartInfo.RowCount--).MTR_Time_2!FieldValFloat,"Hold_Time_3",V.DataTable.PartInfo(V.DataTable.PartInfo.RowCount--).MTR_Time_3!FieldValFloat,"HT_Description",V.DataTable.PartInfo(V.DataTable.PartInfo.RowCount--).HT_Description!FieldValTrim)
+						F.Data.DataTable.SaveToDB("Pres",con,"GCG_6936_Pressure","Order_NO*!*Record_No",3)
+						F.Data.DataTable.Close("Pres")
+					F.Intrinsic.Control.EndIf
+					F.Data.DataTable.Close("PartInfo")
+				F.Intrinsic.Control.EndIf
+			F.Intrinsic.Control.EndIf
+			
+	F.Intrinsic.Control.EndSelect
+	
+	F.Data.DataView.Close("Temp","VTemp")
+F.Intrinsic.Control.Next(V.Local.i)
+
+F.Data.DataTable.Close("Temp")
+
+F.Data.DataTable.Close("Dis_Serial")
+F.Data.DataTable.FillFromDictionary("SerialTemp","Bonnet","Serial_Number","Bonnet_Heat")
+F.Data.Dictionary.Close("Bonnet")
+
+F.Intrinsic.Control.If(V.DataTable.CHEM.Exists,=,True)
+	F.Data.DataTable.Close("CHEM")
+F.Intrinsic.Control.EndIf
+
+F.Data.DataTable.CreateFromSQL("CHEM",con,"Select Heat, 'Y' as Chems from GCG_6936_Heat_Chem",True)
+F.Data.DataTable.AddRow("CHEM","Heat","","Chems","Y")
+
+F.Intrinsic.Control.For(V.Local.i,0,V.DataTable.SerialTemp.RowCount--,1)
+	F.Intrinsic.String.Build("Heat = '{0}'",V.DataTable.SerialTemp(V.Local.i).Heat!FieldValTrim,V.Local.sFilter)
+	F.Data.DataView.Create("CHEM","Temp",22,V.Local.sFilter,"")
+	F.Intrinsic.Control.If(V.DataView.CHEM!Temp.RowCount--,=,-1)
+		Gui.FormSerialWIP.lblNote2.Visible(True)
+		Gui.FormSerialWIP.cmdWIPFG.Enabled(False)
+		F.Data.DataView.Close("CHEM","Temp")
+		F.Intrinsic.Control.ExitFor(V.Local.i)
+	F.Intrinsic.Control.EndIf
+	F.Data.DataView.Close("CHEM","Temp")
+	F.Intrinsic.String.Build("Heat = '{0}'",V.DataTable.SerialTemp(V.Local.i).Bonnet_Heat!FieldValTrim,V.Local.sFilter)
+	F.Data.DataView.Create("CHEM","Temp",22,V.Local.sFilter,"")
+	F.Intrinsic.Control.If(V.DataView.CHEM!Temp.RowCount--,=,-1)
+		Gui.FormSerialWIP.lblNote2.Visible(True)
+		Gui.FormSerialWIP.cmdWIPFG.Enabled(False)
+		F.Data.DataView.Close("CHEM","Temp")
+		F.Intrinsic.Control.ExitFor(V.Local.i)
+	F.Intrinsic.Control.EndIf
+	F.Data.DataView.Close("CHEM","Temp")
+F.Intrinsic.Control.Next(V.Local.i)
+F.Data.DataTable.DeleteRow("Serial")
+F.Data.DataTable.AcceptChanges("Serial")
+F.Data.DataTable.Merge("SerialTemp","Serial",False,2)
+F.Data.DataTable.Close("SerialTemp")
+
+F.ODBC.Connection!Con.Close
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("Get_Data_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_SERIAL_WIP.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormSerialWIP_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.Get_Data.End
+
+Program.Sub.GsGridSerial_CellValueChanged.Start
+F.Intrinsic.Control.SetErrorHandler("Get_Data_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+V.Local.sSql.Declare(String,"")
+V.Local.sHeat.Declare(String,"")
+V.Local.sSuffix.Declare(String,"")
+V.Local.sFilter.Declare(String,"")
+V.Local.i.Declare(Long,0)
+V.Local.bVis.Declare(Boolean,False)
+
+F.Intrinsic.Control.If(V.DataTable.CHEM.Exists)
+	F.Intrinsic.Control.For(V.Local.i,0,V.DataTable.Serial.RowCount--,1)
+		F.Intrinsic.String.Build("Heat = '{0}'",V.DataTable.Serial(V.Local.i).Heat!FieldValTrim,V.Local.sFilter)
+		F.Data.DataView.Create("CHEM","Temp",22,V.Local.sFilter,"")
+		F.Intrinsic.Control.If(V.DataView.CHEM!Temp.RowCount--,=,-1)
+			V.Local.bVis.Set(True)
+			Gui.FormSerialWIP.lblNote2.Visible(True)
+			Gui.FormSerialWIP.cmdWIPFG.Enabled(False)
+			F.Data.DataView.Close("CHEM","Temp")
+			F.Intrinsic.Control.ExitFor(V.Local.i)
+		F.Intrinsic.Control.EndIf
+		F.Data.DataView.Close("CHEM","Temp")
+		F.Intrinsic.String.Build("Heat = '{0}'",V.DataTable.Serial(V.Local.i).Bonnet_Heat!FieldValTrim,V.Local.sFilter)
+		F.Data.DataView.Create("CHEM","Temp",22,V.Local.sFilter,"")
+		F.Intrinsic.Control.If(V.DataView.CHEM!Temp.RowCount--,=,-1)
+			V.Local.bVis.Set(True)
+			Gui.FormSerialWIP.lblNote2.Visible(True)
+			Gui.FormSerialWIP.cmdWIPFG.Enabled(False)
+			F.Data.DataView.Close("CHEM","Temp")
+			F.Intrinsic.Control.ExitFor(V.Local.i)
+		F.Intrinsic.Control.EndIf
+		F.Data.DataView.Close("CHEM","Temp")
+	F.Intrinsic.Control.Next(V.Local.i)
+	F.Intrinsic.Control.If(V.Local.bVis,=,False)
+		Gui.FormSerialWIP.lblNote2.Visible(False)
+		Gui.FormSerialWIP.cmdWIPFG.Enabled(True)
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.Else
+	Gui.FormSerialWIP.lblNote2.Visible(True)
+	Gui.FormSerialWIP.cmdWIPFG.Enabled(False)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("Get_Data_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_SERIAL_WIP.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormSerialWIP_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.GsGridSerial_CellValueChanged.End
+
+Program.Sub.Comments.Start
+${$5$}$20.1.8713.32002$}$1
+${$6$}$rking$}$20240126110239147$}$QNdZLVy4bWuiWa9jh1ZTiPY99LydZoBN65ijzRe7OgwD4tGJRD72RxWS+y4PMBnjLwiIuqNeBSc=
+Program.Sub.Comments.End
