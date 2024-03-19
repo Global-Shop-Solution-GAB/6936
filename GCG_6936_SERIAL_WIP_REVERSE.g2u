@@ -1,0 +1,170 @@
+﻿Program.Sub.Preflight.Start
+V.Global.sDir.Declare(String,"")
+Program.Sub.Preflight.End
+
+Program.Sub.Main.Start
+F.Intrinsic.Control.SetErrorHandler("Main_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+V.Local.sSql.Declare(String,"")
+V.Local.sDate.Declare(String,"")
+V.Local.sTime2.Declare(String,"")
+V.Local.sKey.Declare(String,"")
+V.Local.sSalesOrder.Declare(String,"")
+V.Local.sRet.Declare(String,"")
+V.Local.iD.Declare(Long,0)
+V.Local.sFile.Declare(String,"")
+V.Local.sFileName.Declare(String,"")
+V.Local.sOrder.Declare(String,"")
+V.Local.iRPTID.Declare(Long,0)
+V.Local.sValues.Declare(String,"")
+V.Local.sDesc.Declare(String,"")
+V.Local.iLogID.Declare(Long,0)
+V.Local.iRunID.Declare(Long,0)
+V.Local.sParams.Declare(String,"")
+V.Local.sPart.Declare(String,"")
+V.Local.sLine.Declare(String,"")
+v.Local.iRet.Declare(Long,0)
+
+Function.Intrinsic.UI.UsePixels ' Allows you to use Pixels instead of Twips throughout
+
+F.Intrinsic.Control.SelectCase(V.Caller.Hook)	
+	F.Intrinsic.Control.Case(16556)
+		'job = 000003
+		'suffix = 000003
+		'key seq = 000022
+		
+		F.Intrinsic.String.LPad(V.Passed.000022,"0",4,V.Local.sKey)
+
+		F.Intrinsic.String.Format(V.Ambient.Now,"HH:NN:SS",V.Local.sTime2)
+		F.Intrinsic.String.Build("{0} {1}",V.Ambient.Date.PervasiveDate,V.Local.sTime2,V.Local.sDate)
+		
+		F.ODBC.Connection!Con.OpenCompanyConnection
+		
+		F.Intrinsic.String.Build("select Top 1 rtrim(Part), Sales_Order,Sales_Order_Line from V_JOB_HEADER Where Job = '{0}' and Suffix = '{1}' and Sales_Order <> '0000000' and Sales_Order <> ''",V.Passed.000003,V.Passed.000004.Trim,V.Local.sSql)
+		F.ODBC.Connection!con.ExecuteAndReturn(V.Local.sSql,V.Local.sSalesOrder)
+		F.Intrinsic.String.Split(V.Local.sSalesOrder,"*!*",V.Local.sSalesOrder)
+		v.Local.sSalesOrder.RedimPreserve(0,2)
+		V.Local.sOrder.Set(V.Local.sSalesOrder(1))
+		F.Intrinsic.Control.If(V.Local.sSalesOrder(2).Trim,<>,"")
+			F.Intrinsic.String.Build("{0}0",V.Local.sSalesOrder(2).Trim,V.Local.sLine)
+		F.Intrinsic.Control.EndIf
+		V.Local.sPart.Set(V.Local.sSalesOrder.Trim)
+		F.Intrinsic.Control.If(V.Local.sPart.Trim,=,"")
+			F.Intrinsic.String.Build("select Top 1 rtrim(Part) from V_JOB_HEADER Where Job = '{0}' and Suffix = '{1}'",V.Passed.000003,V.Passed.000004.Trim,V.Local.sSql)
+			F.ODBC.Connection!con.ExecuteAndReturn(V.Local.sSql,V.Local.sPart)
+			V.Local.sPart.Set(V.Local.sPart.Trim)
+			
+		F.Intrinsic.Control.EndIf
+		F.Intrinsic.String.Build("{0}-{1}",V.Local.sSalesOrder(1).Trim,V.Local.sSalesOrder(2).Trim,V.Local.sSalesOrder)
+		
+		F.Intrinsic.String.Build("Select a.Job, a.Suffix, rtrim(a.Serial_Number) as Serial_Number From Item_History a Where a.DTL_Key_Seq = '{2}' and a.Job = '{0}' and a.Suffix = '{1}' and a.Serial_Number <> '' and Code_Transaction = 'J52'",V.Passed.000003,V.Passed.000004.Trim,V.Local.sKey,V.Local.sSql)
+		F.Data.DataTable.CreateFromSQL("Serial",con,V.Local.sSql,True)
+		F.Data.DataTable.AddColumn("Serial","WIPFG",BOOLEAN,False)
+		F.Data.DataTable.AddColumn("Serial","LST_CHG_DATE",Date,V.Local.sDate)
+		F.Data.DataTable.AddColumn("Serial","LST_CHG_USER",String,V.Caller.User)
+		F.Data.DataTable.AddColumn("Serial","LST_CHG_PRG",String,"GCG_6936_SERIAL_WIP_REVERSE")
+		F.Intrinsic.Control.If(V.DataTable.Serial.RowCount--,<>,-1)
+			F.Data.DataTable.SaveToDB("Serial",con,"GCG_6936_PO_SERIALS","Serial_Number",256,"Job@!@Job*!*Suffix@!@Suffix*!*Serial_Number@!@Serial_Number*!*WIPFG@!@WIPFG*!*LST_CHG_DATE@!@LST_CHG_DATE*!*LST_CHG_USER@!@LST_CHG_USER*!*LST_CHG_PRG@!@LST_CHG_PRG")
+			
+			F.Intrinsic.Control.CallSub(Build_Dir)
+			
+			F.Intrinsic.Control.If(V.Local.sPart.Trim,<>,"","AND",V.Local.sSalesOrder.Trim,<>,"")
+				F.Intrinsic.String.Build("{0}-{1}","MTR",V.Local.sSalesOrder,V.Local.sRet)
+		
+				F.Global.DocumentControl.CreateReference(V.Local.sOrder,45,V.Local.iD)
+				F.Intrinsic.String.Build("{0}{1}.PDF",V.Global.sDir,V.Local.sRet,V.Local.sFile)
+				F.Intrinsic.String.Build("{0}.PDF",V.Local.sRet.UCase,V.Local.sFileName)
+				V.Local.sParams.Set("Sales Order*!*Line") 
+				
+				F.Intrinsic.String.Build("MTR - SO-Line: {0}",V.Local.sSalesOrder,V.Local.sDesc)
+				
+				F.Intrinsic.String.Build("{0}*!*{1}",V.Local.sOrder,V.Local.sLine,V.Local.sValues)
+				
+				F.Global.BI.GetIDFromName("GCG_6936_MTR.rpt",V.Local.iRPTID)
+				
+				F.Global.BI.GetRunID(V.Local.iRunID)
+				F.Global.BI.StartLogging(V.Local.iRunID,V.Local.iRPTID,-1,"",V.Local.iLogID)
+				F.Global.BI.StopLogging(V.Local.iLogID)
+		
+				F.Intrinsic.Control.If(V.Local.iRPTID,<>,-1)
+					F.Global.BI.RunReportPreProcessor(V.Local.iRunID,V.Local.iLogID,V.Local.sParams,V.Local.sValues,"",4,True,"",-1,"",0,V.Local.sFile,"",V.Local.iRet)
+					
+					F.Intrinsic.String.Build("Select File From ATG_Doc_Assoc Where Link_ID = {0} and ucase(File) = '{1}'",V.Local.iD,V.Local.sFileName,V.Local.sSql)
+					F.ODBC.Connection!Con.ExecuteAndReturn(V.Local.sSql,V.Local.sRet)
+					F.Intrinsic.Control.If(V.Local.sRet.Trim,=,"")
+						F.Global.DocumentControl.AddDocument(V.Local.iD,V.Local.sFile,V.Local.sDesc,-1,"PDF")
+					F.Intrinsic.Control.EndIf
+				F.Intrinsic.Control.EndIf
+			F.Intrinsic.Control.EndIf
+		F.Intrinsic.Control.EndIf
+		F.ODBC.Connection!Con.Close
+		F.Intrinsic.Control.End
+		
+	F.Intrinsic.Control.CaseElse
+		F.Intrinsic.Control.End
+		
+F.Intrinsic.Control.EndSelect
+
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("Main_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_SERIAL_WIP_REVERSE.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.End
+Function.Intrinsic.Control.EndIf
+Program.Sub.Main.End
+
+Program.Sub.Build_Dir.Start
+F.Intrinsic.Control.SetErrorHandler("Build_Dir_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+V.Local.bRet.Declare(Boolean,False)
+
+F.Intrinsic.Control.If(V.Caller.GlobalDir.Right1,=,"\")
+	F.Intrinsic.String.Build("{0}Custom",V.Caller.GlobalDir,V.Global.sDir)
+F.Intrinsic.Control.Else
+	V.Global.sDir.Set(V.Caller.GlobalDir)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.String.Build("{0}\Custom",V.Global.sDir,V.Global.sDir)
+F.Intrinsic.File.DirExists(V.Global.sDir,V.Local.bRet)
+
+F.Intrinsic.Control.If(V.Local.bRet,=,False)
+	F.Intrinsic.File.CreateDir(V.Global.sDir)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.String.Build("{0}\6936",V.Global.sDir,V.Global.sDir)
+F.Intrinsic.File.DirExists(V.Global.sDir,V.Local.bRet)
+
+F.Intrinsic.Control.If(V.Local.bRet,=,False)
+	F.Intrinsic.File.CreateDir(V.Global.sDir)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.String.Build("{0}\6936\{1}",V.Global.sDir,V.Caller.CompanyCode,V.Global.sDir)
+F.Intrinsic.File.DirExists(V.Global.sDir,V.Local.bRet)
+
+F.Intrinsic.Control.If(V.Local.bRet,=,False)
+	F.Intrinsic.File.CreateDir(V.Global.sDir)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.String.Build("{0}\",V.Global.sDir,V.Global.sDir)
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("Build_Dir_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_SERIAL_WIP_REVERSE.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.End
+Function.Intrinsic.Control.EndIf
+Program.Sub.Build_Dir.End
+
+Program.Sub.Comments.Start
+${$5$}$20.1.8711.23215$}$1
+${$6$}$rking$}$20231121144628766$}$QNdZLVy4bWuiWa9jh1ZTiKHvMPldSPXeki/+MiLSozXLpOxHHBPgA6PBBrApryrypi3ES3ZiVko=
+Program.Sub.Comments.End
