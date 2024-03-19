@@ -1,0 +1,394 @@
+﻿Program.Sub.ScreenSU.Start
+Gui.FormHTGROUP..Create(BaseForm)
+Gui.FormHTGROUP..Caption("HT Group Import/Update")
+Gui.FormHTGROUP..Size(651,720)
+Gui.FormHTGROUP..MinX(0)
+Gui.FormHTGROUP..MinY(0)
+Gui.FormHTGROUP..Position(0,0)
+Gui.FormHTGROUP..AlwaysOnTop(False)
+Gui.FormHTGROUP..FontName("Tahoma")
+Gui.FormHTGROUP..FontSize(8.25)
+Gui.FormHTGROUP..ControlBox(True)
+Gui.FormHTGROUP..MaxButton(True)
+Gui.FormHTGROUP..MinButton(True)
+Gui.FormHTGROUP..MousePointer(0)
+Gui.FormHTGROUP..Moveable(True)
+Gui.FormHTGROUP..Sizeable(True)
+Gui.FormHTGROUP..ShowInTaskBar(True)
+Gui.FormHTGROUP..TitleBar(True)
+Gui.FormHTGROUP..Event(UnLoad,FormHTGROUP_UnLoad)
+Gui.FormHTGROUP.lblGroup.Create(Label,"Group",True,29,13,0,27,11,True,0,"Tahoma",8.25,,0,0)
+Gui.FormHTGROUP.lblGroup.BorderStyle(0)
+Gui.FormHTGROUP.txtHTGROUP.Create(TextBox,"",True,156,20,0,26,28,True,0,"Tahoma",8.25,,1)
+Gui.FormHTGROUP.txtHTGROUP.Mask(">")
+Gui.FormHTGROUP.txtHTGROUP.MaxLength(20)
+Gui.FormHTGROUP.txtHTGROUP.Event(GotFocus,txtHTGROUP_GotFocus)
+Gui.FormHTGROUP.lblDesc.Create(Label,"Description",True,53,13,0,191,11,True,0,"Tahoma",8.25,,0,0)
+Gui.FormHTGROUP.lblDesc.BorderStyle(0)
+Gui.FormHTGROUP.txtDesc.Create(TextBox,"",True,211,20,0,190,28,True,0,"Tahoma",8.25,,1)
+Gui.FormHTGROUP.txtDesc.MaxLength(30)
+Gui.FormHTGROUP.txtDesc.Event(GotFocus,txtDesc_GotFocus)
+Gui.FormHTGROUP.cmdUpdate.Create(Button)
+Gui.FormHTGROUP.cmdUpdate.Enabled(True)
+Gui.FormHTGROUP.cmdUpdate.Visible(True)
+Gui.FormHTGROUP.cmdUpdate.Zorder(0)
+Gui.FormHTGROUP.cmdUpdate.Size(162,23)
+Gui.FormHTGROUP.cmdUpdate.Position(477,25)
+Gui.FormHTGROUP.cmdUpdate.Caption("Mass Update from Excel File")
+Gui.FormHTGROUP.cmdUpdate.FontName("Tahoma")
+Gui.FormHTGROUP.cmdUpdate.FontSize(8.25)
+Gui.FormHTGROUP.cmdUpdate.Event(Click,cmdUpdate_Click)
+Gui.FormHTGROUP.GsGridHTGROUP.Create(GsGridControl)
+Gui.FormHTGROUP.GsGridHTGROUP.Enabled(True)
+Gui.FormHTGROUP.GsGridHTGROUP.Visible(True)
+Gui.FormHTGROUP.GsGridHTGROUP.Zorder(0)
+Gui.FormHTGROUP.GsGridHTGROUP.Size(628,601)
+Gui.FormHTGROUP.GsGridHTGROUP.Position(11,53)
+Gui.FormHTGROUP.GsGridHTGROUP.Anchor(15)
+Gui.FormHTGROUP.GsGridHTGROUP.Event(RowCellClick,GsGridHTGROUP_RowCellClick)
+Gui.FormHTGROUP.cmdSave.Create(Button)
+Gui.FormHTGROUP.cmdSave.Enabled(True)
+Gui.FormHTGROUP.cmdSave.Visible(True)
+Gui.FormHTGROUP.cmdSave.Zorder(0)
+Gui.FormHTGROUP.cmdSave.Size(75,23)
+Gui.FormHTGROUP.cmdSave.Position(19,662)
+Gui.FormHTGROUP.cmdSave.Caption("Save")
+Gui.FormHTGROUP.cmdSave.FontName("Tahoma")
+Gui.FormHTGROUP.cmdSave.FontSize(8.25)
+Gui.FormHTGROUP.cmdSave.Anchor(6)
+Gui.FormHTGROUP.cmdSave.Event(Click,cmdSave_Click)
+Gui.FormHTGROUP.cmdAdd.Create(Button)
+Gui.FormHTGROUP.cmdAdd.Enabled(True)
+Gui.FormHTGROUP.cmdAdd.Visible(True)
+Gui.FormHTGROUP.cmdAdd.Zorder(0)
+Gui.FormHTGROUP.cmdAdd.Size(62,23)
+Gui.FormHTGROUP.cmdAdd.Position(410,25)
+Gui.FormHTGROUP.cmdAdd.Caption("Add")
+Gui.FormHTGROUP.cmdAdd.FontName("Tahoma")
+Gui.FormHTGROUP.cmdAdd.FontSize(8.25)
+Gui.FormHTGROUP.cmdAdd.Event(Click,cmdAdd_Click)
+Program.Sub.ScreenSU.End
+
+Program.Sub.Preflight.Start
+Program.Sub.Preflight.End
+
+Program.Sub.Main.Start
+F.Intrinsic.Control.SetErrorHandler("Main_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+V.Local.bExcel.Declare(Boolean,False)
+
+Function.Intrinsic.UI.UsePixels ' Allows you to use Pixels instead of Twips throughout
+
+F.Automation.MSExcel.CheckPresence(V.Local.bExcel)
+
+F.Intrinsic.Control.If(V.Local.bExcel)
+	Gui.FormHTGROUP.cmdUpdate.Visible(True)
+F.Intrinsic.Control.Else
+	Gui.FormHTGROUP.cmdUpdate.Visible(False)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.CallSub(Get_Data)
+F.Intrinsic.Control.CallSub(Set_Prop)
+
+Gui.FormHTGROUP..Show
+Gui.FormHTGROUP..AlwaysOnTop(True)
+Gui.FormHTGROUP..AlwaysOnTop(False)
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("Main_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_HEAT_TREAT.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormHTGROUP_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.Main.End
+
+Program.Sub.FormHTGROUP_UnLoad.Start
+F.Intrinsic.Control.SetErrorHandler("FormHTGROUP_UnLoad_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+F.Intrinsic.Control.End
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("FormHTGROUP_UnLoad_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.Control.End
+Function.Intrinsic.Control.EndIf
+Program.Sub.FormHTGROUP_UnLoad.End
+
+Program.Sub.GsGridHTGROUP_RowCellClick.Start
+F.Intrinsic.Control.SetErrorHandler("GsGridHTGROUP_RowCellClick_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+F.Intrinsic.Control.SelectCase(V.Args.Column.UCase)
+	F.Intrinsic.Control.Case("DELETE_ROW")
+		F.Data.DataTable.DeleteRow("HTGROUP",v.Args.RowIndex)
+	
+F.Intrinsic.Control.EndSelect
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("GsGridHTGROUP_RowCellClick_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_HEAT_TREAT.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormHTGROUP_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.GsGridHTGROUP_RowCellClick.End
+
+Program.Sub.cmdUpdate_Click.Start
+F.Intrinsic.Control.SetErrorHandler("cmdUpdate_Click_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+V.Local.sFileName.Declare(String,"")
+V.Local.sFileContent.Declare(String,"")
+V.Local.sSheets.Declare(String,"")
+V.Local.sSheetInfo.Declare(String,"")
+V.Local.i.Declare(Long,0)
+V.Local.iC.Declare(Long,0)
+V.Local.iRet.Declare(Long,0)
+V.Local.sData.Declare(String,"")
+V.Local.sFilter.Declare(String,"")
+V.Local.sFields.Declare(String,"HT_Group*!*HT_Description")
+
+F.Intrinsic.String.Split(V.Local.sFields,"*!*",V.Local.sFields)
+
+'when selecting from the browser only show csv files
+F.Intrinsic.UI.ShowOpenFileDialog("","XLSX [.xlsx]|*.xlsx","",V.Local.sFileName)
+
+'checking to see if a file was chosen
+F.Intrinsic.Control.If(V.Local.sFileName.Length,>,0,"AND",V.Local.sFileName.UCase,<>,"***CANCEL***")
+	Gui.FormHTGROUP.GsGridHTGROUP.SuspendLayout
+	F.Automation.MSExcel.ReadSpreadsheet(V.Local.sFileName,V.Local.sFileContent)
+	
+	F.Intrinsic.String.Split(V.Local.sFileContent,"&^&",V.Local.sSheets)
+	
+	F.Intrinsic.String.Split(V.Local.sSheets(0),"$!$",V.Local.sSheetInfo)
+
+	F.Intrinsic.Control.For(V.Local.i,1,V.Local.sSheetInfo.UBound,1)
+		F.Intrinsic.String.Split(V.Local.sSheetInfo(V.Local.i),"*!*",V.Local.sData)
+		F.Intrinsic.String.Build("HT_Group = '{0}'",V.Local.sData(0).Trim,V.Local.sFilter)
+		F.Data.DataView.Create("HTGROUP","Temp",22,V.Local.sFilter,"")
+		F.Intrinsic.Control.If(V.DataView.HTGROUP!Temp.RowCount--,<>,-1)
+			F.Intrinsic.Control.For(V.Local.iC,1,V.Local.sFields.UBound,1)
+				F.Intrinsic.Control.If(V.Local.sData(V.Local.iC).Trim,=,"")
+					F.Data.DataTable.SetValue("HTGROUP",V.DataView.HTGROUP!Temp(V.DataView.HTGROUP!Temp.RowCount--).DataTableIndex,V.Local.sFields(V.Local.iC),V.Ambient.DBNULL)
+				F.Intrinsic.Control.Else
+					F.Data.DataTable.SetValue("HTGROUP",V.DataView.HTGROUP!Temp(V.DataView.HTGROUP!Temp.RowCount--).DataTableIndex,V.Local.sFields(V.Local.iC),V.Local.sData(V.Local.iC))
+				F.Intrinsic.Control.EndIf
+			F.Intrinsic.Control.Next(V.Local.iC)
+		F.Intrinsic.Control.Else
+			F.Data.DataTable.AddRow("HTGROUP","HT_Group",V.Local.sData(0).Trim)
+			F.Intrinsic.Control.For(V.Local.iC,1,V.Local.sFields.UBound,1)
+				F.Intrinsic.Control.If(V.Local.sData(V.Local.iC).Trim,=,"")
+					F.Data.DataTable.SetValue("HTGROUP",V.DataTable.HTGROUP.RowCount--,V.Local.sFields(V.Local.iC),V.Ambient.DBNULL)
+				F.Intrinsic.Control.Else
+					F.Data.DataTable.SetValue("HTGROUP",V.DataTable.HTGROUP.RowCount--,V.Local.sFields(V.Local.iC),V.Local.sData(V.Local.iC))
+				F.Intrinsic.Control.EndIf
+			F.Intrinsic.Control.Next(V.Local.iC)
+		F.Intrinsic.Control.EndIf
+		F.Data.DataView.Close("HTGROUP","Temp")
+	F.Intrinsic.Control.Next(V.Local.i)
+	Gui.FormHTGROUP.GsGridHTGROUP.ResumeLayout
+	F.Intrinsic.UI.Msgbox("Records have been updated in the Grid.  Would you like to save updated Records?","Attention",4,V.Local.iRet)
+	F.Intrinsic.Control.If(V.Local.iRet,=,6)
+		F.Intrinsic.Control.CallSub(cmdSave_Click)
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.EndIf
+	
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("cmdUpdate_Click_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_HEAT_TREAT.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormHTGROUP_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.cmdUpdate_Click.End
+
+Program.Sub.cmdSave_Click.Start
+F.Intrinsic.Control.SetErrorHandler("cmdSave_Click_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+F.ODBC.Connection!con.OpenCompanyConnection
+F.Data.DataTable.SaveToDB("HTGROUP",con,"GCG_6936_HEAT_TREAT","HT_Group",7,"HT_Group@!@HT_Group*!*HT_Description@!@HT_Description")
+F.ODBC.Connection!Con.Close
+
+F.Data.DataTable.AcceptChanges("HTGROUP")
+
+F.Intrinsic.UI.Msgbox("Records have been saved.........")
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("cmdSave_Click_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_HEAT_TREAT.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormHTGROUP_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.cmdSave_Click.End
+
+Program.Sub.txtHTGROUP_GotFocus.Start
+F.Intrinsic.Control.SetErrorHandler("txtHTGROUP_GotFocus_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+Gui.FormHTGROUP.txtHTGROUP.SelectAll
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("txtHTGROUP_GotFocus_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_HEAT_TREAT.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormHTGROUP_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.txtHTGROUP_GotFocus.End
+
+Program.Sub.cmdAdd_Click.Start
+F.Intrinsic.Control.SetErrorHandler("cmdAdd_Click_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+V.Local.sFilter.Declare(String,"")
+V.Local.sValue.Declare(String,"")
+V.Local.sFields.Declare(String,"HT_Description")
+V.Local.sControl.Declare(String,"txtDesc")
+V.Local.iC.Declare(Long,0)
+
+F.Intrinsic.String.Split(V.Local.sFields,"*!*",V.Local.sFields)
+F.Intrinsic.String.Split(V.Local.sControl,"*!*",V.Local.sControl)
+
+V.Local.sValue.Set(V.Screen.FormHTGROUP!txtHTGROUP.Text)
+
+F.Intrinsic.Control.If(V.Local.sValue.Trim,<>,"")
+	F.Intrinsic.String.Build("HT_Group = '{0}'",V.Local.sValue.Trim,V.Local.sFilter)
+	F.Data.DataView.Create("HTGROUP","Temp",22,V.Local.sFilter,"")
+	F.Intrinsic.Control.If(V.DataView.HTGROUP!Temp.RowCount--,<>,-1)
+		F.Intrinsic.Control.For(V.Local.iC,0,V.Local.sFields.UBound,1)
+			V.Local.sValue.Set(V.Screen.FormHTGROUP![V.Local.sControl(V.Local.iC)].Text)
+			F.Intrinsic.Control.If(V.Local.sValue.Trim,=,"")
+				F.Data.DataTable.SetValue("HTGROUP",V.DataView.HTGROUP!Temp(V.DataView.HTGROUP!Temp.RowCount--).DataTableIndex,V.Local.sFields(V.Local.iC),V.Ambient.DBNULL)
+			F.Intrinsic.Control.Else
+				F.Data.DataTable.SetValue("HTGROUP",V.DataView.HTGROUP!Temp(V.DataView.HTGROUP!Temp.RowCount--).DataTableIndex,V.Local.sFields(V.Local.iC),V.Local.sValue.Trim)
+			F.Intrinsic.Control.EndIf
+		F.Intrinsic.Control.Next(V.Local.iC)
+	F.Intrinsic.Control.Else
+		F.Data.DataTable.AddRow("HTGROUP","HT_Group",V.Local.sValue.Trim)
+		F.Intrinsic.Control.For(V.Local.iC,0,V.Local.sFields.UBound,1)
+			V.Local.sValue.Set(V.Screen.FormHTGROUP![V.Local.sControl(V.Local.iC)].Text)
+			F.Intrinsic.Control.If(V.Local.sValue.Trim,=,"")
+				F.Data.DataTable.SetValue("HTGROUP",V.DataTable.HTGROUP.RowCount--,V.Local.sFields(V.Local.iC),V.Ambient.DBNULL)
+			F.Intrinsic.Control.Else
+				F.Data.DataTable.SetValue("HTGROUP",V.DataTable.HTGROUP.RowCount--,V.Local.sFields(V.Local.iC),V.Local.sValue.Trim)
+			F.Intrinsic.Control.EndIf
+		F.Intrinsic.Control.Next(V.Local.iC)
+	F.Intrinsic.Control.EndIf
+	F.Data.DataView.Close("HTGROUP","Temp")
+F.Intrinsic.Control.EndIf
+
+Gui.FormHTGROUP.txtHTGROUP.Text(V.Ambient.DBNULL)
+Gui.FormHTGROUP.txtDesc.Text(V.Ambient.DBNULL)
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("cmdAdd_Click_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_HEAT_TREAT.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormHTGROUP_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.cmdAdd_Click.End
+
+Program.Sub.txtDesc_GotFocus.Start
+F.Intrinsic.Control.SetErrorHandler("txtDesc_GotFocus_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+Gui.FormHTGROUP.txtDesc.SelectAll
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("txtDesc_GotFocus_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_HEAT_TREAT.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormHTGROUP_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.txtDesc_GotFocus.End
+
+Program.Sub.Get_Data.Start
+F.Intrinsic.Control.SetErrorHandler("Get_Data_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+F.ODBC.Connection!Con.OpenCompanyConnection
+
+F.Data.DataTable.CreateFromSQL("HTGROUP",con,"Select HT_Group, HT_Description From GCG_6936_HEAT_TREAT Order by HT_Group",True)
+
+F.ODBC.Connection!Con.Close
+
+F.Data.DataTable.AddColumn("HTGROUP","DELETE_ROW",STRING)
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("Get_Data_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_HEAT_TREAT.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormHTGROUP_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.Get_Data.End
+
+Program.Sub.Set_Prop.Start
+F.Intrinsic.Control.SetErrorHandler("Set_Prop_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+Gui.FormHTGROUP.GsGridHTGROUP.AddGridviewFromDatatable("GHTGROUP","HTGROUP")
+
+Gui.FormHTGROUP.GsGridHTGROUP.SetColumnProperty("GHTGROUP","HT_Group","Caption","Group")
+Gui.FormHTGROUP.GsGridHTGROUP.SetColumnProperty("GHTGROUP","HT_Group","AllowEdit",False)
+Gui.FormHTGROUP.GsGridHTGROUP.SetColumnProperty("GHTGROUP","HT_Group","ReadOnly",True)
+
+Gui.FormHTGROUP.GsGridHTGROUP.SetColumnProperty("GHTGROUP","HT_Description","Caption","Description")
+Gui.FormHTGROUP.GsGridHTGROUP.SetColumnProperty("GHTGROUP","HT_Description","AllowEdit",True)
+Gui.FormHTGROUP.GsGridHTGROUP.SetColumnProperty("GHTGROUP","HT_Description","ReadOnly",False)
+Gui.FormHTGROUP.GsGridHTGROUP.SetColumnProperty("GHTGROUP","HT_Description","MaxLength",50)
+
+Gui.FormHTGROUP.GsGridHTGROUP.SetColumnProperty("GHTGROUP","Delete_Row","Caption"," ")
+Gui.FormHTGROUP.GsGridHTGROUP.ColumnEdit("GHTGROUP","Delete_Row","EditorButton","Delete")
+Gui.FormHTGROUP.GsGridHTGROUP.SetColumnProperty("GHTGROUP","Delete_Row","AllowEdit",False)
+Gui.FormHTGROUP.GsGridHTGROUP.SetColumnProperty("GHTGROUP","Delete_Row","ReadOnly",True)
+
+Gui.FormHTGROUP.GsGridHTGROUP.MainView("GHTGROUP")
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("Set_Prop_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_HEAT_TREAT.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormHTGROUP_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.Set_Prop.End
+
+Program.Sub.Comments.Start
+${$5$}$20.1.8615.24403$}$1
+${$6$}$rking$}$20230927113746497$}$QNdZLVy4bWuiWa9jh1ZTiKHvMPldSPXeg5tnYWgTB0eXBPQBCQeEMRXb8xkDhRnQfZL/CaSsmXQ=
+Program.Sub.Comments.End
