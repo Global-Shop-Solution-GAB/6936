@@ -1,0 +1,377 @@
+﻿Program.Sub.ScreenSU.Start
+Gui.FormAdd..Create(BaseForm)
+Gui.FormAdd..Caption("Part Material and Hold Additional Data")
+Gui.FormAdd..Size(818,240)
+Gui.FormAdd..MinX(0)
+Gui.FormAdd..MinY(0)
+Gui.FormAdd..Position(0,0)
+Gui.FormAdd..AlwaysOnTop(False)
+Gui.FormAdd..FontName("Tahoma")
+Gui.FormAdd..FontSize(8.25)
+Gui.FormAdd..ControlBox(True)
+Gui.FormAdd..MaxButton(True)
+Gui.FormAdd..MinButton(True)
+Gui.FormAdd..MousePointer(0)
+Gui.FormAdd..Moveable(True)
+Gui.FormAdd..Sizeable(True)
+Gui.FormAdd..ShowInTaskBar(True)
+Gui.FormAdd..TitleBar(True)
+Gui.FormAdd..Event(UnLoad,FormAdd_UnLoad)
+Gui.FormAdd.ddlGroup.Create(DropDownList)
+Gui.FormAdd.ddlGroup.Enabled(True)
+Gui.FormAdd.ddlGroup.Visible(True)
+Gui.FormAdd.ddlGroup.Zorder(0)
+Gui.FormAdd.ddlGroup.Size(164,20)
+Gui.FormAdd.ddlGroup.Position(16,28)
+Gui.FormAdd.ddlGroup.FontName("Tahoma")
+Gui.FormAdd.ddlGroup.FontSize(8.25)
+Gui.FormAdd.ddlGroup.Event(SelectedIndexChanged,ddlMat_SelectedIndexChanged)
+Gui.FormAdd.lblGroup.Create(Label,"Group",True,29,13,0,16,12,True,0,"Tahoma",8.25,,0,0)
+Gui.FormAdd.lblGroup.BorderStyle(0)
+Gui.FormAdd.lblCode.Create(Label,"Code",True,25,13,0,16,73,True,0,"Tahoma",8.25,,0,0)
+Gui.FormAdd.lblCode.BorderStyle(0)
+Gui.FormAdd.ddlCode.Create(DropDownList)
+Gui.FormAdd.ddlCode.Enabled(True)
+Gui.FormAdd.ddlCode.Visible(True)
+Gui.FormAdd.ddlCode.Zorder(0)
+Gui.FormAdd.ddlCode.Size(164,20)
+Gui.FormAdd.ddlCode.Position(16,89)
+Gui.FormAdd.ddlCode.FontName("Tahoma")
+Gui.FormAdd.ddlCode.FontSize(8.25)
+Gui.FormAdd.ddlCode.Event(SelectedIndexChanged,ddlCode_SelectedIndexChanged)
+Gui.FormAdd.lblG_Desc.Create(Label,"Description",True,53,13,0,198,12,True,0,"Tahoma",8.25,,0,0)
+Gui.FormAdd.lblG_Desc.BorderStyle(0)
+Gui.FormAdd.txtG_Desc.Create(TextBox,"",True,221,20,0,198,28,True,0,"Tahoma",8.25,,1)
+Gui.FormAdd.txtG_Desc.Locked(True)
+Gui.FormAdd.lblH_Shell.Create(Label,"Hydro Shell",True,54,13,0,425,12,True,0,"Tahoma",8.25,,0,0)
+Gui.FormAdd.lblH_Shell.BorderStyle(0)
+Gui.FormAdd.txtH_Shell.Create(TextBox,"",True,73,20,0,425,28,True,0,"Tahoma",8.25,,1)
+Gui.FormAdd.txtH_Shell.Locked(True)
+Gui.FormAdd.lblN_Shell.Create(Label,"Nitrogen Shell",True,66,13,0,504,12,True,0,"Tahoma",8.25,,0,0)
+Gui.FormAdd.lblN_Shell.BorderStyle(0)
+Gui.FormAdd.txtN_Shell.Create(TextBox,"",True,73,20,0,504,28,True,0,"Tahoma",8.25,,1)
+Gui.FormAdd.txtN_Shell.Locked(True)
+Gui.FormAdd.lblH_Seat.Create(Label,"Hydro Seat",True,54,13,0,582,12,True,0,"Tahoma",8.25,,0,0)
+Gui.FormAdd.lblH_Seat.BorderStyle(0)
+Gui.FormAdd.txtH_Seat.Create(TextBox,"",True,73,20,0,582,28,True,0,"Tahoma",8.25,,1)
+Gui.FormAdd.txtH_Seat.Locked(True)
+Gui.FormAdd.lblN_Seat.Create(Label,"Nitrogen Seat",True,66,13,0,660,12,True,0,"Tahoma",8.25,,0,0)
+Gui.FormAdd.lblN_Seat.BorderStyle(0)
+Gui.FormAdd.txtN_Seat.Create(TextBox,"",True,73,20,0,660,28,True,0,"Tahoma",8.25,,1)
+Gui.FormAdd.txtN_Seat.Locked(True)
+Gui.FormAdd.lblA_Seat.Create(Label,"Air Seat",True,38,13,0,738,12,True,0,"Tahoma",8.25,,0,0)
+Gui.FormAdd.lblA_Seat.BorderStyle(0)
+Gui.FormAdd.txtA_Seat.Create(TextBox,"",True,73,20,0,738,28,True,0,"Tahoma",8.25,,1)
+Gui.FormAdd.txtA_Seat.Locked(True)
+Gui.FormAdd.lblDesc.Create(Label,"Description",True,53,13,0,198,73,True,0,"Tahoma",8.25,,0,0)
+Gui.FormAdd.lblDesc.BorderStyle(0)
+Gui.FormAdd.txtDesc.Create(TextBox,"",True,221,20,0,198,89,True,0,"Tahoma",8.25,,1)
+Gui.FormAdd.txtDesc.Locked(True)
+Gui.FormAdd.lblTime1.Create(Label,"MTR - Holding Time 1",True,100,13,0,425,73,True,0,"Tahoma",8.25,,0,0)
+Gui.FormAdd.lblTime1.BorderStyle(0)
+Gui.FormAdd.txtTime1.Create(TextBox,"",True,73,20,0,425,89,True,0,"Tahoma",8.25,,1)
+Gui.FormAdd.txtTime1.Locked(True)
+Gui.FormAdd.lblTime2.Create(Label,"MTR - Holding Time 2",True,100,13,0,566,73,True,0,"Tahoma",8.25,,0,0)
+Gui.FormAdd.lblTime2.BorderStyle(0)
+Gui.FormAdd.txtTime2.Create(TextBox,"",True,73,20,0,566,89,True,0,"Tahoma",8.25,,1)
+Gui.FormAdd.txtTime2.Locked(True)
+Gui.FormAdd.lblTime3.Create(Label,"MTR - Holding Time 3",True,100,13,0,711,73,True,0,"Tahoma",8.25,,0,0)
+Gui.FormAdd.lblTime3.BorderStyle(0)
+Gui.FormAdd.txtTime3.Create(TextBox,"",True,73,20,0,711,89,True,0,"Tahoma",8.25,,1)
+Gui.FormAdd.txtTime3.Locked(True)
+Gui.FormAdd.cmdSave.Create(Button)
+Gui.FormAdd.cmdSave.Enabled(True)
+Gui.FormAdd.cmdSave.Visible(True)
+Gui.FormAdd.cmdSave.Zorder(0)
+Gui.FormAdd.cmdSave.Size(75,23)
+Gui.FormAdd.cmdSave.Position(33,179)
+Gui.FormAdd.cmdSave.Caption("Save")
+Gui.FormAdd.cmdSave.FontName("Tahoma")
+Gui.FormAdd.cmdSave.FontSize(8.25)
+Gui.FormAdd.cmdSave.Event(Click,cmdSave_Click)
+Gui.FormAdd.lblHT_Group.Create(Label,"HT Group",True,45,13,0,15,129,True,0,"Tahoma",8.25,,0,0)
+Gui.FormAdd.lblHT_Group.BorderStyle(0)
+Gui.FormAdd.ddlHT_Group.Create(DropDownList)
+Gui.FormAdd.ddlHT_Group.Enabled(True)
+Gui.FormAdd.ddlHT_Group.Visible(True)
+Gui.FormAdd.ddlHT_Group.Zorder(0)
+Gui.FormAdd.ddlHT_Group.Size(164,20)
+Gui.FormAdd.ddlHT_Group.Position(15,145)
+Gui.FormAdd.ddlHT_Group.FontName("Tahoma")
+Gui.FormAdd.ddlHT_Group.FontSize(8.25)
+Gui.FormAdd.ddlHT_Group.Event(SelectedIndexChanged,ddlHT_Group_SelectedIndexChanged)
+Gui.FormAdd.txtHT_Desc.Create(TextBox,"",True,221,20,0,198,145,True,0,"Tahoma",8.25,,1)
+Gui.FormAdd.txtHT_Desc.Locked(True)
+Gui.FormAdd.lblHT_Desc.Create(Label,"Description",True,53,13,0,198,129,True,0,"Tahoma",8.25,,0,0)
+Gui.FormAdd.lblHT_Desc.BorderStyle(0)
+Program.Sub.ScreenSU.End
+
+Program.Sub.Preflight.Start
+Program.Sub.Preflight.End
+
+Program.Sub.Main.Start
+F.Intrinsic.Control.SetErrorHandler("Main_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+Function.Intrinsic.UI.UsePixels ' Allows you to use Pixels instead of Twips throughout
+
+F.Intrinsic.Control.SelectCase(v.Caller.Hook)
+	F.Intrinsic.Control.Case(10120)
+		V.Passed.000069.Set("Mat/Hold")
+		
+	F.Intrinsic.Control.Case(10220)
+		F.Intrinsic.Control.CallSub(Get_Data)
+		Gui.FormAdd..Show
+		Gui.FormAdd..AlwaysOnTop(True)
+		Gui.FormAdd..AlwaysOnTop(False)
+		
+F.Intrinsic.Control.EndSelect
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("Main_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_PART_ADDITIONAL.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormAdd_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.Main.End
+Program.Sub.ddlMat_SelectedIndexChanged.Start
+F.Intrinsic.Control.SetErrorHandler("ddlMat_SelectedIndexChanged_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+V.Local.sFilter.Declare(String,"")
+V.Local.sValue.Declare(String,"")
+
+V.Local.sValue.Set(V.Screen.FormAdd!ddlGroup.Text)
+
+F.Intrinsic.Control.If(V.Local.sValue.Trim,=,"")
+	gui.FormAdd.txtG_Desc.Text(V.Ambient.DBNull)
+	Gui.FormAdd.txtA_Seat.Text(V.Ambient.DBNull)
+	Gui.FormAdd.txtH_Seat.Text(V.Ambient.DBNull)
+	Gui.FormAdd.txtH_Shell.Text(V.Ambient.DBNull)
+	Gui.FormAdd.txtN_Seat.Text(V.Ambient.DBNull)
+	Gui.FormAdd.txtN_Shell.Text(V.Ambient.DBNull)
+F.Intrinsic.Control.Else
+	F.Intrinsic.String.Build("Mat_Group = '{0}'",V.Local.sValue,V.Local.sFilter)
+	F.Data.DataView.Create("Material","Temp",22,V.Local.sFilter,"")
+	F.Intrinsic.Control.If(V.DataView.Material!Temp.RowCount--,<>,-1)
+		gui.FormAdd.txtG_Desc.Text(V.DataView.Material!Temp(V.DataView.Material!Temp.RowCount--).Description!FieldValTrim)
+		Gui.FormAdd.txtA_Seat.Text(V.DataView.Material!Temp(V.DataView.Material!Temp.RowCount--).Air_Seat!FieldValTrim)
+		Gui.FormAdd.txtH_Seat.Text(V.DataView.Material!Temp(V.DataView.Material!Temp.RowCount--).Hydro_Seat!FieldValTrim)
+		Gui.FormAdd.txtH_Shell.Text(V.DataView.Material!Temp(V.DataView.Material!Temp.RowCount--).Hydro_Shell!FieldValTrim)
+		Gui.FormAdd.txtN_Seat.Text(V.DataView.Material!Temp(V.DataView.Material!Temp.RowCount--).Nitrogen_Seat!FieldValTrim)
+		Gui.FormAdd.txtN_Shell.Text(V.DataView.Material!Temp(V.DataView.Material!Temp.RowCount--).Nitrogen_Shell!FieldValTrim)
+	F.Intrinsic.Control.Else
+		gui.FormAdd.txtG_Desc.Text(V.Ambient.DBNull)
+		Gui.FormAdd.txtA_Seat.Text(V.Ambient.DBNull)
+		Gui.FormAdd.txtH_Seat.Text(V.Ambient.DBNull)
+		Gui.FormAdd.txtH_Shell.Text(V.Ambient.DBNull)
+		Gui.FormAdd.txtN_Seat.Text(V.Ambient.DBNull)
+		Gui.FormAdd.txtN_Shell.Text(V.Ambient.DBNull)
+	F.Intrinsic.Control.EndIf
+	F.Data.DataView.Close("Material","Temp")
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("ddlMat_SelectedIndexChanged_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_PART_ADDITIONAL.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormAdd_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.ddlMat_SelectedIndexChanged.End
+
+Program.Sub.ddlCode_SelectedIndexChanged.Start
+F.Intrinsic.Control.SetErrorHandler("ddlCode_SelectedIndexChanged_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+V.Local.sFilter.Declare(String,"")
+V.Local.sValue.Declare(String,"")
+
+V.Local.sValue.Set(V.Screen.FormAdd!ddlCode.Text)
+
+F.Intrinsic.Control.If(V.Local.sValue.Trim,=,"")
+	Gui.FormAdd.txtDesc.Text(V.Ambient.DBNull)
+	Gui.FormAdd.txtTime1.Text(V.Ambient.DBNull)
+	Gui.FormAdd.txtTime2.Text(V.Ambient.DBNull)
+	Gui.FormAdd.txtTime3.Text(V.Ambient.DBNull)
+F.Intrinsic.Control.Else
+	F.Intrinsic.String.Build("Code = '{0}'",V.Local.sValue,V.Local.sFilter)
+	F.Data.DataView.Create("Code","Temp",22,V.Local.sFilter,"")
+	F.Intrinsic.Control.If(V.DataView.Code!Temp.RowCount--,<>,-1)
+		Gui.FormAdd.txtDesc.Text(V.DataView.Code!Temp(V.DataView.Code!Temp.RowCount--).Description!FieldValTrim)
+		Gui.FormAdd.txtTime1.Text(V.DataView.Code!Temp(V.DataView.Code!Temp.RowCount--).MTR_Time_1!FieldValTrim)
+		Gui.FormAdd.txtTime2.Text(V.DataView.Code!Temp(V.DataView.Code!Temp.RowCount--).MTR_Time_2!FieldValTrim)
+		Gui.FormAdd.txtTime3.Text(V.DataView.Code!Temp(V.DataView.Code!Temp.RowCount--).MTR_Time_3!FieldValTrim)
+	F.Intrinsic.Control.Else
+		Gui.FormAdd.txtDesc.Text(V.Ambient.DBNull)
+		Gui.FormAdd.txtTime1.Text(V.Ambient.DBNull)
+		Gui.FormAdd.txtTime2.Text(V.Ambient.DBNull)
+		Gui.FormAdd.txtTime3.Text(V.Ambient.DBNull)
+	F.Intrinsic.Control.EndIf
+	F.Data.DataView.Close("Code","Temp")
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("ddlCode_SelectedIndexChanged_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_PART_ADDITIONAL.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormAdd_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.ddlCode_SelectedIndexChanged.End
+
+Program.Sub.FormAdd_UnLoad.Start
+F.Intrinsic.Control.SetErrorHandler("FormAdd_UnLoad_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+F.Intrinsic.Control.End
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("FormAdd_UnLoad_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.Control.End
+Function.Intrinsic.Control.EndIf
+Program.Sub.FormAdd_UnLoad.End
+
+Program.Sub.cmdSave_Click.Start
+F.Intrinsic.Control.SetErrorHandler("cmdSave_Click_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+F.Data.DataTable.SetValue("Info",-1,"Mat_Group",V.Screen.FormAdd!ddlGroup.Text,"Code",V.Screen.FormAdd!ddlCode.Text,"HT_Group",V.Screen.FormAdd!ddlHT_Group.Text)
+
+F.ODBC.Connection!Con.OpenCompanyConnection
+
+F.Data.DataTable.SaveToDB("Info",con,"GCG_6936_Part_Info","Part*!*Location",3)
+
+F.ODBC.Connection!Con.Close
+
+F.Intrinsic.Control.CallSub(FormAdd_UnLoad)
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("cmdSave_Click_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_PART_ADDITIONAL.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormAdd_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.cmdSave_Click.End
+
+Program.Sub.Get_Data.Start
+F.Intrinsic.Control.SetErrorHandler("Get_Data_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+V.Local.sSql.Declare(String,"")
+V.Local.sRev.Declare(String,"")
+V.Local.bRev.Declare(Boolean,False)
+V.Local.sFilter.Declare(String,"")
+V.Local.sPart.Declare(String,"")
+V.Local.sLocation.Declare(String,"")
+
+F.Global.General.ReadOption("070008",0,"0000",V.Local.bRev)
+
+F.Intrinsic.String.RTrim(V.Passed.000007,V.Local.sPart)
+F.Intrinsic.String.RTrim(V.Passed.000008,V.Local.sRev)
+F.Intrinsic.String.RTrim(V.Passed.000009,V.Local.sLocation)
+
+F.Intrinsic.Control.If(V.Local.bRev)
+	F.Intrinsic.String.RPad(V.Local.sPart," ",17,V.Local.sPart)
+	F.Intrinsic.String.Build("{0}{1}",V.Local.sPart,V.Local.sRev,V.Local.sPart)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.String.Build("Select Part, Location, Mat_Group, Code, HT_GROUP From GCG_6936_Part_Info Where Part = '{0}' and Location = '{1}'",V.Local.sPart.Trim,V.Local.sLocation.Trim,V.Local.sSql)
+
+F.ODBC.Connection!Con.OpenCompanyConnection
+F.Data.DataTable.CreateFromSQL("Info",con,V.Local.sSql,True)
+
+F.Data.DataTable.CreateFromSQL("Material",con,"Select * From GCG_6936_Mat_Group",True)
+F.Data.DataTable.CreateFromSQL("Code",con,"Select * From GCG_6936_Hold_Time",True)
+F.Data.DataTable.CreateFromSQL("HT",con,"Select * From GCG_6936_Heat_Treat",True)
+
+F.Data.Dictionary.CreateFromSQL("dMat",con,"Select rtrim(Mat_Group), rtrim(Mat_Group) From GCG_6936_Mat_Group Order by Mat_Group")
+F.Data.Dictionary.CreateFromSQL("dCode",con,"Select rtrim(Code), rtrim(Code) From GCG_6936_Hold_Time Order by Code")
+F.Data.Dictionary.CreateFromSQL("dHT",con,"Select rtrim(HT_Group), rtrim(HT_Group) From GCG_6936_Heat_Treat Order by HT_Group")
+
+gui.FormAdd.ddlGroup.AddItem("",0)
+Gui.FormAdd.ddlCode.AddItem("",0)
+Gui.FormAdd.ddlHT_Group.AddItem("",0)
+
+gui.FormAdd.ddlGroup.AddItems(Dictionary,"dMat")
+Gui.FormAdd.ddlCode.AddItems(Dictionary,"dCode")
+Gui.FormAdd.ddlHT_Group.AddItems(Dictionary,"dHT")
+
+F.Data.Dictionary.Close("dMat")
+F.Data.Dictionary.Close("dCode")
+F.Data.Dictionary.Close("dHT")
+
+F.ODBC.Connection!Con.Close
+
+F.Intrinsic.Control.If(V.DataTable.Info.RowCount--,=,-1)
+	F.Data.DataTable.AddRow("Info","Part",V.Local.sPart.Trim,"Location",V.Local.sLocation.Trim)
+F.Intrinsic.Control.Else
+	Gui.FormAdd.ddlGroup.Text(V.DataTable.Info(V.DataTable.Info.RowCount--).Mat_Group!FieldValTrim)
+	Gui.FormAdd.ddlCode.Text(V.DataTable.Info(V.DataTable.Info.RowCount--).Code!FieldValTrim)
+	Gui.FormAdd.ddlHT_Group.Text(V.DataTable.Info(V.DataTable.Info.RowCount--).HT_GROUP!FieldValTrim)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("Get_Data_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_PART_ADDITIONAL.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormAdd_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.Get_Data.End
+
+Program.Sub.ddlHT_Group_SelectedIndexChanged.Start
+F.Intrinsic.Control.SetErrorHandler("ddlHT_Group_SelectedIndexChanged_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+V.Local.sFilter.Declare(String,"")
+V.Local.sValue.Declare(String,"")
+
+V.Local.sValue.Set(V.Screen.FormAdd!ddlHT_Group.Text)
+
+F.Intrinsic.Control.If(V.Local.sValue.Trim,=,"")
+	Gui.FormAdd.txtHT_Desc.Text(V.Ambient.DBNull)
+F.Intrinsic.Control.Else
+	F.Intrinsic.String.Build("HT_Group = '{0}'",V.Local.sValue,V.Local.sFilter)
+	F.Data.DataView.Create("HT","Temp",22,V.Local.sFilter,"")
+	F.Intrinsic.Control.If(V.DataView.HT!Temp.RowCount--,<>,-1)
+		Gui.FormAdd.txtHT_Desc.Text(V.DataView.HT!Temp(V.DataView.HT!Temp.RowCount--).HT_Description!FieldValTrim)
+	F.Intrinsic.Control.Else
+		Gui.FormAdd.txtHT_Desc.Text(V.Ambient.DBNull)
+	F.Intrinsic.Control.EndIf
+	F.Data.DataView.Close("HT","Temp")
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("ddlHT_Group_SelectedIndexChanged_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_PART_ADDITIONAL.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormAdd_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.ddlHT_Group_SelectedIndexChanged.End
+
+Program.Sub.Comments.Start
+${$5$}$20.1.8615.24403$}$1
+${$6$}$rking$}$20230927105437237$}$QNdZLVy4bWuiWa9jh1ZTiKHvMPldSPXeg5tnYWgTB0dQIbe/IU8TTxM2QIWjawzoyvcov/S7hkY=
+Program.Sub.Comments.End
