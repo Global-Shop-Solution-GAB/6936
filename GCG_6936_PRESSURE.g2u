@@ -1,0 +1,395 @@
+﻿Program.Sub.ScreenSU.Start
+Gui.FormPressure..Create(BaseForm)
+Gui.FormPressure..Caption("Hydrostatic Pressure and Heat Treatment")
+Gui.FormPressure..Size(472,274)
+Gui.FormPressure..MinX(0)
+Gui.FormPressure..MinY(0)
+Gui.FormPressure..Position(0,0)
+Gui.FormPressure..AlwaysOnTop(False)
+Gui.FormPressure..FontName("Tahoma")
+Gui.FormPressure..FontSize(8.25)
+Gui.FormPressure..ControlBox(True)
+Gui.FormPressure..MaxButton(False)
+Gui.FormPressure..MinButton(True)
+Gui.FormPressure..MousePointer(0)
+Gui.FormPressure..Moveable(True)
+Gui.FormPressure..Sizeable(True)
+Gui.FormPressure..ShowInTaskBar(True)
+Gui.FormPressure..TitleBar(True)
+Gui.FormPressure..Event(UnLoad,FormPressure_UnLoad)
+Gui.FormPressure.lblShellHydro.Create(Label,"Shell Hydro",True,54,13,0,13,34,True,0,"Tahoma",8.25,,0,0)
+Gui.FormPressure.lblShellHydro.BorderStyle(0)
+Gui.FormPressure.txtShellHydro.Create(TextBox,"",True,76,20,0,13,50,True,0,"Tahoma",8.25,,1)
+Gui.FormPressure.txtShellHydro.NumericOnly(1)
+Gui.FormPressure.txtShellHydro.Event(GotFocus,txtShellHydro_GotFocus)
+Gui.FormPressure.txtSeatAH.Create(TextBox,"",True,76,20,0,95,50,True,0,"Tahoma",8.25,,1)
+Gui.FormPressure.txtSeatAH.NumericOnly(1)
+Gui.FormPressure.txtSeatAH.Event(GotFocus,txtSeatAH_GotFocus)
+Gui.FormPressure.lblSeatAH.Create(Label,"Seat A Hydro",True,64,13,0,95,34,True,0,"Tahoma",8.25,,0,0)
+Gui.FormPressure.lblSeatAH.BorderStyle(0)
+Gui.FormPressure.txtSeatAA.Create(TextBox,"",True,76,20,0,177,50,True,0,"Tahoma",8.25,,1)
+Gui.FormPressure.txtSeatAA.NumericOnly(1)
+Gui.FormPressure.txtSeatAA.Event(GotFocus,txtSeatAA_GotFocus)
+Gui.FormPressure.lblSeatAA.Create(Label,"Seat A Air",True,48,13,0,177,34,True,0,"Tahoma",8.25,,0,0)
+Gui.FormPressure.lblSeatAA.BorderStyle(0)
+Gui.FormPressure.txtSeatBH.Create(TextBox,"",True,76,20,0,258,50,True,0,"Tahoma",8.25,,1)
+Gui.FormPressure.txtSeatBH.NumericOnly(1)
+Gui.FormPressure.txtSeatBH.Event(GotFocus,txtSeatBH_GotFocus)
+Gui.FormPressure.lblSeatBH.Create(Label,"Seat B Hydro",True,63,13,0,258,34,True,0,"Tahoma",8.25,,0,0)
+Gui.FormPressure.lblSeatBH.BorderStyle(0)
+Gui.FormPressure.txtSeatBA.Create(TextBox,"",True,76,20,0,340,50,True,0,"Tahoma",8.25,,1)
+Gui.FormPressure.txtSeatBA.NumericOnly(1)
+Gui.FormPressure.txtSeatBA.Event(GotFocus,txtSeatBA_GotFocus)
+Gui.FormPressure.lblSeatBA.Create(Label,"Seat B Air",True,47,13,0,340,34,True,0,"Tahoma",8.25,,0,0)
+Gui.FormPressure.lblSeatBA.BorderStyle(0)
+Gui.FormPressure.lblHold1.Create(Label,"Holding Time 1",True,69,13,0,13,93,True,0,"Tahoma",8.25,,0,0)
+Gui.FormPressure.lblHold1.BorderStyle(0)
+Gui.FormPressure.txtHold1.Create(TextBox,"",True,76,20,0,13,109,True,0,"Tahoma",8.25,,1)
+Gui.FormPressure.txtHold1.NumericOnly(1)
+Gui.FormPressure.txtHold1.Event(GotFocus,txtHold1_GotFocus)
+Gui.FormPressure.lblHold2.Create(Label,"Holding Time 2",True,69,13,0,95,93,True,0,"Tahoma",8.25,,0,0)
+Gui.FormPressure.lblHold2.BorderStyle(0)
+Gui.FormPressure.txtHold2.Create(TextBox,"",True,76,20,0,95,109,True,0,"Tahoma",8.25,,1)
+Gui.FormPressure.txtHold2.NumericOnly(1)
+Gui.FormPressure.txtHold2.Event(GotFocus,txtHold2_GotFocus)
+Gui.FormPressure.lblHold3.Create(Label,"Holding Time 3",True,69,13,0,177,93,True,0,"Tahoma",8.25,,0,0)
+Gui.FormPressure.lblHold3.BorderStyle(0)
+Gui.FormPressure.txtHold3.Create(TextBox,"",True,76,20,0,177,109,True,0,"Tahoma",8.25,,1)
+Gui.FormPressure.txtHold3.NumericOnly(1)
+Gui.FormPressure.txtHold3.Event(GotFocus,txtHold3_GotFocus)
+Gui.FormPressure.lblHT.Create(Label,"Heat Treatment",True,76,13,0,17,151,True,0,"Tahoma",8.25,,0,0)
+Gui.FormPressure.lblHT.BorderStyle(0)
+Gui.FormPressure.txtHT.Create(TextBox,"",True,445,20,0,16,168,True,0,"Tahoma",8.25,,1)
+Gui.FormPressure.txtHT.MaxLength(50)
+Gui.FormPressure.txtHT.Event(GotFocus,txtHT_GotFocus)
+Gui.FormPressure.cmdSave.Create(Button)
+Gui.FormPressure.cmdSave.Enabled(True)
+Gui.FormPressure.cmdSave.Visible(True)
+Gui.FormPressure.cmdSave.Zorder(0)
+Gui.FormPressure.cmdSave.Size(75,23)
+Gui.FormPressure.cmdSave.Position(35,209)
+Gui.FormPressure.cmdSave.Caption("Save")
+Gui.FormPressure.cmdSave.FontName("Tahoma")
+Gui.FormPressure.cmdSave.FontSize(8.25)
+Gui.FormPressure.cmdSave.Event(Click,cmdSave_Click)
+Program.Sub.ScreenSU.End
+
+Program.Sub.Preflight.Start
+Program.Sub.Preflight.End
+
+Program.Sub.Main.Start
+F.Intrinsic.Control.SetErrorHandler("Main_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+Function.Intrinsic.UI.UsePixels ' Allows you to use Pixels instead of Twips throughout
+
+F.Intrinsic.Control.SelectCase(V.Caller.Hook)
+	F.Intrinsic.Control.Case(12440)
+		'seeting script button caption
+		V.Passed.000162.Set("Hold Time")
+	
+	
+	F.Intrinsic.Control.Case(12620)
+		F.Intrinsic.Control.CallSub(Get_Data,"Screen","Short")
+		
+		Gui.FormPressure..Show
+		Gui.FormPressure..AlwaysOnTop(True)
+		Gui.FormPressure..AlwaysOnTop(False)
+	
+	F.Intrinsic.Control.Case(12010)
+		V.Passed.000162.Set("Hold Time")
+	
+	F.Intrinsic.Control.Case(12410)
+		F.Intrinsic.Control.CallSub(Get_Data,"Screen","Long")
+		
+		Gui.FormPressure..Show
+		Gui.FormPressure..AlwaysOnTop(True)
+		Gui.FormPressure..AlwaysOnTop(False)
+	
+	F.Intrinsic.Control.CaseElse
+		F.Intrinsic.Control.End
+		
+F.Intrinsic.Control.EndSelect
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("Main_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_SERIAL_WIP.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormPressure_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.Main.End
+
+Program.Sub.FormPressure_UnLoad.Start
+F.Intrinsic.Control.SetErrorHandler("FormPressure_UnLoad_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+F.Intrinsic.Control.End
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("FormPressure_UnLoad_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.Control.End
+Function.Intrinsic.Control.EndIf
+Program.Sub.FormPressure_UnLoad.End
+
+Program.Sub.cmdSave_Click.Start
+F.Intrinsic.Control.SetErrorHandler("cmdSave_Click_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+F.ODBC.Connection!Con.OpenCompanyConnection
+F.Data.DataTable.SaveToDB("Pres",con,"GCG_6936_Pressure","Order_NO*!*Record_No",3)
+F.ODBC.Connection!con.Close
+
+F.Data.DataTable.Close("Pres")
+
+F.Intrinsic.Control.CallSub(FormPressure_UnLoad)
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("cmdSave_Click_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_SERIAL_WIP.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormPressure_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.cmdSave_Click.End
+
+Program.Sub.txtShellHydro_GotFocus.Start
+F.Intrinsic.Control.SetErrorHandler("txtShellHydro_GotFocus_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+Gui.FormPressure.txtShellHydro.SelectAll
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("txtShellHydro_GotFocus_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_SERIAL_WIP.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormPressure_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.txtShellHydro_GotFocus.End
+
+Program.Sub.txtSeatAH_GotFocus.Start
+F.Intrinsic.Control.SetErrorHandler("txtSeatAH_GotFocus_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+Gui.FormPressure.txtSeatAH.SelectAll
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("txtSeatAH_GotFocus_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_SERIAL_WIP.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormPressure_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.txtSeatAH_GotFocus.End
+
+Program.Sub.txtSeatAA_GotFocus.Start
+F.Intrinsic.Control.SetErrorHandler("txtSeatAA_GotFocus_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+Gui.FormPressure.txtSeatAA.SelectAll
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("txtSeatAA_GotFocus_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_SERIAL_WIP.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormPressure_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.txtSeatAA_GotFocus.End
+
+Program.Sub.txtSeatBH_GotFocus.Start
+F.Intrinsic.Control.SetErrorHandler("txtSeatBH_GotFocus_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+Gui.FormPressure.txtSeatBH.SelectAll
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("txtSeatBH_GotFocus_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_SERIAL_WIP.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormPressure_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.txtSeatBH_GotFocus.End
+
+Program.Sub.txtSeatBA_GotFocus.Start
+F.Intrinsic.Control.SetErrorHandler("txtSeatBA_GotFocus_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+Gui.FormPressure.txtSeatBA.SelectAll
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("txtSeatBA_GotFocus_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_SERIAL_WIP.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormPressure_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.txtSeatBA_GotFocus.End
+
+Program.Sub.txtHold1_GotFocus.Start
+F.Intrinsic.Control.SetErrorHandler("txtHold1_GotFocus_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+Gui.FormPressure.txtHold1.SelectAll
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("txtHold1_GotFocus_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_SERIAL_WIP.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormPressure_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.txtHold1_GotFocus.End
+
+Program.Sub.txtHold2_GotFocus.Start
+F.Intrinsic.Control.SetErrorHandler("txtHold2_GotFocus_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+Gui.FormPressure.txtHold2.SelectAll
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("txtHold2_GotFocus_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_SERIAL_WIP.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormPressure_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.txtHold2_GotFocus.End
+
+Program.Sub.txtHold3_GotFocus.Start
+F.Intrinsic.Control.SetErrorHandler("txtHold3_GotFocus_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+Gui.FormPressure.txtHold3.SelectAll
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("txtHold3_GotFocus_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_SERIAL_WIP.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormPressure_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.txtHold3_GotFocus.End
+
+Program.Sub.txtHT_GotFocus.Start
+F.Intrinsic.Control.SetErrorHandler("txtHT_GotFocus_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+Gui.FormPressure.txtHT.SelectAll
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("txtHT_GotFocus_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_SERIAL_WIP.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormPressure_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.txtHT_GotFocus.End
+
+Program.Sub.Get_Data.Start
+F.Intrinsic.Control.SetErrorHandler("Get_Data_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+V.Local.sOrder.Declare(String,"")
+V.Local.sLine.Declare(String,"")
+V.Local.sPart.Declare(String,"")
+V.Local.sSql.Declare(String,"")
+
+F.Intrinsic.Control.If(V.Args.Screen.UCase,<>,"LONG")
+	F.Intrinsic.String.LPad(V.Passed.000005,"0",7,V.Local.sOrder)
+	F.Intrinsic.String.LPad(V.Passed.000013,"0",3,V.Local.sLine)
+	F.Intrinsic.String.Build("{0}0",V.Local.sLine,V.Local.sLine)
+F.Intrinsic.Control.Else
+	F.Intrinsic.String.LPad(V.Passed.000060,"0",7,V.Local.sOrder)
+	F.Intrinsic.String.LPad(V.Passed.000051,"0",3,V.Local.sLine)
+	F.Intrinsic.String.Build("{0}0",V.Local.sLine,V.Local.sLine)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.String.Build("Select Order_No, Record_No, Shell_Hydro, Seat_A_Hydro, Seat_B_Hydro, Seat_A_Air, Seat_B_Air, Hold_Time_1, Hold_Time_2, Hold_Time_3, HT_Description From GCG_6936_Pressure Where Order_NO = '{0}' and Record_No = '{1}'",V.Local.sOrder,V.Local.sLine,V.Local.sSql)
+F.ODBC.Connection!Con.OpenCompanyConnection
+
+F.Data.DataTable.CreateFromSQL("Pres",Con,V.Local.sSql,True)
+
+F.Intrinsic.Control.If(V.DataTable.Pres.RowCount--,=,-1)
+	F.Intrinsic.String.Build("Select Top 1 b.Part, a.Location From Job_Header a Join V_Job_Operations b on a.Job = b.Job and a.Suffix = b.Suffix Where LMO = 'M' and b.Part+a.Location In(Select c.Part+c.Location From GCG_6936_Part_Info c) and Sales_Order = '{0}' and Sales_Order_Line+'0' = '{1}' Order by Seq",V.Local.sOrder,V.Local.sLine,V.Local.sSql)
+	F.ODBC.Connection!con.ExecuteAndReturn(V.Local.sSql,V.Local.sPart)
+	F.Intrinsic.Control.If(v.Local.sPart.Trim,<>,"")
+		F.Intrinsic.String.Split(V.Local.sPart,"*!*",V.Local.sPart)
+		F.Intrinsic.String.Build("Select Hydro_Shell, Hydro_Seat, Nitrogen_Seat, MTR_Time_1, MTR_Time_2, MTR_Time_3, HT_Description From GCG_6936_Part_Info a Left Join GCG_6936_Mat_Group b on a.Mat_Group = b.Mat_Group Left Join GCG_6936_Hold_Time c on a.Code = c.Code Left Join GCG_6936_Heat_Treat d on a.HT_Group = d.HT_Group Where Part = '{0}' and Location = '{1}'",V.Local.sPart,V.Local.sPart(1),V.Local.sSql)
+		F.Data.DataTable.CreateFromSQL("PartInfo",con,V.Local.sSql,True)
+		F.Intrinsic.Control.If(V.DataTable.PartInfo.RowCount--,<>,-1)
+			F.Data.DataTable.AddRow("Pres","Order_NO",V.Local.sOrder,"Record_NO",V.Local.sLine,"Shell_Hydro",V.DataTable.PartInfo(V.DataTable.PartInfo.RowCount--).Hydro_Shell!FieldValFloat,"Seat_A_Hydro",V.DataTable.PartInfo(V.DataTable.PartInfo.RowCount--).Hydro_Seat!FieldValFloat,"Seat_B_Hydro",V.DataTable.PartInfo(V.DataTable.PartInfo.RowCount--).Hydro_Seat!FieldValFloat,"Seat_A_Air",0.00,"Seat_B_Air",0.00)
+			F.Data.DataTable.SetValue("Pres",-1,"Hold_Time_1",V.DataTable.PartInfo(V.DataTable.PartInfo.RowCount--).MTR_Time_1!FieldValFloat,"Hold_Time_2",V.DataTable.PartInfo(V.DataTable.PartInfo.RowCount--).MTR_Time_2!FieldValFloat,"Hold_Time_3",V.DataTable.PartInfo(V.DataTable.PartInfo.RowCount--).MTR_Time_3!FieldValFloat,"HT_Description",V.DataTable.PartInfo(V.DataTable.PartInfo.RowCount--).HT_Description!FieldValTrim)
+		F.Intrinsic.Control.EndIf
+		F.Data.DataTable.Close("PartInfo")
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.EndIf
+
+F.ODBC.Connection!Con.Close
+
+F.Intrinsic.Control.If(V.DataTable.Pres.RowCount--,<>,-1)
+	Gui.FormPressure.txtShellHydro.Text(V.DataTable.Pres(V.DataTable.Pres.RowCount--).Shell_Hydro!FieldValFloat)
+	Gui.FormPressure.txtSeatAH.Text(V.DataTable.Pres(V.DataTable.Pres.RowCount--).Seat_A_Hydro!FieldValFloat)
+	Gui.FormPressure.txtSeatAA.Text(V.DataTable.Pres(V.DataTable.Pres.RowCount--).Seat_A_Air!FieldValFloat)
+	Gui.FormPressure.txtSeatBH.Text(V.DataTable.Pres(V.DataTable.Pres.RowCount--).Seat_B_Hydro!FieldValFloat)
+	Gui.FormPressure.txtSeatBA.Text(V.DataTable.Pres(V.DataTable.Pres.RowCount--).Seat_B_Air!FieldValFloat)
+	Gui.FormPressure.txtHold1.Text(V.DataTable.Pres(V.DataTable.Pres.RowCount--).Hold_Time_1!FieldValFloat)
+	Gui.FormPressure.txtHold2.Text(V.DataTable.Pres(V.DataTable.Pres.RowCount--).Hold_Time_2!FieldValFloat)
+	Gui.FormPressure.txtHold3.Text(V.DataTable.Pres(V.DataTable.Pres.RowCount--).Hold_Time_3!FieldValFloat)
+	Gui.FormPressure.txtHT.Text(V.DataTable.Pres(V.DataTable.Pres.RowCount--).Ht_Description!FieldValTrim)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("Get_Data_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_SERIAL_WIP.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(FormPressure_UnLoad)
+Function.Intrinsic.Control.EndIf
+Program.Sub.Get_Data.End
+
+Program.Sub.Comments.Start
+${$5$}$20.1.8711.23215$}$1
+${$6$}$rking$}$20231113105258617$}$QNdZLVy4bWuiWa9jh1ZTiKHvMPldSPXeuL5fEXipjbWYenvHngvgBQMJhCaRfMi+OwLO4jJIffA=
+Program.Sub.Comments.End
