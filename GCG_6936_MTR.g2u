@@ -1,0 +1,146 @@
+﻿Program.Sub.Preflight.Start
+Program.Sub.Preflight.End
+
+Program.Sub.Main.Start
+F.Intrinsic.Control.SetErrorHandler("Main_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+V.Local.sSql.Declare(String,"")
+V.Local.iRet.Declare(Long,0)
+V.Local.i.Declare(Long,0)
+V.Local.sFilter.Declare(String,"")
+
+Function.Intrinsic.UI.UsePixels ' Allows you to use Pixels instead of Twips throughout
+
+F.Intrinsic.Control.SelectCase(V.Caller.Hook)
+	F.Intrinsic.Control.Case("16090")
+		f.Intrinsic.Control.If(v.Passed.CALLING-PGM,<>,"ORD0LZBI")
+			F.Intrinsic.Control.If(V.Passed.009001,=,"001811")
+				F.Intrinsic.String.Build("Select Distinct Job, Suffix From BI_BAR_HEAD Where Terminal = '{0}' and RPTID = '001811'",V.Caller.Terminal,V.Local.sSql)
+				F.ODBC.Connection!Con.OpenCompanyConnection(999)
+				F.Data.DataTable.CreateFromSQL("BARHEAD",con,V.Local.sSql,True)
+				F.Data.DataTable.CreateFromSQL("BarSerial",con,"Select TERMINAL, RPTID, JOB, SUFFIX, SERIAL_NUMBER FROM GCG_6936_BAR_SERIALS Where TERMINAL = '-1'",True)
+				F.Intrinsic.Control.For(V.Local.i,0,V.DataTable.BARHEAD.RowCount--,1)
+					F.Intrinsic.String.Build("Select Distinct Cast(0 as Bit) as WIPFG, Job, Suffix, rtrim(Serial_Number) as Serial_Number, Code_Transaction, Date_History, Time_Item_History, Quantity From V_Item_History Where Job = '{0}' and Suffix = '{1}' and Code_Transaction in('R10','J52','J55') Order by Serial_Number,Date_History, Time_Item_History",V.DataTable.BARHEAD(V.Local.i).Job!FieldValTrim,V.DataTable.BARHEAD(V.Local.i).Suffix!FieldValTrim,V.Local.sSql)
+					F.Data.DataTable.CreateFromSQL("Temp",con,V.Local.sSql,True)
+					F.Data.DataView.Create("Temp","VTemp",22,"","")
+					F.Data.DataView.ToDataTableDistinct("Temp","VTemp","Dis_Serial","Serial_Number")
+					F.Data.DataView.Close("Temp","VTemp")
+					F.Intrinsic.Control.For(V.Local.iRet,0,V.DataTable.Dis_Serial.RowCount--,1)
+						F.Intrinsic.String.Build("Serial_Number = '{0}'",V.DataTable.Dis_Serial(V.Local.iRet).Serial_Number!FieldValTrim,V.Local.sFilter)
+						
+						F.Data.DataView.Create("Temp","VTemp",22,V.Local.sFilter,"")
+						
+						F.Intrinsic.Control.SelectCase(V.DataView.Temp!VTemp(V.DataView.Temp!VTemp.RowCount--).Code_Transaction!FieldValTrim)
+							F.Intrinsic.Control.Case("J52")
+								F.Data.DataTable.AddRow("BarSerial","TERMINAL",V.Caller.Terminal,"RPTID","001811","JOB",V.DataTable.BARHEAD(V.Local.i).Job!FieldValTrim,"SUFFIX",V.DataTable.BARHEAD(V.Local.i).Suffix!FieldValTrim,"SERIAL_NUMBER",V.DataView.Temp!VTemp(V.DataView.Temp!VTemp.RowCount--).Serial_Number!FieldValTrim)
+								
+							F.Intrinsic.Control.Case("J55")
+								F.Intrinsic.Control.If(V.DataView.Temp!VTemp(V.DataView.Temp!VTemp.RowCount--).Quantity!FieldValFloat,<,0)
+									F.Data.DataTable.AddRow("BarSerial","TERMINAL",V.Caller.Terminal,"RPTID","001811","JOB",V.DataTable.BARHEAD(V.Local.i).Job!FieldValTrim,"SUFFIX",V.DataTable.BARHEAD(V.Local.i).Suffix!FieldValTrim,"SERIAL_NUMBER",V.DataView.Temp!VTemp(V.DataView.Temp!VTemp.RowCount--).Serial_Number!FieldValTrim)
+								F.Intrinsic.Control.EndIf
+								
+							F.Intrinsic.Control.Case("R10")
+								F.Intrinsic.Control.If(V.DataView.Temp!VTemp(V.DataView.Temp!VTemp.RowCount--).Quantity!FieldValFloat,<,0)
+									F.Data.DataTable.AddRow("BarSerial","TERMINAL",V.Caller.Terminal,"RPTID","001811","JOB",V.DataTable.BARHEAD(V.Local.i).Job!FieldValTrim,"SUFFIX",V.DataTable.BARHEAD(V.Local.i).Suffix!FieldValTrim,"SERIAL_NUMBER",V.DataView.Temp!VTemp(V.DataView.Temp!VTemp.RowCount--).Serial_Number!FieldValTrim)
+								F.Intrinsic.Control.EndIf
+								
+						F.Intrinsic.Control.EndSelect
+						
+						F.Data.DataView.Close("Temp","VTemp")
+					F.Intrinsic.Control.Next(V.Local.iRet)
+				F.Intrinsic.Control.Next(V.Local.i)
+				F.Intrinsic.String.Build("Delete From GCG_6936_BAR_SERIALS Where TERMINAL = '{0}'",V.Caller.Terminal,V.Local.sSql)
+				F.ODBC.Connection!Con.Execute(V.Local.sSql)
+				F.Intrinsic.Control.If(V.DataTable.BarSerial.RowCount--,<>,-1)
+					F.Data.DataTable.SaveToDB("BarSerial",con,"GCG_6936_BAR_SERIALS","",128,"TERMINAL@!@TERMINAL*!*RPTID@!@RPTID*!*JOB@!@JOB*!*SUFFIX@!@SUFFIX*!*SERIAL_NUMBER@!@SERIAL_NUMBER")
+				F.Intrinsic.Control.EndIf
+				F.ODBC.Connection!con.Close
+			F.Intrinsic.Control.EndIf
+			F.Intrinsic.Control.End
+		f.Intrinsic.Control.EndIf
+		
+		F.Intrinsic.UI.Msgbox("Do you want to Print MTRs?","Print MTRs",4,V.Local.iRet)
+		F.Intrinsic.Control.If(V.Local.iRet,=,6)
+			F.Intrinsic.Control.CallSub(Print_MTR)
+		F.Intrinsic.Control.EndIf
+		
+	F.Intrinsic.Control.CaseElse
+		F.Intrinsic.Control.End
+F.Intrinsic.Control.EndSelect
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("Main_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_MTR.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(Exit)
+Function.Intrinsic.Control.EndIf
+Program.Sub.Main.End
+
+Program.Sub.Exit.Start
+F.Intrinsic.Control.SetErrorHandler("Exit_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+
+F.Intrinsic.Control.End
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("Exit_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.Control.End
+Function.Intrinsic.Control.EndIf
+Program.Sub.Exit.End
+
+Program.Sub.Print_MTR.Start
+F.Intrinsic.Control.SetErrorHandler("Print_MTR_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String,"")
+V.Local.sRpt.Declare(String,"")
+V.Local.sSql.Declare(String,"")
+V.Local.iRet.Declare(Long,0)
+
+V.Local.sRpt.Set(V.Passed.009001)
+
+F.ODBC.Connection!Con.OpenCompanyConnection
+
+F.Intrinsic.String.Build("Select Order_No, 'MTR-'+Order_No+'-'+Left(Record_No,3) as File_Name From V_BI_PACKING_LIST Where Record_Type = 'S' and terminal = '{0}' and RPTID = '{1}' and Record_Type = 'S' and Part <> ''",V.Caller.Terminal,V.Local.sRpt,V.Local.sSql)
+F.Data.DataTable.CreateFromSQL("Key",con,V.Local.sSql,True)
+F.Intrinsic.Control.For(V.Local.iRet,0,V.DataTable.Key.RowCount--,1)
+	F.Intrinsic.String.Build("Select Cast(Link_ID as Int) as Link_ID From Link_Data Where ID = '{0}' and Type = '45'",V.DataTable.Key(V.Local.iRet).Order_No!FieldValTrim,V.Local.sSql)
+	F.ODBC.Connection!Con.ExecuteAndReturn(V.Local.sSql,V.Local.sRet)
+	F.Intrinsic.Control.If(V.Local.sRet.Trim,<>,"")
+		F.Intrinsic.String.Build("Select Top 1 rtrim(Path)+rtrim(File) From ATG_DOC_Assoc Where File like '{0}%'",V.DataTable.Key(V.Local.iRet).File_Name!FieldValTrim,V.Local.sSql)
+		F.ODBC.Connection!Con.ExecuteAndReturn(V.Local.sSql,V.Local.sFile)
+		F.Intrinsic.Control.If(V.Local.sFile.Trim,<>,"")
+			F.Intrinsic.File.Exists(V.Local.sFile,V.Local.bRet)
+			F.Intrinsic.Control.If(V.Local.bRet)
+				F.Intrinsic.task.ShellExec(V.Caller.Handle,"PRINT",V.Local.sFile,"","",5)
+				f.Intrinsic.UI.SleepMS(3000)
+			F.Intrinsic.Control.EndIf
+		F.Intrinsic.Control.EndIf
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.Next(V.Local.iRet)
+F.Data.DataTable.Close("Key")
+
+F.ODBC.Connection!Con.Close
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("Print_MTR_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	F.Intrinsic.String.Build("Project: GCG_6936_MTR.g2u {0}{0}Subroutine: {1}{0}Error Occurred {2} with description {3}",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(Exit)
+Function.Intrinsic.Control.EndIf
+Program.Sub.Print_MTR.End
+
+Program.Sub.Comments.Start
+${$5$}$20.1.8711.23215$}$1
+${$6$}$rking$}$20231121144536915$}$QNdZLVy4bWuiWa9jh1ZTiKHvMPldSPXeki/+MiLSozW+jTtnVydqJUdc6pEf0BQc3WG5Ty4fygA=
+Program.Sub.Comments.End
